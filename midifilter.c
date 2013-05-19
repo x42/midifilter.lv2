@@ -17,6 +17,9 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define MFP_URI "http://gareus.org/oss/lv2/midifilter"
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,10 +28,8 @@
 #include "lv2/lv2plug.in/ns/ext/atom/atom.h"
 #include "lv2/lv2plug.in/ns/ext/atom/forge.h"
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
-#include "lv2/lv2plug.in/ns/ext/patch/patch.h"
 #include "lv2/lv2plug.in/ns/ext/midi/midi.h"
 
-#define MFP_URI "http://gareus.org/oss/lv2/midifilter"
 
 typedef struct {
 	LV2_URID atom_Blank;
@@ -36,56 +37,96 @@ typedef struct {
 	LV2_URID atom_Sequence;
 } MidiFilterURIs;
 
-
 typedef struct {
-  LV2_Atom_Forge forge;
-  LV2_Atom_Forge_Frame frame;
+	LV2_Atom_Forge forge;
+	LV2_Atom_Forge_Frame frame;
 
-  LV2_URID_Map* map;
-  MidiFilterURIs uris;
+	LV2_URID_Map* map;
+	MidiFilterURIs uris;
 
-  const LV2_Atom_Sequence* midiin;
-  LV2_Atom_Sequence* midiout;
+	const LV2_Atom_Sequence* midiin;
+	LV2_Atom_Sequence* midiout;
 } MidiFilter;
 
 
+/**
+ * add a midi message to the output port
+ */
 static inline void
-forge_midimessage(LV2_Atom_Forge* forge,
-		const MidiFilterURIs* uris,
+forge_midimessage(MidiFilter* self,
 		uint32_t tme,
-		const uint8_t* const msg, uint32_t size)
+		const uint8_t* const buffer,
+		uint32_t size)
 {
 	LV2_Atom midiatom;
-	midiatom.type = uris->midi_MidiEvent;
+	midiatom.type = self->uris.midi_MidiEvent;
 	midiatom.size = size;
 
-	lv2_atom_forge_frame_time(forge, tme);
-	lv2_atom_forge_raw(forge, &midiatom, sizeof(LV2_Atom));
-	lv2_atom_forge_raw(forge, msg, size);
-	lv2_atom_forge_pad(forge, sizeof(LV2_Atom) + size);
+	lv2_atom_forge_frame_time(&self->forge, tme);
+	lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom));
+	lv2_atom_forge_raw(&self->forge, buffer, size);
+	lv2_atom_forge_pad(&self->forge, sizeof(LV2_Atom) + size);
 }
+
+/**
+ * the actual MIDI event filter
+ * called for every incoming MIDI message
+ *
+ * @param tme timestamp (sample in this cycle) of the message
+ * @param buffer raw midi data
+ * @param size size of buffer (in bytes)
+ */
+static inline void
+filter_midi(MidiFilter* self,
+		uint32_t tme,
+		const uint8_t* const buffer,
+		uint32_t size)
+{
+	/*
+	 * TODO do sth useful here :)
+	 */
+
+#if 1 // forward orig message
+	forge_midimessage(self, tme, buffer, size);
+#endif
+
+#if 0 // phun with MIDI notes
+	if (size == 3 && (
+				((buffer[0] & 0xf0) != 0x90) // Note on
+			||
+				((buffer[0] & 0xf0) != 0x80) // Note off
+			)
+		 )
+	{
+		uint8_t buf[3];
+		buf[0] = buffer[0];
+		buf[1] = (buffer[1] + 12) & 0x7f;
+		buf[2] = (buffer[2] / 2)  & 0x7f;
+
+		forge_midimessage(self, tme, buf, size);
+	}
+#endif
+}
+
+/******************************************************************************
+ * LV2
+ */
 
 static void
 run(LV2_Handle instance, uint32_t n_samples)
 {
 	MidiFilter* self = (MidiFilter*)instance;
 
-  const uint32_t capacity = self->midiout->atom.size;
-  lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->midiout, capacity);
-  lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
+	/* prepare midiout port */
+	const uint32_t capacity = self->midiout->atom.size;
+	lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->midiout, capacity);
+	lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
 
+	/* process events on the midiin port */
 	LV2_Atom_Event* ev = lv2_atom_sequence_begin(&(self->midiin)->body);
 	while(!lv2_atom_sequence_is_end(&(self->midiin)->body, (self->midiin)->atom.size, ev)) {
 		if (ev->body.type == self->uris.midi_MidiEvent) {
-#if 0
-      uint8_t msg[3];
-      msg[0] = 0xb0; // control change
-      msg[1] = 0x00; // param
-      msg[2] = 0x00; // val
-      forge_midimessage(&self->forge, &self->uris, 0, msg, 3);
-#else
-      forge_midimessage(&self->forge, &self->uris, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
-#endif
+			filter_midi(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
 		ev = lv2_atom_sequence_next(ev);
 	}
@@ -97,50 +138,50 @@ map_mf_uris(LV2_URID_Map* map, MidiFilterURIs* uris)
 {
 	uris->atom_Blank         = map->map(map->handle, LV2_ATOM__Blank);
 	uris->midi_MidiEvent     = map->map(map->handle, LV2_MIDI__MidiEvent);
-  uris->atom_Sequence      = map->map(map->handle, LV2_ATOM__Sequence);
+	uris->atom_Sequence      = map->map(map->handle, LV2_ATOM__Sequence);
 }
 
 static LV2_Handle
-instantiate(const LV2_Descriptor*     descriptor,
-            double                    rate,
-            const char*               bundle_path,
-            const LV2_Feature* const* features)
+instantiate(const LV2_Descriptor*         descriptor,
+		double                    rate,
+		const char*               bundle_path,
+		const LV2_Feature* const* features)
 {
 	int i;
 	MidiFilter* self = (MidiFilter*)calloc(1, sizeof(MidiFilter));
 	if (!self) return NULL;
 
-  for (i=0; features[i]; ++i) {
-    if (!strcmp(features[i]->URI, LV2_URID__map)) {
-      self->map = (LV2_URID_Map*)features[i]->data;
-    }
-  }
+	for (i=0; features[i]; ++i) {
+		if (!strcmp(features[i]->URI, LV2_URID__map)) {
+			self->map = (LV2_URID_Map*)features[i]->data;
+		}
+	}
 
 	if (!self->map) {
-    fprintf(stderr, "midifilter.lv2 error: Host does not support urid:map\n");
+		fprintf(stderr, "midifilter.lv2 error: Host does not support urid:map\n");
 		free(self);
 		return NULL;
 	}
 
 	map_mf_uris(self->map, &self->uris);
-  lv2_atom_forge_init(&self->forge, self->map);
+	lv2_atom_forge_init(&self->forge, self->map);
 
 	return (LV2_Handle)self;
 }
 
 static void
-connect_port(LV2_Handle instance,
-             uint32_t   port,
-             void*      data)
+connect_port(LV2_Handle    instance,
+		uint32_t   port,
+		void*      data)
 {
 	MidiFilter* self = (MidiFilter*)instance;
 
 	switch (port) {
 		case 0:
-      self->midiin = (const LV2_Atom_Sequence*)data;
+			self->midiin = (const LV2_Atom_Sequence*)data;
 			break;
 		case 1:
-      self->midiout = (LV2_Atom_Sequence*)data;
+			self->midiout = (LV2_Atom_Sequence*)data;
 			break;
 		default:
 			break;
@@ -181,3 +222,4 @@ lv2_descriptor(uint32_t index)
 		return NULL;
 	}
 }
+/* vi:set ts=8 sts=8 sw=8: */
