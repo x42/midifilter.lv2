@@ -29,10 +29,10 @@ endif
 targets=$(LV2NAME)$(LIB_EXT)
 
 # check for build-dependencies
-ifeq ($(shell pkg-config --exists lv2 lv2core || echo no), no)
+ifeq ($(shell pkg-config --exists lv2 || echo no), no)
   $(error "LV2 SDK was not found")
 else
-  CFLAGS+=`pkg-config --cflags lv2 lv2core`
+  CFLAGS+=`pkg-config --cflags lv2`
 endif
 
 # build target definitions
