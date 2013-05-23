@@ -28,7 +28,7 @@
 	a lv2:Plugin ; \
 	doap:name DOAPNAME ; \
 	doap:license <HTTPP/usefulinc.com/doap/licenses/gpl> ; \
-  lv2:project <HTTP/gareus.org/oss/lv2/midifilter> ; \
+  lv2:project <HTTPP/gareus.org/oss/lv2/midifilter> ; \
 	lv2:optionalFeature lv2:hardRTCapable ; \
 	lv2:requiredFeature urid:map ; \
 	lv2:port \
