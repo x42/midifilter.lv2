@@ -4,8 +4,8 @@ MFD_FILTER(mididup)
 
 	mflt:mididup
 	TTF_DEFAULTDEF("MIDI Channel Unisono")
-	, TTF_INTPORT( 2, "chs", "Gain",  1.0, 16.0,  1.0)
-	, TTF_INTPORT( 2, "chd", "Gain",  1.0, 16.0,  2.0)
+	, TTF_IPORTINT(0, "chs", "Gain",  1.0, 16.0,  1.0)
+	, TTF_IPORTINT(1, "chd", "Gain",  1.0, 16.0,  2.0)
 	.
 
 #elif defined MX_CODE

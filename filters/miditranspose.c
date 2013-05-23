@@ -4,7 +4,7 @@ MFD_FILTER(miditranspose)
 
 	mflt:miditranspose
 	TTF_DEFAULTDEF("MIDI Chromatic Transpose")
-	, TTF_INTPORT( 2, "transpose", "Transpose",  -72.0, 72.0, 0.0)
+	, TTF_IPORTINT(0, "transpose", "Transpose",  -72.0, 72.0, 0.0)
 	.
 
 #elif defined MX_CODE

@@ -59,4 +59,29 @@ void forge_midimessage(MidiFilter* self,
 
 inline int midi_limit(int data);
 
+#define MIDI_NOTEOFF         0x80
+#define MIDI_NOTEON          0x90
+#define MIDI_POLYKEYPRESSURE 0xA0
+#define MIDI_CONTROLCHANGE   0xB0
+#define MIDI_PROGRAMCHANGE   0xC0
+#define MIDI_CHANNELPRESSURE 0xD0
+#define MIDI_PITCHBEND       0xE0
+
+#define MIDI_SYSEX           0xF0
+#define MIDI_QUARTERFRAME    0xF1
+#define MIDI_SONGPOSITION    0xF2
+#define MIDI_SONGSELECT      0xF3
+#define MIDI_F4              0xF4
+#define MIDI_F5              0xF5
+#define MIDI_TUNEREQUEST     0xF6
+#define MIDI_EOX             0xF7
+#define MIDI_TIMINGCLOCK     0xF8
+#define MIDI_F9              0xF9
+#define MIDI_START           0xFA
+#define MIDI_CONTINUE        0xFB
+#define MIDI_STOP            0xFC
+#define MIDI_FD              0xFD
+#define MIDI_ACTIVESENSING   0xFE
+#define MIDI_SYSTEMRESET     0xFF
+
 #endif
