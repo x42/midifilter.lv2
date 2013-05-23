@@ -3,7 +3,7 @@ MFD_FILTER(midigain)
 #ifdef MX_TTF
 
 	mflt:midigain
-	TTF_DEFAULTDEF("MIDI Gain")
+	TTF_DEFAULTDEF("MIDI Velocity")
 	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0, \
 			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Any" ; rdf:value 0.0 ])
 	, TTF_IPORTFLOAT(1, "gain", "Midi Velocity Gain",  0.0, 4.0,  1.0)

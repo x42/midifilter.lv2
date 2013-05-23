@@ -8,7 +8,7 @@ So far 7 MIDI event filters have been implemented:
 *   Channel Map -- map any MIDI-channel to another MIDI-channel
 *   Keysplit -- split note on/off/pressure to different channels & transpose
 *   Unisono  -- duplicate events from one channel to another
-*   Gain -- modify note velocity
+*   Velocity -- modify note velocity
 *   Transpose -- chromatic transpose of midi notes
 *   Sensing -- strip midi Active-Sensing events
 *   Passtrhu -- no operation, just pass the midi event through (example)
