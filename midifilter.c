@@ -28,10 +28,16 @@
 /******************************************************************************
  * common 'helper' functions
  */
-static int midi_limit(const int d) {
+static int midi_limit_val(const int d) {
 	if (d < 0) return 0;
 	if (d > 127) return 127;
 	return d;
+}
+
+static int midi_limit_chn(const int c) {
+	if (c < 0) return 0;
+	if (c > 15) return 15;
+	return c;
 }
 
 static int midi_valid(const int d) {

@@ -5,7 +5,7 @@ MFD_FILTER(miditranspose)
 	mflt:miditranspose
 	TTF_DEFAULTDEF("MIDI Chromatic Transpose")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, \
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "all channels" ; rdf:value 0.0 ])
+			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Any" ; rdf:value 0.0 ])
 	, TTF_IPORTINT(1, "transpose", "Transpose",  -72.0, 72.0, 0.0)
 	.
 
@@ -14,7 +14,7 @@ MFD_FILTER(miditranspose)
 static void filter_init_miditranspose(MidiFilter* self) {
 	int c,k;
 
-	for (c=0; c < 16; ++c) for (k=0; c < 127; ++k) {
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
 		self->memCI[c][k] = -1000; // current key transpose
 		self->memCM[c][k] = 0; // velocity
 	}
@@ -26,7 +26,7 @@ filter_midi_miditranspose(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int chs = floor(*self->cfg[0]);
+	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
 	const int transp = rint(*(self->cfg[1]));
 
 	/* config changed */
@@ -46,16 +46,16 @@ filter_midi_miditranspose(MidiFilter* self,
 			buf[1] = 120;
 			forge_midimessage(self, tme, buf, 3);
 #else /* re-transpose playing notes */
-			for (k=0; c < 127; ++k) {
+			for (k=0; k < 127; ++k) {
 				if (!self->memCM[c][k]) continue;
 
 				buf[0] = MIDI_NOTEOFF | c;
-				buf[1] = midi_limit(k + self->memCI[c][k]);
+				buf[1] = midi_limit_val(k + self->memCI[c][k]);
 				buf[2] = 0;
 				forge_midimessage(self, tme, buf, 3);
 
 				buf[0] = MIDI_NOTEON | c;
-				buf[1] = midi_limit(k + transp);
+				buf[1] = midi_limit_val(k + transp);
 				buf[2] = self->memCM[c][k];
 				self->memCI[c][k] = transp;
 				forge_midimessage(self, tme, buf, 3);
@@ -74,7 +74,7 @@ filter_midi_miditranspose(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
-			|| !(chs == 0 || chs == chn)
+			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
 		forge_midimessage(self, tme, buffer, size);

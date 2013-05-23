@@ -61,7 +61,8 @@ void forge_midimessage(MidiFilter* self,
 		extension_data \
 };
 
-static int midi_limit(const int);
+static int midi_limit_val(const int);
+static int midi_limit_chn(const int);
 static int midi_valid(const int);
 static int midi_14bit(const uint8_t * const);
 

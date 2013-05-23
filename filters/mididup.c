@@ -4,8 +4,8 @@ MFD_FILTER(mididup)
 
 	mflt:mididup
 	TTF_DEFAULTDEF("MIDI Channel Unisono")
-	, TTF_IPORTINT(0, "chs", "Gain",  1.0, 16.0,  1.0)
-	, TTF_IPORTINT(1, "chd", "Gain",  1.0, 16.0,  2.0)
+	, TTF_IPORTINT(0, "chs", "Source Channel",  1.0, 16.0,  1.0)
+	, TTF_IPORTINT(1, "chd", "Duplicate to Channel",  1.0, 16.0,  2.0)
 	.
 
 #elif defined MX_CODE
@@ -18,8 +18,8 @@ filter_midi_mididup(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int chs = floor(*self->cfg[0]);
-	const int chd = floor(*self->cfg[1]);
+	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const int chd = midi_limit_chn(floor(*self->cfg[1]) -1);
 
 	const int chn = buffer[0] & 0x0f;
 	const int msg = buffer[0] & 0xf0;
