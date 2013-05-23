@@ -6,13 +6,13 @@ MFD_FILTER(randvelocity)
 	TTF_DEFAULTDEF("MIDI Velocity Randomization")
 	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0, \
 			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Any" ; rdf:value 0.0 ])
-	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 64.0,  1.0)
+	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 64.0,  8.0)
 	.
 
 #elif defined MX_CODE
 
 static void filter_init_randvelocity(MidiFilter* self) {
-	srand ((unsigned int) time (NULL));
+	srandom ((unsigned int) time (NULL));
 }
 
 static void
@@ -32,7 +32,7 @@ filter_midi_randvelocity(MidiFilter* self,
 	{
 		uint8_t buf[3];
 		const float rf = *(self->cfg[1]);
-		const float rnd = -rf + 2 * rf * rand() / (float)RAND_MAX;
+		const float rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
 		buf[0] = buffer[0];
 		buf[1] = buffer[1];
 		buf[2] = midi_limit_val(rintf(buffer[2] + rnd));
