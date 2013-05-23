@@ -4,6 +4,8 @@
 @prefix lv2:   <http://lv2plug.in/ns/lv2core#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
+@prefix mflt:  <http://gareus.org/oss/lv2/midifilter#> .
 
 <http://gareus.org/rgareus#me>
 	a foaf:Person ;
@@ -12,27 +14,7 @@
 	foaf:homepage <http://gareus.org/> .
 
 <http://gareus.org/oss/lv2/midifilter>
-	a lv2:Plugin, doap:Project;
-	doap:license <http://usefulinc.com/doap/licenses/gpl> ;
+	a doap:Project ;
 	doap:maintainer <http://gareus.org/rgareus#me> ;
-	doap:name "MIDI Event Filter";
-	lv2:optionalFeature lv2:hardRTCapable ;
-	lv2:requiredFeature urid:map ;
-	lv2:port
-	[
-		a atom:AtomPort ,
-			lv2:InputPort ;
-		atom:bufferType atom:Sequence ;
-		atom:supports <http://lv2plug.in/ns/ext/midi#MidiEvent> ;
-		lv2:index 0 ;
-		lv2:symbol "midiin" ;
-		lv2:name "MIDI In"
-	] , [
-		a atom:AtomPort ,
-			lv2:OutputPort ;
-		atom:bufferType atom:Sequence ;
-		atom:supports <http://lv2plug.in/ns/ext/midi#MidiEvent> ;
-		lv2:index 1 ;
-		lv2:symbol "midiout" ;
-		lv2:name "MIDI Out";
-	] .
+	doap:name "Midi Filter Plugin Set" .
+

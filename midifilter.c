@@ -17,42 +17,24 @@
  * Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define MFP_URI "http://gareus.org/oss/lv2/midifilter"
-
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
-#include "lv2/lv2plug.in/ns/lv2core/lv2.h"
-#include "lv2/lv2plug.in/ns/ext/atom/atom.h"
-#include "lv2/lv2plug.in/ns/ext/atom/forge.h"
-#include "lv2/lv2plug.in/ns/ext/urid/urid.h"
-#include "lv2/lv2plug.in/ns/ext/midi/midi.h"
+#include "midifilter.h"
 
 
-typedef struct {
-	LV2_URID atom_Blank;
-	LV2_URID midi_MidiEvent;
-	LV2_URID atom_Sequence;
-} MidiFilterURIs;
-
-typedef struct {
-	LV2_Atom_Forge forge;
-	LV2_Atom_Forge_Frame frame;
-
-	LV2_URID_Map* map;
-	MidiFilterURIs uris;
-
-	const LV2_Atom_Sequence* midiin;
-	LV2_Atom_Sequence* midiout;
-} MidiFilter;
-
-
+#define LOOP_CFG(FN) \
+	FN(0)  FN(1)  FN(2)  FN(3) \
+	FN(4)  FN(5)  FN(6)  FN(7) \
+	FN(8)  FN(9)  FN(10) FN(11) \
+	FN(12) FN(13) FN(14) FN(15) \
 /**
  * add a midi message to the output port
  */
-static inline void
+void
 forge_midimessage(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,
@@ -76,7 +58,7 @@ forge_midimessage(MidiFilter* self,
  * @param buffer raw midi data
  * @param size size of buffer (in bytes)
  */
-static inline void
+void
 filter_midi(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,
@@ -108,6 +90,10 @@ filter_midi(MidiFilter* self,
 #endif
 }
 
+#define MX_CODE
+#include "filters.c"
+#undef MX_CODE
+
 /******************************************************************************
  * LV2
  */
@@ -126,7 +112,7 @@ run(LV2_Handle instance, uint32_t n_samples)
 	LV2_Atom_Event* ev = lv2_atom_sequence_begin(&(self->midiin)->body);
 	while(!lv2_atom_sequence_is_end(&(self->midiin)->body, (self->midiin)->atom.size, ev)) {
 		if (ev->body.type == self->uris.midi_MidiEvent) {
-			filter_midi(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
+			self->filter_fn(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
 		ev = lv2_atom_sequence_next(ev);
 	}
@@ -166,8 +152,23 @@ instantiate(const LV2_Descriptor*         descriptor,
 	map_mf_uris(self->map, &self->uris);
 	lv2_atom_forge_init(&self->forge, self->map);
 
+	if (0) ;
+#define MX_FILTER
+#include "filters.c"
+#undef MX_FILTER
+	else {
+		fprintf(stderr, "midifilter.lv2 error: unsupported plugin function.\n");
+		free(self);
+		return NULL;
+	}
+
 	return (LV2_Handle)self;
 }
+
+#define CFG_PORT(n) \
+	case (n+2): \
+		self->cfg[n] = (float*)data; \
+		break;
 
 static void
 connect_port(LV2_Handle    instance,
@@ -183,6 +184,7 @@ connect_port(LV2_Handle    instance,
 		case 1:
 			self->midiout = (LV2_Atom_Sequence*)data;
 			break;
+		LOOP_CFG(CFG_PORT)
 		default:
 			break;
 	}
@@ -200,26 +202,20 @@ extension_data(const char* uri)
 	return NULL;
 }
 
-static const LV2_Descriptor descriptor = {
-	MFP_URI,
-	instantiate,
-	connect_port,
-	NULL,
-	run,
-	NULL,
-	cleanup,
-	extension_data
-};
+#define MX_DESC
+#include "filters.c"
+#undef MX_DESC
+
+#define LV2DESC(ID) \
+	case ID: return &(descriptor ## ID);
 
 LV2_SYMBOL_EXPORT
 const LV2_Descriptor*
 lv2_descriptor(uint32_t index)
 {
 	switch (index) {
-	case 0:
-		return &descriptor;
-	default:
-		return NULL;
+	LOOP_DESC(LV2DESC)
+	default: return NULL;
 	}
 }
 /* vi:set ts=8 sts=8 sw=8: */

@@ -36,14 +36,39 @@ default: all
 
 all: manifest.ttl $(LV2NAME).ttl $(targets)
 
-manifest.ttl: manifest.ttl.in
-	sed "s/@LV2NAME@/$(LV2NAME)/;s/@LIB_EXT@/$(LIB_EXT)/" \
-	  manifest.ttl.in > manifest.ttl
+FILTERS := $(wildcard filters/*.c)
 
-$(LV2NAME).ttl: $(LV2NAME).ttl.in
+filters.c: $(FILTERS)
+	echo "#include \"ttf.h\"" > filters.c
+	i=0; for file in $(FILTERS); do \
+		echo "#define MFD_FILTER(FNX) MFD_FLT($$i, FNX)" >> filters.c; \
+		echo "#include \"$${file}\"" >> filters.c; \
+		echo "#undef MFD_FILTER" >> filters.c; \
+		i=`expr $$i + 1`; \
+		done;
+	echo "#define LOOP_DESC(FN) \\" >> filters.c;
+	i=0; for file in $(FILTERS); do \
+		echo "FN($$i) \\" >> filters.c; \
+		i=`expr $$i + 1`; \
+		done;
+	echo >> filters.c;
+
+manifest.ttl: manifest.ttl.in ttf.h filters.c
+	cat manifest.ttl.in > manifest.ttl
+	gcc -E -I. -DMX_MANIFEST filters.c \
+		| grep -v '^\#' \
+		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
+		>> manifest.ttl
+
+
+$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	cat $(LV2NAME).ttl.in > $(LV2NAME).ttl
+	gcc -E -I. -DMX_TTF filters.c \
+		| grep -v '^\#' \
+		| sed 's/HTTPP/http:\//g' \
+		>> $(LV2NAME).ttl
 
-$(LV2NAME)$(LIB_EXT): $(LV2NAME).c
+$(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) \
 	  -o $(LV2NAME)$(LIB_EXT) $(LV2NAME).c \
 		-shared $(LV2LDFLAGS) $(LDFLAGS) $(LOADLIBES)
