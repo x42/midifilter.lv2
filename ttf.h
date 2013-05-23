@@ -1,10 +1,6 @@
 #ifndef _TTF_H_
 #define _TTF_H_
 
-#ifndef MFP_URIX
-#define MFP_URIX HTTPP/gareus.org/oss/lv2/midifilter
-#endif
-
 #define MAINTAINER <HTTPP/gareus.org/rgareus#me>
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
 
@@ -34,7 +30,7 @@
 		lv2:name "MIDI Out"; \
 	] 
 
-#define TTF_INTPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
+#define TTF_PORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
 	[ \
     a lv2:InputPort , \
       lv2:ControlPort ; \
@@ -44,20 +40,14 @@
     lv2:minimum VMIN ; \
     lv2:maximum VMAX ; \
     lv2:default VDFLT; \
-    lv2:portProperty lv2:integer; \
+    ATTR \
   ]
 
 #define TTF_FLOATPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
-	[ \
-    a lv2:InputPort , \
-      lv2:ControlPort ; \
-    lv2:index IDX ; \
-    lv2:symbol SYM ; \
-    lv2:name DESC; \
-    lv2:minimum VMIN ; \
-    lv2:maximum VMAX ; \
-    lv2:default VDFLT; \
-  ]
+	TTF_PORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, ;)
+
+#define TTF_INTPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
+	TTF_PORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, lv2:portProperty lv2:integer; )
 
 #endif
 
