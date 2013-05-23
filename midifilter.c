@@ -28,10 +28,19 @@
 /******************************************************************************
  * common 'helper' functions
  */
-inline int midi_limit(int data) {
-	if (data<0) return 0;
-	if (data>127) return 127;
-	return data;
+inline int midi_limit(const int d) {
+	if (d < 0) return 0;
+	if (d > 127) return 127;
+	return d;
+}
+
+inline int midi_valid(const int d) {
+	if (d >=0 && d < 128) return 1;
+	return 0;
+}
+
+inline int midi_14bit(const uint8_t * const b) {
+	return ((b[1]) | (b[2]<<7));
 }
 
 /**
@@ -68,6 +77,7 @@ forge_midimessage(MidiFilter* self,
 static void
 run(LV2_Handle instance, uint32_t n_samples)
 {
+	int i;
 	MidiFilter* self = (MidiFilter*)instance;
 
 	/* prepare midiout port */
@@ -82,6 +92,11 @@ run(LV2_Handle instance, uint32_t n_samples)
 			self->filter_fn(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
 		ev = lv2_atom_sequence_next(ev);
+	}
+
+	for (i = 0 ; i < MAXCFG ; ++i) {
+		if (!self->cfg[i]) continue;
+		self->lcfg[i] = *self->cfg[i];
 	}
 }
 

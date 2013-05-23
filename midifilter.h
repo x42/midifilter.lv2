@@ -61,7 +61,9 @@ void forge_midimessage(MidiFilter* self,
 		extension_data \
 };
 
-inline int midi_limit(int data);
+inline int midi_limit(const int);
+inline int midi_valid(const int);
+inline int midi_14bit(const uint8_t * const);
 
 #define MIDI_NOTEOFF         0x80
 #define MIDI_NOTEON          0x90
