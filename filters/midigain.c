@@ -11,6 +11,8 @@ MFD_FILTER(midigain)
 
 #elif defined MX_CODE
 
+void filter_init_midigain(MidiFilter* self) { }
+
 void
 filter_midi_midigain(MidiFilter* self,
 		uint32_t tme,

@@ -8,6 +8,8 @@ MFD_FILTER(passthru)
 
 #elif defined MX_CODE
 
+void filter_init_passthru(MidiFilter* self) { }
+
 void
 filter_midi_passthru(MidiFilter* self,
 		uint32_t tme,

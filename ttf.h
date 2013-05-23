@@ -79,7 +79,7 @@
 
 #ifdef MX_FILTER
 #define MFD_FLT(ID, FNX) \
-	else if (!strcmp(descriptor->URI, MFP_URI "#" # FNX)) self->filter_fn = filter_midi_ ## FNX; 
+	else if (!strcmp(descriptor->URI, MFP_URI "#" # FNX)) { self->filter_fn = filter_midi_ ## FNX; filter_init_ ## FNX(self); }
 
 #elif (defined MX_DESC)
 

@@ -37,6 +37,10 @@ typedef struct _MidiFilter{
 	float *cfg[MAXCFG];
 	float lcfg[MAXCFG];
 
+	int     memI[127];
+	int     memCI[16][127];
+	uint8_t memCM[16][127];
+
 	void (*filter_fn) (struct _MidiFilter*, uint32_t, const uint8_t* const, uint32_t);
 } MidiFilter;
 

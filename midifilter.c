@@ -129,7 +129,6 @@ instantiate(const LV2_Descriptor*         descriptor,
 		return NULL;
 	}
 
-	// TODO call filter dependent init fn (if any)
 	for (i=0; i < MAXCFG; ++i) {
 		self->lcfg[i] = 0;
 	}

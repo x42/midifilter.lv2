@@ -9,6 +9,15 @@ MFD_FILTER(miditranspose)
 
 #elif defined MX_CODE
 
+void filter_init_miditranspose(MidiFilter* self) {
+	int c,k;
+
+	for (c=0; c < 16; ++c) for (k=0; c < 127; ++k) {
+		self->memCI[c][k] = -1000;
+		self->memCM[c][k] = 0;
+	}
+}
+
 void
 filter_midi_miditranspose(MidiFilter* self,
 		uint32_t tme,
@@ -19,6 +28,7 @@ filter_midi_miditranspose(MidiFilter* self,
 	// TODO allow to select channel to mod
 	// TODO option mute note <0 || > 127 
 
+	/* config changed */
 	if (self->lcfg[0] != *(self->cfg[0])) {
 		int i;
 		uint8_t buf[3];
@@ -36,8 +46,8 @@ filter_midi_miditranspose(MidiFilter* self,
 #endif
 		}
 	}
-
 	self->lcfg[0] = *(self->cfg[0]);
+
 
 	if (size == 3 && (
 				((buffer[0] & 0xf0) != 0x90) // Note on
