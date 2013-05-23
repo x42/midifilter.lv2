@@ -4,22 +4,22 @@ MFD_FILTER(channelmap)
 
 	mflt:channelmap
 	TTF_DEFAULTDEF("MIDI Channel Map")
-	, TTF_INTPORT( 2, "chn1", "Channel  1",  1.0, 16.0,  1.0)
-	, TTF_INTPORT( 3, "chn2", "Channel  2",  1.0, 16.0,  2.0)
-	, TTF_INTPORT( 4, "chn3", "Channel  3",  1.0, 16.0,  3.0)
-	, TTF_INTPORT( 5, "chn4", "Channel  4",  1.0, 16.0,  4.0)
-	, TTF_INTPORT( 6, "chn5", "Channel  5",  1.0, 16.0,  5.0)
-	, TTF_INTPORT( 7, "chn6", "Channel  6",  1.0, 16.0,  6.0)
-	, TTF_INTPORT( 8, "chn7", "Channel  7",  1.0, 16.0,  7.0)
-	, TTF_INTPORT( 9, "chn8", "Channel  8",  1.0, 16.0,  8.0)
-	, TTF_INTPORT(10, "chn9", "Channel  9",  1.0, 16.0,  9.0)
-	, TTF_INTPORT(11, "chn10", "Channel 10", 1.0, 16.0, 10.0)
-	, TTF_INTPORT(12, "chn11", "Channel 11", 1.0, 16.0, 11.0)
-	, TTF_INTPORT(13, "chn12", "Channel 12", 1.0, 16.0, 12.0)
-	, TTF_INTPORT(14, "chn13", "Channel 13", 1.0, 16.0, 13.0)
-	, TTF_INTPORT(15, "chn14", "Channel 14", 1.0, 16.0, 14.0)
-	, TTF_INTPORT(16, "chn15", "Channel 15", 1.0, 16.0, 15.0)
-	, TTF_INTPORT(17, "chn16", "Channel 16", 1.0, 16.0, 16.0)
+	, TTF_INTPORT( 2, "chn1",  "Channel  1 to:", 1.0, 16.0,  1.0)
+	, TTF_INTPORT( 3, "chn2",  "Channel  2 to:", 1.0, 16.0,  2.0)
+	, TTF_INTPORT( 4, "chn3",  "Channel  3 to:", 1.0, 16.0,  3.0)
+	, TTF_INTPORT( 5, "chn4",  "Channel  4 to:", 1.0, 16.0,  4.0)
+	, TTF_INTPORT( 6, "chn5",  "Channel  5 to:", 1.0, 16.0,  5.0)
+	, TTF_INTPORT( 7, "chn6",  "Channel  6 to:", 1.0, 16.0,  6.0)
+	, TTF_INTPORT( 8, "chn7",  "Channel  7 to:", 1.0, 16.0,  7.0)
+	, TTF_INTPORT( 9, "chn8",  "Channel  8 to:", 1.0, 16.0,  8.0)
+	, TTF_INTPORT(10, "chn9",  "Channel  9 to:", 1.0, 16.0,  9.0)
+	, TTF_INTPORT(11, "chn10", "Channel 10 to:", 1.0, 16.0, 10.0)
+	, TTF_INTPORT(12, "chn11", "Channel 11 to:", 1.0, 16.0, 11.0)
+	, TTF_INTPORT(13, "chn12", "Channel 12 to:", 1.0, 16.0, 12.0)
+	, TTF_INTPORT(14, "chn13", "Channel 13 to:", 1.0, 16.0, 13.0)
+	, TTF_INTPORT(15, "chn14", "Channel 14 to:", 1.0, 16.0, 14.0)
+	, TTF_INTPORT(16, "chn15", "Channel 15 to:", 1.0, 16.0, 15.0)
+	, TTF_INTPORT(17, "chn16", "Channel 16 to:", 1.0, 16.0, 16.0)
 	.
 
 #elif defined MX_CODE
@@ -48,7 +48,7 @@ filter_midi_channelmap(MidiFilter* self,
 		case 0xD0: // Channel Pressure (After-touch)
 		case 0xE0: // pitch wheel
 			chn = (int) floor(-1 + *(self->cfg[chn]));
-			if (chn < 0)  chn = 0;
+			if (chn < 0)    chn = 0;
 			if (chn > 0xf)  chn = 0xf;
 			buf[0] = (buffer[0] & 0xf0) | chn;
 			break;

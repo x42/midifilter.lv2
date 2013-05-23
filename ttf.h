@@ -47,6 +47,18 @@
     lv2:portProperty lv2:integer; \
   ]
 
+#define TTF_FLOATPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
+	[ \
+    a lv2:InputPort , \
+      lv2:ControlPort ; \
+    lv2:index IDX ; \
+    lv2:symbol SYM ; \
+    lv2:name DESC; \
+    lv2:minimum VMIN ; \
+    lv2:maximum VMAX ; \
+    lv2:default VDFLT; \
+  ]
+
 #endif
 
 /* variable part */

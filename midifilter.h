@@ -7,8 +7,15 @@
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
 #include "lv2/lv2plug.in/ns/ext/midi/midi.h"
 
-#define MAXCFG 16
 #define MFP_URI "http://gareus.org/oss/lv2/midifilter"
+
+#define MAXCFG 16
+
+#define LOOP_CFG(FN) \
+	FN(0)  FN(1)  FN(2)  FN(3) \
+	FN(4)  FN(5)  FN(6)  FN(7) \
+	FN(8)  FN(9)  FN(10) FN(11) \
+	FN(12) FN(13) FN(14) FN(15) \
 
 typedef struct {
 	LV2_URID atom_Blank;
@@ -28,6 +35,8 @@ typedef struct _MidiFilter{
 	LV2_Atom_Sequence* midiout;
 
 	float *cfg[MAXCFG];
+	float lcfg[MAXCFG];
+
 	void (*filter_fn) (struct _MidiFilter*, uint32_t, const uint8_t* const, uint32_t);
 } MidiFilter;
 
@@ -47,5 +56,7 @@ void forge_midimessage(MidiFilter* self,
 		cleanup, \
 		extension_data \
 };
+
+inline int midi_limit(int data);
 
 #endif

@@ -25,12 +25,15 @@
 
 #include "midifilter.h"
 
+/******************************************************************************
+ * common 'helper' functions
+ */
+inline int midi_limit(int data) {
+	if (data<0) return 0;
+	if (data>127) return 127;
+	return data;
+}
 
-#define LOOP_CFG(FN) \
-	FN(0)  FN(1)  FN(2)  FN(3) \
-	FN(4)  FN(5)  FN(6)  FN(7) \
-	FN(8)  FN(9)  FN(10) FN(11) \
-	FN(12) FN(13) FN(14) FN(15) \
 /**
  * add a midi message to the output port
  */
@@ -50,45 +53,9 @@ forge_midimessage(MidiFilter* self,
 	lv2_atom_forge_pad(&self->forge, sizeof(LV2_Atom) + size);
 }
 
-/**
- * the actual MIDI event filter
- * called for every incoming MIDI message
- *
- * @param tme timestamp (sample in this cycle) of the message
- * @param buffer raw midi data
- * @param size size of buffer (in bytes)
+/******************************************************************************
+ * include vairant code
  */
-void
-filter_midi(MidiFilter* self,
-		uint32_t tme,
-		const uint8_t* const buffer,
-		uint32_t size)
-{
-	/*
-	 * TODO do sth useful here :)
-	 */
-
-#if 1 // forward orig message
-	forge_midimessage(self, tme, buffer, size);
-#endif
-
-#if 0 // phun with MIDI notes
-	if (size == 3 && (
-				((buffer[0] & 0xf0) != 0x90) // Note on
-			||
-				((buffer[0] & 0xf0) != 0x80) // Note off
-			)
-		 )
-	{
-		uint8_t buf[3];
-		buf[0] = buffer[0];
-		buf[1] = (buffer[1] + 12) & 0x7f;
-		buf[2] = (buffer[2] / 2)  & 0x7f;
-
-		forge_midimessage(self, tme, buf, size);
-	}
-#endif
-}
 
 #define MX_CODE
 #include "filters.c"
@@ -160,6 +127,11 @@ instantiate(const LV2_Descriptor*         descriptor,
 		fprintf(stderr, "midifilter.lv2 error: unsupported plugin function.\n");
 		free(self);
 		return NULL;
+	}
+
+	// TODO call filter dependent init fn (if any)
+	for (i=0; i < MAXCFG; ++i) {
+		self->lcfg[i] = 0;
 	}
 
 	return (LV2_Handle)self;
