@@ -1,7 +1,7 @@
 midifilter.lv2
 ==============
 
-LV2 audio plugins to filter MIDI events.
+LV2 plugins to filter MIDI events.
 
 So far 7 MIDI event filters have been implemented:
 
