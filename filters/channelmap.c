@@ -24,9 +24,9 @@ MFD_FILTER(channelmap)
 
 #elif defined MX_CODE
 
-void filter_init_channelmap(MidiFilter* self) { }
+static void filter_init_channelmap(MidiFilter* self) { }
 
-void
+static void
 filter_midi_channelmap(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,

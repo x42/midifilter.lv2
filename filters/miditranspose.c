@@ -11,7 +11,7 @@ MFD_FILTER(miditranspose)
 
 #elif defined MX_CODE
 
-void filter_init_miditranspose(MidiFilter* self) {
+static void filter_init_miditranspose(MidiFilter* self) {
 	int c,k;
 
 	for (c=0; c < 16; ++c) for (k=0; c < 127; ++k) {
@@ -20,7 +20,7 @@ void filter_init_miditranspose(MidiFilter* self) {
 	}
 }
 
-void
+static void
 filter_midi_miditranspose(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,

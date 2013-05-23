@@ -28,18 +28,18 @@
 /******************************************************************************
  * common 'helper' functions
  */
-inline int midi_limit(const int d) {
+static int midi_limit(const int d) {
 	if (d < 0) return 0;
 	if (d > 127) return 127;
 	return d;
 }
 
-inline int midi_valid(const int d) {
+static int midi_valid(const int d) {
 	if (d >=0 && d < 128) return 1;
 	return 0;
 }
 
-inline int midi_14bit(const uint8_t * const b) {
+static int midi_14bit(const uint8_t * const b) {
 	return ((b[1]) | (b[2]<<7));
 }
 

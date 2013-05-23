@@ -10,9 +10,9 @@ MFD_FILTER(mididup)
 
 #elif defined MX_CODE
 
-void filter_init_mididup(MidiFilter* self) { }
+static void filter_init_mididup(MidiFilter* self) { }
 
-void
+static void
 filter_midi_mididup(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,

@@ -15,7 +15,7 @@ MFD_FILTER(keysplit)
 
 #elif defined MX_CODE
 
-void
+static void
 filter_init_keysplit(MidiFilter* self)
 {
 	int i;
@@ -24,7 +24,7 @@ filter_init_keysplit(MidiFilter* self)
 	}
 }
 
-void
+static void
 filter_midi_keysplit(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,
