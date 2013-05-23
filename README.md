@@ -11,7 +11,7 @@ So far 7 MIDI event filters have been implemented:
 *   Velocity -- modify note velocity
 *   Transpose -- chromatic transpose of midi notes
 *   Sensing -- strip midi Active-Sensing events
-*   Passtrhu -- no operation, just pass the midi event through (example)
+*   Passthru -- no operation, just pass the midi event through (example)
 
 
 Install
