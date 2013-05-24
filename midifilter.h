@@ -17,6 +17,10 @@
 #define MAX(a,b) ( (a) > (b) ? (a) : (b) )
 #endif
 
+#ifndef SQUARE
+#define SQUARE(a) ( (a) * (a) )
+#endif
+
 #define MAXCFG 16
 
 #define LOOP_CFG(FN) \
@@ -54,6 +58,7 @@ typedef struct _MidiFilter{
 	float *cfg[MAXCFG];
 	float lcfg[MAXCFG];
 
+	float   memF[16];
 	int     memI[127];
 	int     memCI[16][127];
 	uint8_t memCM[16][127];

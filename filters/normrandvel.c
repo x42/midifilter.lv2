@@ -11,11 +11,9 @@ MFD_FILTER(normrandvel)
 
 #elif defined MX_CODE
 
-float V;
-
 static void filter_init_normrandvel(MidiFilter* self) {
     srandom ((unsigned int) time (NULL));
-    V = 2*random() / (float)RAND_MAX - 1;
+    self->memF[0] = 2*random() / (float)RAND_MAX - 1;
 }
 
 
@@ -41,20 +39,20 @@ filter_midi_normrandvel(MidiFilter* self,
         uint8_t buf[3];
         const float dev = *(self->cfg[1]);
         float U = 2.0* random() / (float)RAND_MAX - 1;//rand E(-1,1)
-        float S = U*U + V*V;//map 2 random vars to unit circle
+        float S = SQUARE(U) + SQUARE(self->memF[0]);//map 2 random vars to unit circle
         uint8_t timeout = 0;
         while(S>=1)//repull RV if outside unit circle
         {   
             if(timeout++>2)
             {
                 U = 2.0* random() / (float)RAND_MAX - 1;
-                S = U*U + V*V;
+                S = SQUARE(U) + SQUARE(self->memF[0]);
             }else{//guarantee an exit, velocity will be unchanged
                 U=0;
             }
         }
         
-        V = U;//store RV for next round
+        self->memF[0] = U;//store RV for next round
         buf[0] = buffer[0];
         buf[1] = buffer[1];
         if(U)
