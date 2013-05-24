@@ -27,15 +27,23 @@ static int sostenuto_check_dup(MidiFilter* self,
 
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
-		if (off == woff) break;
 
-		if (self->memQ[off].size != 3) continue;
+		if (self->memQ[off].size != 3) {
+			if (off == woff) break;
+			continue;
+		}
+
 		const uint8_t c = self->memQ[off].buf[0] & 0x0f;
 		const uint8_t k = self->memQ[off].buf[1] & 0x7f;
-		if (c != chn || k != key) continue;
+		if (c != chn || k != key) {
+			if (off == woff) break;
+			continue;
+		}
 
 		if (newdelay >= 0)
 			self->memQ[off].reltime = newdelay;
+		else
+			self->memQ[off].size = 0;
 		return 1;
 	}
 	return 0;
@@ -48,8 +56,12 @@ filter_postproc_sostenuto(MidiFilter* self)
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
-	const uint32_t n_samples = self->n_samples;
+	uint32_t n_samples = self->n_samples;
 	int skipped = 0;
+
+	/* only process until given time */
+	if (self->memI[3] > 0)
+		n_samples = MIN(self->memI[3], n_samples);
 
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
@@ -59,7 +71,8 @@ filter_postproc_sostenuto(MidiFilter* self)
 				self->memQ[off].size = 0;
 				if (!skipped) self->memI[1] = (self->memI[1] + 1) % max_delay;
 			} else {
-				self->memQ[off].reltime -= n_samples;
+				/* don't decrement time if called from filter_midi_sostenuto() */
+				if (self->memI[3] < 0) {self->memQ[off].reltime -= n_samples;}
 				skipped = 1;
 			}
 		} else if (!skipped) self->memI[1] = off;
@@ -86,7 +99,7 @@ filter_midi_sostenuto(MidiFilter* self,
 	if (size == 3 && mst == MIDI_NOTEON) {
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
-		if (sostenuto_check_dup(self, chn, key, tme + delay)) {
+		if (sostenuto_check_dup(self, chn, key, -1)) {
 			/* note was already on,
 			 * send note off + immediate note on, again
 			 */
@@ -102,7 +115,7 @@ filter_midi_sostenuto(MidiFilter* self,
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
 
-		if (!sostenuto_check_dup(self, chn, key, -1)) {
+		if (!sostenuto_check_dup(self, chn, key, tme + delay)) {
 			// queue note-off if not already queued
 			MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 			memcpy(qm->buf, buffer, size);
@@ -110,12 +123,18 @@ filter_midi_sostenuto(MidiFilter* self,
 			qm->reltime = tme + delay;
 			self->memI[2] = (self->memI[2] + 1) % self->memI[0];
 		}
-	} 
+	}
 	else {
 		forge_midimessage(self, tme, buffer, size);
 	}
 
+	/* only note-off are queued in the buffer.
+	 * Interleave delay-buffer with messages sent in-process above
+	 * to retain sequential order.
+	 */
+	self->memI[3] = tme + 1;
 	filter_postproc_sostenuto(self);
+	self->memI[3] = -1;
 }
 
 void filter_init_sostenuto(MidiFilter* self) {
@@ -123,6 +142,7 @@ void filter_init_sostenuto(MidiFilter* self) {
 	self->memI[0] = self->samplerate / 16.0;
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
+	self->memI[3] = -1; // max time-offset
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
 	self->postproc_fn = filter_postproc_sostenuto;
 	self->cleanup_fn = filter_cleanup_sostenuto;
