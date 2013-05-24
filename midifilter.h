@@ -9,6 +9,14 @@
 
 #define MFP_URI "http://gareus.org/oss/lv2/midifilter"
 
+#ifndef MIN
+#define MIN(a,b) ( (a) < (b) ? (a) : (b) )
+#endif
+
+#ifndef MAX
+#define MAX(a,b) ( (a) > (b) ? (a) : (b) )
+#endif
+
 #define MAXCFG 16
 
 #define LOOP_CFG(FN) \
@@ -23,6 +31,12 @@ typedef struct {
 	LV2_URID atom_Sequence;
 } MidiFilterURIs;
 
+
+typedef struct {
+	uint8_t buf[3];
+	int size;
+	int reltime;
+} MidiEventQueue;
 
 typedef struct _MidiFilter{
 	LV2_Atom_Forge forge;
@@ -41,7 +55,14 @@ typedef struct _MidiFilter{
 	int     memCI[16][127];
 	uint8_t memCM[16][127];
 
+	MidiEventQueue *memQ;
+	uint32_t n_samples;
+	double samplerate;
+
 	void (*filter_fn) (struct _MidiFilter*, uint32_t, const uint8_t* const, uint32_t);
+	void (*preproc_fn)  (struct _MidiFilter*);
+	void (*postproc_fn) (struct _MidiFilter*);
+	void (*cleanup_fn)  (struct _MidiFilter*);
 } MidiFilter;
 
 void forge_midimessage(MidiFilter* self,

@@ -87,6 +87,11 @@ run(LV2_Handle instance, uint32_t n_samples)
 {
 	int i;
 	MidiFilter* self = (MidiFilter*)instance;
+	self->n_samples = n_samples;
+
+	if (self->preproc_fn) {
+		self->preproc_fn(self);
+	}
 
 	/* prepare midiout port */
 	const uint32_t capacity = self->midiout->atom.size;
@@ -100,6 +105,10 @@ run(LV2_Handle instance, uint32_t n_samples)
 			self->filter_fn(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
 		ev = lv2_atom_sequence_next(ev);
+	}
+
+	if (self->postproc_fn) {
+		self->postproc_fn(self);
 	}
 
 	for (i = 0 ; i < MAXCFG ; ++i) {
@@ -141,6 +150,7 @@ instantiate(const LV2_Descriptor*         descriptor,
 
 	map_mf_uris(self->map, &self->uris);
 	lv2_atom_forge_init(&self->forge, self->map);
+	self->samplerate = rate;
 
 	if (0) ;
 #define MX_FILTER
@@ -187,6 +197,11 @@ connect_port(LV2_Handle    instance,
 static void
 cleanup(LV2_Handle instance)
 {
+	MidiFilter* self = (MidiFilter*)instance;
+	if (self->cleanup_fn) {
+		self->cleanup_fn(self);
+	}
+
 	free(instance);
 }
 
