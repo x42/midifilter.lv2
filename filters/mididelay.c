@@ -29,6 +29,29 @@ filter_cleanup_mididelay(MidiFilter* self)
 	free(self->memQ);
 }
 
+static int mididelay_noteon_mindelay(MidiFilter* self,
+		uint8_t chn,
+		uint8_t key) {
+	int i;
+	const int max_delay = self->memI[0];
+	const int roff = self->memI[1];
+	const int woff = self->memI[2];
+
+	int min_delay = 0;
+	for (i=0; i < max_delay; ++i) {
+		const int off = (i + roff) % max_delay;
+		if (self->memQ[off].size != 3) continue;
+		const uint8_t s = self->memQ[off].buf[0] & 0xf0;
+		const uint8_t c = self->memQ[off].buf[0] & 0x0f;
+		const uint8_t k = self->memQ[off].buf[1] & 0x7f;
+		if (c != chn || k != key) continue;
+		if (s != MIDI_NOTEON && s != MIDI_NOTEOFF) continue;
+		min_delay = MAX(min_delay, self->memQ[off].reltime);
+		if (off == woff) break;
+	}
+	return min_delay;
+}
+
 void
 filter_midi_mididelay(MidiFilter* self,
 		const uint32_t tme,
@@ -67,6 +90,7 @@ filter_midi_mididelay(MidiFilter* self,
 		// keep track of absolute time of latest note-on/off
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
+		delay = MAX(delay, mididelay_noteon_mindelay(self, chn, key));
 		self->memCI[chn][key] = delay;
 	}
 
