@@ -5,18 +5,19 @@ MFD_FILTER(mididelay)
 	mflt:mididelay
 	TTF_DEFAULTDEF("MIDI Delayline")
 	, TTF_IPORTFLOAT( 0, "delayBPM",  "BPM", 1.0, 280.0,  120.0)
+#if 1
 	, TTF_IPORTFLOAT( 1, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0)
-			/*
-	, TTF_IPORT( 1, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0, \
-			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ; ] \
-			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ; ] \
-			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ; ] \
-			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ; ] \
-			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ; ] \
-			lv2:scalePoint [ rdfs:label "Two Bars" ; rdf:value 8.0 ; ] \
-			lv2:scalePoint [ rdfs:label "Four Bars" ; rdf:value 16.0 ;] \
+#else
+	, TTF_IPORT(1, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0, \
+			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ] \
+			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] \
+			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] \
+			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] \
+			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] \
+			lv2:scalePoint [ rdfs:label "Two Bars" ; rdf:value 8.0 ] \
+			lv2:scalePoint [ rdfs:label "Four Bars" ; rdf:value 16.0 ] \
 			)
-			*/
+#endif
 	, TTF_IPORTFLOAT( 2, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0)
 	.
 

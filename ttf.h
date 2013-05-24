@@ -19,7 +19,7 @@
 #define ADDTWO_14 16
 #define ADDTWO_15 17
 
-#define PORTIDX(x) ADDTWO##_##x
+#define PORTIDX(x) ADDTWO_##x
 
 #define MAINTAINER <HTTPP/gareus.org/rgareus#me>
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
@@ -50,9 +50,9 @@
 		lv2:name "MIDI Out"; \
 	]
 
-#define TTF_IPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
+#define TTF_PORT(TYPE, IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
 	[ \
-    a lv2:InputPort , \
+    a TYPE, \
       lv2:ControlPort ; \
     lv2:index PORTIDX(IDX) ; \
     lv2:symbol SYM ; \
@@ -62,6 +62,9 @@
     lv2:default VDFLT; \
     ATTR \
   ]
+
+#define TTF_IPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
+	TTF_PORT(lv2:InputPort, IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR)
 
 #define TTF_IPORTFLOAT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
 	TTF_IPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, )
