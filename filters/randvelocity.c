@@ -23,10 +23,16 @@ filter_midi_randvelocity(MidiFilter* self,
 {
 	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
 	const int chn = buffer[0] & 0x0f;
-	const int msg = buffer[0] & 0xf0;
+
+	const uint8_t vel = buffer[2] & 0x7f;
+	int mst = buffer[0] & 0xf0;
+
+	if (mst == MIDI_NOTEON && vel ==0 ) {
+		mst = MIDI_NOTEOFF;
+	}
 
 	if (size == 3
-			&& (msg == 0x90 || msg == 0x80) // note on, off
+			&& (mst == MIDI_NOTEON || (mst == MIDI_NOTEOFF && vel != 0) )
 			&& (floor(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
