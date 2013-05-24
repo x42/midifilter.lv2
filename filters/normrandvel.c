@@ -33,7 +33,7 @@ filter_midi_normrandvel(MidiFilter* self,
     const int msg = buffer[0] & 0xf0;
 
     if (size == 3
-            && (msg == 0x90 || msg == 0x80) // note on, off
+            && (mst == MIDI_NOTEON || (mst == MIDI_NOTEOFF && vel != 0)) // note on, off
             && (floor(*self->cfg[0]) == 0 || chs == chn)
             )
     {
