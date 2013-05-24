@@ -10,6 +10,7 @@ So far 9 MIDI event filters have been implemented:
 *   Unison  -- duplicate events from one MIDI channel to another
 *   Velocity -- modify note velocity by constant factor
 *   Velocity Randomizer -- change velocity of note-on events
+*   Velocity Randomizer (Normal) -- change velocity of note-on events according to normalized random distribution
 *   Transpose -- chromatic transpose MIDI notes
 *   Delay -- delay MIDI events with optional radomization
 *   NoSensing -- strip MIDI Active-Sensing events
