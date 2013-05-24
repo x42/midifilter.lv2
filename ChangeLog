@@ -1,10 +1,16 @@
 2013-05-24 (0.0.3)  Robin Gareus <robin@gareus.org>
-* delayline, velocity randomizer
-* normrandvel - velocity filter with normal distribution
+* new plugins:
+- delayline w/ optional random delay
+- velocity randomizer
+- normrandvel - velocity filter with normal distribution
+- sostenuto - piano pedal effect
+- channel filter
 
 2013-05-23 (0.0.2)  Robin Gareus <robin@gareus.org>
-* first plugins: channel map, velocity, dup
-* add keysplit, transpose
+* first plugins: channel-map, velocity, duplicate/unison
+* transpose plugin
+* add keysplit w/transpose plugin
+* filter active-sensing
 
 2013-05-20 (0.0.1)  Robin Gareus <robin@gareus.org>
 * initial framework, passthru example
