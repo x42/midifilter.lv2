@@ -43,7 +43,7 @@ filter_midi_normrandvel(MidiFilter* self,
         float U = 2.0* random() / (float)RAND_MAX - 1;//rand E(-1,1)
         float S = U*U + V*V;//map 2 random vars to unit circle
         uint8_t timeout = 0;
-        while(S>=1)//repull RV if outside unit circlehttp://pastebin.com/cEzJLZXh
+        while(S>=1)//repull RV if outside unit circle
         {   
             if(timeout++>2)
             {
