@@ -47,6 +47,9 @@ typedef struct _MidiFilter{
 
 	const LV2_Atom_Sequence* midiin;
 	LV2_Atom_Sequence* midiout;
+	float* latency_port;
+
+	float  latency;
 
 	float *cfg[MAXCFG];
 	float lcfg[MAXCFG];

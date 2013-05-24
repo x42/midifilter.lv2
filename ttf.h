@@ -2,24 +2,24 @@
 #define _TTF_H_
 
 /* cfg-port offsets 0,1, are midi ports, . */
-#define ADDTWO_0 2
-#define ADDTWO_1 3
-#define ADDTWO_2 4
-#define ADDTWO_3 5
-#define ADDTWO_4 6
-#define ADDTWO_5 7
-#define ADDTWO_6 8
-#define ADDTWO_7 9
-#define ADDTWO_8 10
-#define ADDTWO_9 11
-#define ADDTWO_10 12
-#define ADDTWO_11 13
-#define ADDTWO_12 14
-#define ADDTWO_13 15
-#define ADDTWO_14 16
-#define ADDTWO_15 17
+#define ADDP_0 3
+#define ADDP_1 4
+#define ADDP_2 5
+#define ADDP_3 6
+#define ADDP_4 7
+#define ADDP_5 8
+#define ADDP_6 9
+#define ADDP_7 10
+#define ADDP_8 11
+#define ADDP_9 12
+#define ADDP_10 13
+#define ADDP_11 14
+#define ADDP_12 15
+#define ADDP_13 16
+#define ADDP_14 17
+#define ADDP_15 18
 
-#define PORTIDX(x) ADDTWO_##x
+#define PORTIDX(x) ADDP_##x
 
 #define MAINTAINER <HTTPP/gareus.org/rgareus#me>
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
@@ -48,6 +48,15 @@
 		lv2:index 1 ; \
 		lv2:symbol "midiout" ; \
 		lv2:name "MIDI Out"; \
+	] , [ \
+		a lv2:OutputPort, \
+			lv2:ControlPort ; \
+		lv2:name "latency (samples)" ; \
+		lv2:index 2 ; \
+		lv2:symbol "latency" ; \
+		lv2:minimum 0 ; \
+		lv2:maximum 192000 ; \
+		lv2:portProperty lv2:reportsLatency, lv2:integer, pprops:notOnGUI; \
 	]
 
 #define TTF_PORT(TYPE, IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \

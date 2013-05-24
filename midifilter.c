@@ -89,6 +89,13 @@ run(LV2_Handle instance, uint32_t n_samples)
 	MidiFilter* self = (MidiFilter*)instance;
 	self->n_samples = n_samples;
 
+	if (!self->midiout || !self->midiin) {
+		/* eg. ARDOUR::LV2Plugin::latency_compute_run()
+		 * -> midi ports are not yet connected
+		 */
+		goto out;
+	}
+
 	if (self->preproc_fn) {
 		self->preproc_fn(self);
 	}
@@ -109,6 +116,11 @@ run(LV2_Handle instance, uint32_t n_samples)
 
 	if (self->postproc_fn) {
 		self->postproc_fn(self);
+	}
+
+out:
+	if (self->latency_port) {
+		*self->latency_port = self->latency;
 	}
 
 	for (i = 0 ; i < MAXCFG ; ++i) {
@@ -170,7 +182,7 @@ instantiate(const LV2_Descriptor*         descriptor,
 }
 
 #define CFG_PORT(n) \
-	case (n+2): \
+	case (n+3): \
 		self->cfg[n] = (float*)data; \
 		break;
 
@@ -187,6 +199,9 @@ connect_port(LV2_Handle    instance,
 			break;
 		case 1:
 			self->midiout = (LV2_Atom_Sequence*)data;
+			break;
+		case 2:
+			self->latency_port = (float*)data;
 			break;
 		LOOP_CFG(CFG_PORT)
 		default:
