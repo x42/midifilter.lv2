@@ -3,7 +3,7 @@ MFD_FILTER(normrandvel)
 #ifdef MX_TTF
 
     mflt:normrandvel
-    TTF_DEFAULTDEF("MIDI Velocity Randomization")
+    TTF_DEFAULTDEF("MIDI Velocity Randomization (Normal)")
     , TTF_IPORT(0, "channel", "Channel", 0.0, 16.0, 0.0, \
     lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Any" ; rdf:value 0.0 ])
     , TTF_IPORTFLOAT(1, "dev", "Velocity Standard Deviation", 0.0, 64.0, 8.0)
