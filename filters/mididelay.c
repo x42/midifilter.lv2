@@ -37,7 +37,6 @@ filter_midi_mididelay(MidiFilter* self,
 
 	if (delay < 0) delay = 0;
 
-	// TODO keep track of note on/off -- use same random delay
 
 	if (rnd_val > 0 && delay > 0) {
 		rnd_off -=  MIN(rnd_val, delay);
@@ -46,11 +45,37 @@ filter_midi_mididelay(MidiFilter* self,
 	if (rnd_val > 0) {
 		delay += rnd_off + rnd_val * random() / (float)RAND_MAX;
 	}
-
 	
 	if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
 		return;
 	}
+
+#if 1 /* keep track of note on/off */
+	uint8_t mst = buffer[0] & 0xf0;
+	const uint8_t vel = buffer[2] & 0x7f;
+
+	if (mst == MIDI_NOTEON && vel ==0 ) {
+		mst = MIDI_NOTEOFF;
+	}
+
+	if (size == 3 && mst == MIDI_NOTEON) {
+		// TODO handle consecuitve Note On -> no overlap
+		// keep track of absolute time of latest note-on/off
+		const uint8_t chn = buffer[0] & 0x0f;
+		const uint8_t key = buffer[1] & 0x7f;
+		self->memCI[chn][key] = delay;
+	}
+
+	if (size == 3 && mst == MIDI_NOTEOFF) {
+		const uint8_t chn = buffer[0] & 0x0f;
+		const uint8_t key = buffer[1] & 0x7f;
+		if(self->memCI[chn][key] >= 0) {
+			// TODO negative randomization, just not to before note-start
+			delay = MAX(delay, self->memCI[chn][key]);
+		}
+		self->memCI[chn][key] = -1;
+	}
+#endif
 
 	MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 	memcpy(qm->buf, buffer, size);
@@ -87,6 +112,7 @@ filter_postproc_mididelay(MidiFilter* self)
 }
 
 void filter_init_mididelay(MidiFilter* self) {
+	int c,k;
 	srandom ((unsigned int) time (NULL));
 	self->memI[0] = self->samplerate / 16.0;
 	self->memI[1] = 0; // read-pointer
@@ -94,6 +120,10 @@ void filter_init_mididelay(MidiFilter* self) {
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
 	self->postproc_fn = filter_postproc_mididelay;
 	self->cleanup_fn = filter_cleanup_mididelay;
+
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+		self->memCI[c][k] = -1; // current key delay
+	}
 }
 
 #endif
