@@ -3,15 +3,17 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 7 MIDI event filters have been implemented:
+So far 9 MIDI event filters have been implemented:
 
 *   Channel Map -- map any MIDI-channel to another MIDI-channel
-*   Keysplit -- split note on/off/pressure to different channels & transpose
-*   Unisono  -- duplicate events from one channel to another
-*   Velocity -- modify note velocity
-*   Transpose -- chromatic transpose of midi notes
-*   Sensing -- strip midi Active-Sensing events
-*   Passthru -- no operation, just pass the midi event through (example)
+*   Keysplit -- split note on/off/pressure messages to different channels & optionally transpose
+*   Unison  -- duplicate events from one MIDI channel to another
+*   Velocity -- modify note velocity by constant factor
+*   Velocity Randomizer -- change velocity of note-on events
+*   Transpose -- chromatic transpose MIDI notes
+*   Delay -- delay MIDI events with optional radomization
+*   NoSensing -- strip MIDI Active-Sensing events
+*   Passthru -- no operation, just pass the MIDI event through (example)
 
 
 Install
