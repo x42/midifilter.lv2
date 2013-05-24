@@ -137,6 +137,29 @@ filter_midi_sostenuto(MidiFilter* self,
 	self->memI[3] = -1;
 }
 
+static void
+filter_preproc_sostenuto(MidiFilter* self)
+{
+	int i;
+	const int max_delay = self->memI[0];
+	const int roff = self->memI[1];
+	const int woff = self->memI[2];
+
+	if (self->lcfg[0] == *self->cfg[0])
+		return;
+
+	const float diff = *self->cfg[0] - self->lcfg[0];
+	const int delay = rint(self->samplerate * diff);
+
+	for (i=0; i < max_delay; ++i) {
+		const int off = (i + roff) % max_delay;
+		if (self->memQ[off].size > 0) {
+			self->memQ[off].reltime = MAX(0, self->memQ[off].reltime + delay);
+		}
+		if (off == woff) break;
+	}
+}
+
 void filter_init_sostenuto(MidiFilter* self) {
 	srandom ((unsigned int) time (NULL));
 	self->memI[0] = self->samplerate / 16.0;
@@ -145,6 +168,7 @@ void filter_init_sostenuto(MidiFilter* self) {
 	self->memI[3] = -1; // max time-offset
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
 	self->postproc_fn = filter_postproc_sostenuto;
+	self->preproc_fn = filter_preproc_sostenuto;
 	self->cleanup_fn = filter_cleanup_sostenuto;
 }
 
