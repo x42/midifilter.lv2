@@ -72,6 +72,8 @@
 #define TTF_IPORTINT(IDX, SYM, DESC, VMIN, VMAX, VDFLT) \
 	TTF_IPORT(IDX, SYM, DESC, VMIN, VMAX, VDFLT, lv2:portProperty lv2:integer; )
 
+#define TTF_IPORTTOGGLE(IDX, SYM, DESC, VDFLT) \
+	TTF_IPORT(IDX, SYM, DESC, 0.0, 1.1, VDFLT, lv2:portProperty lv2:integer; lv2:portProperty lv2:toggled;)
 #endif
 
 /* variable part */

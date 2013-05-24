@@ -49,9 +49,7 @@ filter_midi_channelmap(MidiFilter* self,
 		case 0xC0: // program change
 		case 0xD0: // Channel Pressure (After-touch)
 		case 0xE0: // pitch wheel
-			chn = (int) floor(-1 + *(self->cfg[chn]));
-			if (chn < 0)    chn = 0;
-			if (chn > 0xf)  chn = 0xf;
+			chn = midi_limit_chn(floor(-1 + *(self->cfg[chn])));
 			buf[0] = (buffer[0] & 0xf0) | chn;
 			break;
 		default:
