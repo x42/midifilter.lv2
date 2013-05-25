@@ -5,7 +5,7 @@ MFD_FILTER(randvelocity)
 	mflt:randvelocity
 	TTF_DEFAULTDEF("MIDI Velocity Randomization")
 	, TTF_IPORT(0, "channel", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 64.0,  8.0)
+	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 127.0,  8.0)
 	.
 
 #elif defined MX_CODE
