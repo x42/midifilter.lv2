@@ -58,6 +58,7 @@ manifest.ttl: manifest.ttl.in ttf.h filters.c
 	gcc -E -I. -DMX_MANIFEST filters.c \
 		| grep -v '^\#' \
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
+		| uniq \
 		>> manifest.ttl
 
 
@@ -66,6 +67,7 @@ $(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	gcc -E -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
 		| sed 's/HTTPP/http:\//g' \
+		| uniq \
 		>> $(LV2NAME).ttl
 
 $(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
