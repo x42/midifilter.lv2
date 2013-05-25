@@ -19,9 +19,9 @@ MFD_FILTER(enforcescale)
 			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11.0 ] ;
 			)
 	, TTF_IPORT(1, "mode", "Mode",  0.0, 2.0,  0.0, \
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0.0 ]
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1.0 ]
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ]
+			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0.0 ] ;
+			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1.0 ] ;
+			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ] ;
 			)
 	.
 
