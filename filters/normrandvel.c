@@ -57,7 +57,7 @@ filter_midi_normrandvel(MidiFilter* self,
         if(U)
         {
             const float rnd = dev*U*sqrt(-2*log(S)/S);
-            buf[2] = midi_limit_val(rintf(buffer[2] + rnd));
+            buf[2] = RAIL(rintf(buffer[2] + rnd)1, 127);
         }else{
             buf[2] = buffer[2];
         }
