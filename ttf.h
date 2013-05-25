@@ -85,27 +85,46 @@
 	TTF_IPORT(IDX, SYM, DESC, 0.0, 1.1, VDFLT, lv2:portProperty lv2:integer; lv2:portProperty lv2:toggled;)
 
 #define PORTENUM16 \
-			lv2:scalePoint [ rdfs:label "01" ; rdf:value  1.0 ] ; \
-			lv2:scalePoint [ rdfs:label "02" ; rdf:value  2.0 ] ; \
-			lv2:scalePoint [ rdfs:label "03" ; rdf:value  3.0 ] ; \
-			lv2:scalePoint [ rdfs:label "04" ; rdf:value  4.0 ] ; \
-			lv2:scalePoint [ rdfs:label "05" ; rdf:value  5.0 ] ; \
-			lv2:scalePoint [ rdfs:label "06" ; rdf:value  6.0 ] ; \
-			lv2:scalePoint [ rdfs:label "07" ; rdf:value  7.0 ] ; \
-			lv2:scalePoint [ rdfs:label "08" ; rdf:value  8.0 ] ; \
-			lv2:scalePoint [ rdfs:label "09" ; rdf:value  9.0 ] ; \
-			lv2:scalePoint [ rdfs:label "10" ; rdf:value 10.0 ] ; \
-			lv2:scalePoint [ rdfs:label "11" ; rdf:value 11.0 ] ; \
-			lv2:scalePoint [ rdfs:label "12" ; rdf:value 12.0 ] ; \
-			lv2:scalePoint [ rdfs:label "13" ; rdf:value 13.0 ] ; \
-			lv2:scalePoint [ rdfs:label "14" ; rdf:value 14.0 ] ; \
-			lv2:scalePoint [ rdfs:label "15" ; rdf:value 15.0 ] ; \
-			lv2:scalePoint [ rdfs:label "16" ; rdf:value 16.0 ] ; \
-			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+	lv2:scalePoint [ rdfs:label "01" ; rdf:value  1.0 ] ; \
+	lv2:scalePoint [ rdfs:label "02" ; rdf:value  2.0 ] ; \
+	lv2:scalePoint [ rdfs:label "03" ; rdf:value  3.0 ] ; \
+	lv2:scalePoint [ rdfs:label "04" ; rdf:value  4.0 ] ; \
+	lv2:scalePoint [ rdfs:label "05" ; rdf:value  5.0 ] ; \
+	lv2:scalePoint [ rdfs:label "06" ; rdf:value  6.0 ] ; \
+	lv2:scalePoint [ rdfs:label "07" ; rdf:value  7.0 ] ; \
+	lv2:scalePoint [ rdfs:label "08" ; rdf:value  8.0 ] ; \
+	lv2:scalePoint [ rdfs:label "09" ; rdf:value  9.0 ] ; \
+	lv2:scalePoint [ rdfs:label "10" ; rdf:value 10.0 ] ; \
+	lv2:scalePoint [ rdfs:label "11" ; rdf:value 11.0 ] ; \
+	lv2:scalePoint [ rdfs:label "12" ; rdf:value 12.0 ] ; \
+	lv2:scalePoint [ rdfs:label "13" ; rdf:value 13.0 ] ; \
+	lv2:scalePoint [ rdfs:label "14" ; rdf:value 14.0 ] ; \
+	lv2:scalePoint [ rdfs:label "15" ; rdf:value 15.0 ] ; \
+	lv2:scalePoint [ rdfs:label "16" ; rdf:value 16.0 ] ; \
+	lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 
 #define PORTENUMZ(ZEROLABEL) \
-			lv2:scalePoint [ rdfs:label ZEROLABEL; rdf:value  0.0 ] ; \
-			PORTENUM16
+	lv2:scalePoint [ rdfs:label ZEROLABEL; rdf:value  0.0 ] ; \
+	PORTENUM16
+
+#define NOTENAMES \
+	lv2:scalePoint [ rdfs:label "C"  ; rdf:value 0.0 ] ; \
+	lv2:scalePoint [ rdfs:label "C#" ; rdf:value 1.0 ] ; \
+	lv2:scalePoint [ rdfs:label "D"  ; rdf:value 2.0 ] ; \
+	lv2:scalePoint [ rdfs:label "D#" ; rdf:value 3.0 ] ; \
+	lv2:scalePoint [ rdfs:label "E"  ; rdf:value 4.0 ] ; \
+	lv2:scalePoint [ rdfs:label "F"  ; rdf:value 5.0 ] ; \
+	lv2:scalePoint [ rdfs:label "F#" ; rdf:value 6.0 ] ; \
+	lv2:scalePoint [ rdfs:label "G"  ; rdf:value 7.0 ] ; \
+	lv2:scalePoint [ rdfs:label "G#" ; rdf:value 8.0 ] ; \
+	lv2:scalePoint [ rdfs:label "A"  ; rdf:value 9.0 ] ; \
+	lv2:scalePoint [ rdfs:label "A#" ; rdf:value 10.0 ] ; \
+	lv2:scalePoint [ rdfs:label "B"  ; rdf:value 11.0 ] ; \
+	lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+
+#define NOTENAMESOFF \
+	lv2:scalePoint [ rdfs:label "OFF" ; rdf:value -1 ] ; \
+	NOTENAMES
 
 #endif
 
