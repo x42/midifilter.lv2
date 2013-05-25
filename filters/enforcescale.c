@@ -5,23 +5,25 @@ MFD_FILTER(enforcescale)
 	mflt:enforcescale
 	TTF_DEFAULTDEF("MIDI Enforce Scale")
 	, TTF_IPORT(0, "scale", "Scale",  0.0, 11.0,  0.0,
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "C Major"  ; rdf:value 0.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "C# Major" ; rdf:value 1.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "D Major"  ; rdf:value 2.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "D# Major" ; rdf:value 3.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "E Major"  ; rdf:value 4.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "F Major"  ; rdf:value 5.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "F# Major" ; rdf:value 6.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "G Major"  ; rdf:value 7.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "G# Major" ; rdf:value 8.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "A Major"  ; rdf:value 9.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "A# Major" ; rdf:value 10.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11.0 ] ;
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "C Major"  ; rdf:value 0.0 ] ;
+			lv2:scalePoint [ rdfs:label "C# Major" ; rdf:value 1.0 ] ;
+			lv2:scalePoint [ rdfs:label "D Major"  ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "D# Major" ; rdf:value 3.0 ] ;
+			lv2:scalePoint [ rdfs:label "E Major"  ; rdf:value 4.0 ] ;
+			lv2:scalePoint [ rdfs:label "F Major"  ; rdf:value 5.0 ] ;
+			lv2:scalePoint [ rdfs:label "F# Major" ; rdf:value 6.0 ] ;
+			lv2:scalePoint [ rdfs:label "G Major"  ; rdf:value 7.0 ] ;
+			lv2:scalePoint [ rdfs:label "G# Major" ; rdf:value 8.0 ] ;
+			lv2:scalePoint [ rdfs:label "A Major"  ; rdf:value 9.0 ] ;
+			lv2:scalePoint [ rdfs:label "A# Major" ; rdf:value 10.0 ] ;
+			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11.0 ] ;
 			)
 	, TTF_IPORT(1, "mode", "Mode",  0.0, 2.0,  0.0, \
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1.0 ] ;
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ] ;
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0.0 ] ;
+			lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1.0 ] ;
+			lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ] ;
 			)
 	.
 
