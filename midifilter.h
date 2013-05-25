@@ -17,6 +17,10 @@
 #define MAX(a,b) ( (a) > (b) ? (a) : (b) )
 #endif
 
+#ifndef RAIL
+#define RAIL(v, min, max) (MIN((max), MAX((min), (v))))
+#endif
+
 #ifndef SQUARE
 #define SQUARE(a) ( (a) * (a) )
 #endif
