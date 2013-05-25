@@ -31,8 +31,6 @@ filter_midi_keysplit(MidiFilter* self,
 {
 	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
-	const uint8_t key = buffer[1] & 0x7f;
-	const uint8_t vel = buffer[2] & 0x7f;
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
@@ -43,6 +41,9 @@ filter_midi_keysplit(MidiFilter* self,
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
+
+	const uint8_t key = buffer[1] & 0x7f;
+	const uint8_t vel = buffer[2] & 0x7f;
 
 	if (mst == MIDI_NOTEON && vel ==0 ) {
 		mst = MIDI_NOTEOFF;
