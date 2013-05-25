@@ -10,8 +10,8 @@ MFD_FILTER(velocityrange)
 	, TTF_IPORT(3, "mode", "Operation Mode",  0.0, 3.0,  1.0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Bypass"  ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Include"  ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "Exclude"  ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "Include Range"  ; rdf:value 1.0 ] ;
+			lv2:scalePoint [ rdfs:label "Exclude Range"  ; rdf:value 2.0 ] ;
 			)
 	.
 
@@ -49,16 +49,16 @@ filter_midi_velocityrange(MidiFilter* self,
 
 	switch(mst) {
 		case MIDI_NOTEON:
-		if ((vel >= low && vel <= upp) ^ (mode == 2)) {
-			forge_midimessage(self, tme, buffer, size);
-			self->memCM[chn][key] = vel;
-		}
-		break;
+			if ((vel >= low && vel <= upp) ^ (mode == 2)) {
+				forge_midimessage(self, tme, buffer, size);
+				self->memCM[chn][key] = vel;
+			}
+			break;
 		case MIDI_NOTEOFF:
-		if (self->memCM[chn][key] > 0) {
-			forge_midimessage(self, tme, buffer, size);
-		}
-		self->memCM[chn][key] = 0;
+			if (self->memCM[chn][key] > 0) {
+				forge_midimessage(self, tme, buffer, size);
+			}
+			self->memCM[chn][key] = 0;
 		break;
 	}
 
