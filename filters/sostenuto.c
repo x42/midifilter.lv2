@@ -4,7 +4,8 @@ MFD_FILTER(sostenuto)
 
 	mflt:sostenuto
 	TTF_DEFAULTDEF("MIDI Sostenuto")
-	, TTF_IPORT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 60.0,  0.0, units:unit units:s)
+	, TTF_IPORT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
+	, TTF_IPORTTOGGLE( 1, "pedal",  "Enable", 1.0)
 	.
 
 #elif defined MX_CODE
@@ -79,6 +80,7 @@ filter_postproc_sostenuto(MidiFilter* self)
 
 		if (off == woff) break;
 	}
+
 }
 
 void
@@ -87,8 +89,9 @@ filter_midi_sostenuto(MidiFilter* self,
 		const uint8_t* const buffer,
 		const uint32_t size)
 {
-	uint32_t delay = floor(self->samplerate * (*self->cfg[0]));
-	if (delay < 0) delay = 0;
+	const uint32_t delay = floor(self->samplerate * RAIL((*self->cfg[0]), 0, 120));
+	const int state = RAIL(*self->cfg[1], 0, 1);
+
 	uint8_t mst = buffer[0] & 0xf0;
 	const uint8_t vel = buffer[2] & 0x7f;
 
@@ -96,7 +99,7 @@ filter_midi_sostenuto(MidiFilter* self,
 		mst = MIDI_NOTEOFF;
 	}
 
-	if (size == 3 && mst == MIDI_NOTEON) {
+	if (size == 3 && mst == MIDI_NOTEON && state == 1) {
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
 		if (sostenuto_check_dup(self, chn, key, -1)) {
@@ -111,7 +114,7 @@ filter_midi_sostenuto(MidiFilter* self,
 		}
 		forge_midimessage(self, tme, buffer, size);
 	}
-	else if (size == 3 && mst == MIDI_NOTEOFF) {
+	else if (size == 3 && mst == MIDI_NOTEOFF && state == 1) {
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
 
@@ -144,9 +147,12 @@ filter_preproc_sostenuto(MidiFilter* self)
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
+	const int state = RAIL(*self->cfg[1], 0, 1);
 
-	if (self->lcfg[0] == *self->cfg[0])
+	if (   self->lcfg[0] == *self->cfg[0]
+			&& self->lcfg[1] == *self->cfg[1]) {
 		return;
+	}
 
 	const float diff = *self->cfg[0] - self->lcfg[0];
 	const int delay = rint(self->samplerate * diff);
@@ -154,10 +160,18 @@ filter_preproc_sostenuto(MidiFilter* self)
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
 		if (self->memQ[off].size > 0) {
-			self->memQ[off].reltime = MAX(0, self->memQ[off].reltime + delay);
+			if (state == 0) {
+				self->memQ[off].reltime = 0;
+			} else {
+				self->memQ[off].reltime = MAX(0, self->memQ[off].reltime + delay);
+			}
 		}
 		if (off == woff) break;
 	}
+
+	self->memI[3] = 1;
+	filter_postproc_sostenuto(self);
+	self->memI[3] = -1;
 }
 
 void filter_init_sostenuto(MidiFilter* self) {
