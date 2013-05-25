@@ -96,14 +96,14 @@ run(LV2_Handle instance, uint32_t n_samples)
 		goto out;
 	}
 
-	if (self->preproc_fn) {
-		self->preproc_fn(self);
-	}
-
 	/* prepare midiout port */
 	const uint32_t capacity = self->midiout->atom.size;
 	lv2_atom_forge_set_buffer(&self->forge, (uint8_t*)self->midiout, capacity);
 	lv2_atom_forge_sequence_head(&self->forge, &self->frame, 0);
+
+	if (self->preproc_fn) {
+		self->preproc_fn(self);
+	}
 
 	/* process events on the midiin port */
 	LV2_Atom_Event* ev = lv2_atom_sequence_begin(&(self->midiin)->body);
