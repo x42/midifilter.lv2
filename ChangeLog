@@ -1,3 +1,7 @@
+2013-05-25 (unreleased)  Robin Gareus <robin@gareus.org>
+* fix transpose plugin -- check for parameter change in every process cycle
+* add 'enforce scale' plugin
+
 2013-05-24 (0.0.3)  Robin Gareus <robin@gareus.org>
 * new plugins:
 - delayline w/ optional random delay

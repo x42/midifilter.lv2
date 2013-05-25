@@ -3,11 +3,12 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 12 MIDI event filters have been implemented:
+So far 13 MIDI event filters have been implemented:
 
 *   Channel Map -- map any MIDI-channel to another MIDI-channel
 *   Channel Filter -- discard messages per Channel
 *   Delay -- delay MIDI events with optional radomization
+*   Enforce Scale -- force midi notes on given musical scale
 *   Keysplit -- split note on/off/pressure messages to different channels & optionally transpose
 *   NoSensing -- strip MIDI Active-Sensing events
 *   Sostenuto -- delay note-off messages, emulate a piano sostenuto pedal
