@@ -40,7 +40,7 @@ filter_midi_randvelocity(MidiFilter* self,
 		const float rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
 		buf[0] = buffer[0];
 		buf[1] = buffer[1];
-		buf[2] = RAIL(rintf(buffer[2] + rnd),1, 127);
+		buf[2] = RAIL(rintf(buffer[2] + rnd), 1, 127);
 		forge_midimessage(self, tme, buf, size);
 	} else {
 		forge_midimessage(self, tme, buffer, size);
