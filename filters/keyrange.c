@@ -1,8 +1,8 @@
-MFD_FILTER(noterange)
+MFD_FILTER(keyrange)
 
 #ifdef MX_TTF
 
-	mflt:noterange
+	mflt:keyrange
 	TTF_DEFAULTDEF("MIDI Key-Range Filter")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
 	, TTF_IPORT(1, "lower", "Lowest Note",  0.0, 127.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
@@ -18,7 +18,7 @@ MFD_FILTER(noterange)
 #elif defined MX_CODE
 
 static void
-filter_midi_noterange(MidiFilter* self,
+filter_midi_keyrange(MidiFilter* self,
 		uint32_t tme,
 		const uint8_t* const buffer,
 		uint32_t size)
@@ -63,7 +63,7 @@ filter_midi_noterange(MidiFilter* self,
 	}
 }
 
-static void filter_preproc_noterange(MidiFilter* self) {
+static void filter_preproc_keyrange(MidiFilter* self) {
 	if (   floor(self->lcfg[1]) == floor(*self->cfg[1])
 			&& floor(self->lcfg[2]) == floor(*self->cfg[2])
 			&& floor(self->lcfg[3]) == floor(*self->cfg[3])
@@ -90,12 +90,12 @@ static void filter_preproc_noterange(MidiFilter* self) {
 	}
 }
 
-static void filter_init_noterange(MidiFilter* self) {
+static void filter_init_keyrange(MidiFilter* self) {
 	int c,k;
 	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
 		self->memCM[c][k] = 0;
 	}
-	self->preproc_fn = filter_preproc_noterange;
+	self->preproc_fn = filter_preproc_keyrange;
 }
 
 #endif
