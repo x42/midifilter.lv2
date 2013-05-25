@@ -4,8 +4,7 @@ MFD_FILTER(miditranspose)
 
 	mflt:miditranspose
 	TTF_DEFAULTDEF("MIDI Chromatic Transpose")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, \
-			lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Any" ; rdf:value 0.0 ])
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
 	, TTF_IPORTINT(1, "transpose", "Transpose",  -72.0, 72.0, 0.0)
 	.
 
