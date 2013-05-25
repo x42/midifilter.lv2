@@ -5,18 +5,18 @@ MFD_FILTER(mapkeyscale)
 	mflt:mapkeyscale
 	TTF_DEFAULTDEF("MIDI Map Keys")
 	, TTF_IPORT( 0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORT( 1, "k0",  "C to",  -1.0, 11.0,  0.0, NOTENAMESOFF)
-	, TTF_IPORT( 2, "k1",  "C# to", -1.0, 11.0,  1.0, NOTENAMESOFF)
-	, TTF_IPORT( 3, "k2",  "D to",  -1.0, 11.0,  2.0, NOTENAMESOFF)
-	, TTF_IPORT( 4, "k3",  "D# to", -1.0, 11.0,  3.0, NOTENAMESOFF)
-	, TTF_IPORT( 5, "k4",  "E to",  -1.0, 11.0,  4.0, NOTENAMESOFF)
-	, TTF_IPORT( 6, "k5",  "F to",  -1.0, 11.0,  5.0, NOTENAMESOFF)
-	, TTF_IPORT( 7, "k6",  "F# to", -1.0, 11.0,  6.0, NOTENAMESOFF)
-	, TTF_IPORT( 8, "k7",  "G to",  -1.0, 11.0,  7.0, NOTENAMESOFF)
-	, TTF_IPORT( 9, "k8",  "G# to", -1.0, 11.0,  8.0, NOTENAMESOFF)
-	, TTF_IPORT(10, "k9",  "A to",  -1.0, 11.0,  9.0, NOTENAMESOFF)
-	, TTF_IPORT(11, "k10", "A# to", -1.0, 11.0, 10.0, NOTENAMESOFF)
-	, TTF_IPORT(12, "k11", "B to",  -1.0, 11.0, 11.0, NOTENAMESOFF)
+	, TTF_IPORT( 1, "k0",  "C",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 2, "k1",  "C#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 3, "k2",  "D",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 4, "k3",  "D#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 5, "k4",  "E",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 6, "k5",  "F",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 7, "k6",  "F#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 8, "k7",  "G",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT( 9, "k8",  "G#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT(10, "k9",  "A",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT(11, "k10", "A#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
+	, TTF_IPORT(12, "k11", "B",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ] )
 	.
 
 #elif defined MX_CODE
@@ -31,7 +31,7 @@ filter_midi_mapkeyscale(MidiFilter* self,
 	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
 	int keymap[12];
 	for (i=0; i < 12; ++i) {
-		keymap[i] = RAIL(floor(*self->cfg[i+1]), 0, 11);
+		keymap[i] = RAIL(floor(*self->cfg[i+1]), -13, 12);
 	}
 
 	const uint8_t chn = buffer[0] & 0x0f;
@@ -59,8 +59,8 @@ filter_midi_mapkeyscale(MidiFilter* self,
 
 	switch (mst) {
 		case MIDI_NOTEON:
-			if (keymap[key%12] < 0) return;
-			note = key + keymap[key%12] - key%12;
+			if (keymap[key%12] < -12) return;
+			note = key + keymap[key%12];
 			if (midi_valid(note)) {
 				buf[1] = note;
 				forge_midimessage(self, tme, buf, size);
@@ -78,8 +78,8 @@ filter_midi_mapkeyscale(MidiFilter* self,
 			self->memCI[chn][key] = -1000;
 			break;
 		case MIDI_POLYKEYPRESSURE:
-			if (keymap[key%12] < 0) return;
-			note = key + keymap[key%12] - key%12;
+			if (keymap[key%12] < -12) return;
+			note = key + keymap[key%12];
 			if (midi_valid(note)) {
 				buf[1] = note;
 				forge_midimessage(self, tme, buf, size);
@@ -93,7 +93,7 @@ static void filter_preproc_mapkeyscale(MidiFilter* self) {
 	int identical_cfg = 1;
 	int keymap[12];
 	for (i=0; i < 12; ++i) {
-		keymap[i] = RAIL(floor(*self->cfg[i+1]), 0, 11);
+		keymap[i] = RAIL(floor(*self->cfg[i+1]), -13, 12);
 		if (floor(self->lcfg[i+1]) != floor(*self->cfg[i+1])) {
 			identical_cfg = 0;
 		}
@@ -114,7 +114,7 @@ static void filter_preproc_mapkeyscale(MidiFilter* self) {
 			buf[2] = 0;
 			forge_midimessage(self, 0, buf, 3);
 
-			int note = k + keymap[k%12] - k%12;
+			int note = k + keymap[k%12];
 
 			if (midi_valid(note)) {
 				buf[0] = MIDI_NOTEON | c;
