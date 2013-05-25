@@ -4,7 +4,7 @@ MFD_FILTER(sostenuto)
 
 	mflt:sostenuto
 	TTF_DEFAULTDEF("MIDI Sostenuto")
-	, TTF_IPORTFLOAT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 60.0,  0.0)
+	, TTF_IPORT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 60.0,  0.0, units:unit units:s)
 	.
 
 #elif defined MX_CODE

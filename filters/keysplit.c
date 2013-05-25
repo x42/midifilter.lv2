@@ -5,11 +5,11 @@ MFD_FILTER(keysplit)
 	mflt:keysplit
 	TTF_DEFAULTDEF("MIDI Keysplit")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORTINT(1, "split", "Splitpoint",  0.0, 127.0,  48.0)
+	, TTF_IPORT(1, "split", "Splitpoint",  0.0, 127.0,  48.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
 	, TTF_IPORT(2, "channel0", "Channel Lower",  1.0, 16.0,  1.0, PORTENUM16)
-	, TTF_IPORTINT(3, "transp0", "Transpose Lower",  -48.0, 48.0,  0.0)
+	, TTF_IPORT(3, "transp0", "Transpose Lower",  -48.0, 48.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
 	, TTF_IPORT(4, "channel1", "Channel Upper",  1.0, 16.0,  2.0, PORTENUM16)
-	, TTF_IPORTINT(5, "transp1", "Transpose Upper",  -48.0, 48.0,  0.0)
+	, TTF_IPORT(5, "transp1", "Transpose Upper",  -48.0, 48.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
 	.
 
 #elif defined MX_CODE

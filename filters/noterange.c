@@ -5,8 +5,8 @@ MFD_FILTER(noterange)
 	mflt:noterange
 	TTF_DEFAULTDEF("MIDI Note-Range Filter")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORTINT(1, "lower", "Lowest Note",  0.0, 127.0,  0.0)
-	, TTF_IPORTINT(2, "upper", "Highest Note",  0.0, 127.0,  127.0)
+	, TTF_IPORT(1, "lower", "Lowest Note",  0.0, 127.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
+	, TTF_IPORT(2, "upper", "Highest Note",  0.0, 127.0,  127.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
 	.
 
 #elif defined MX_CODE

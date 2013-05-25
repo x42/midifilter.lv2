@@ -4,7 +4,7 @@ MFD_FILTER(mididelay)
 
 	mflt:mididelay
 	TTF_DEFAULTDEF("MIDI Delayline")
-	, TTF_IPORTFLOAT( 0, "delayBPM",  "BPM", 1.0, 280.0,  120.0)
+	, TTF_IPORT( 0, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm)
 	, TTF_IPORT(1, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0,
 			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;

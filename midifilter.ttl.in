@@ -7,6 +7,7 @@
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix mflt:  <http://gareus.org/oss/lv2/midifilter#> .
 @prefix pprops:<http://lv2plug.in/ns/ext/port-props#> .
+@prefix units: <http://lv2plug.in/ns/extensions/units#> .
 
 <http://gareus.org/rgareus#me>
 	a foaf:Person ;
