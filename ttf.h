@@ -83,6 +83,27 @@
 
 #define TTF_IPORTTOGGLE(IDX, SYM, DESC, VDFLT) \
 	TTF_IPORT(IDX, SYM, DESC, 0.0, 1.1, VDFLT, lv2:portProperty lv2:integer; lv2:portProperty lv2:toggled;)
+
+#define PORTENUM \
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration; \
+			lv2:scalePoint [ rdfs:label "Off"; rdf:value  0.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "1" ; rdf:value  1.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "2" ; rdf:value  2.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "3" ; rdf:value  3.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "4" ; rdf:value  4.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "5" ; rdf:value  5.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "6" ; rdf:value  6.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "7" ; rdf:value  7.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "8" ; rdf:value  8.0 ] ; \
+			lv2:scalePoint [ rdfs:label  "9" ; rdf:value  9.0 ] ; \
+			lv2:scalePoint [ rdfs:label "10" ; rdf:value 10.0 ] ; \
+			lv2:scalePoint [ rdfs:label "11" ; rdf:value 11.0 ] ; \
+			lv2:scalePoint [ rdfs:label "12" ; rdf:value 12.0 ] ; \
+			lv2:scalePoint [ rdfs:label "13" ; rdf:value 13.0 ] ; \
+			lv2:scalePoint [ rdfs:label "14" ; rdf:value 14.0 ] ; \
+			lv2:scalePoint [ rdfs:label "15" ; rdf:value 15.0 ] ; \
+			lv2:scalePoint [ rdfs:label "16" ; rdf:value 16.0 ] ;
+
 #endif
 
 /* variable part */
