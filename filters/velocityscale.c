@@ -5,10 +5,11 @@ MFD_FILTER(velocityscale)
 	mflt:velocityscale
 	TTF_DEFAULTDEF("MIDI Velocity Adjust")
 	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORTFLOAT(1, "gain", "Note-on Gain (mult)",  0.0, 4.0,  1.0)
-	, TTF_IPORTFLOAT(2, "offset", "Note-on Level (add)",  -126.0, 126.0,  0.0)
-	, TTF_IPORTFLOAT(3, "gain", "Note-off Gain (mult)",  0.0, 4.0,  1.0)
-	, TTF_IPORTFLOAT(4, "offset", "Note-off Level (add)",  -127.0, 127.0,  0.0)
+	, TTF_IPORTFLOAT(1, "onmin",  "Note-on min",  1.0, 127.0,   1.0)
+	, TTF_IPORTFLOAT(2, "onmax",  "Note-on max",  0.0, 127.0, 127.0)
+	, TTF_IPORTFLOAT(3, "offmin", "Note-off min", 0.0, 127.0,   0.0)
+	, TTF_IPORTFLOAT(4, "offmax", "Note-off max", 0.0, 127.0, 127.0)
+	, TTF_IPORTFLOAT(5, "gain",   "common gain offset", -64.0,  64.0,   0.0)
 	.
 
 #elif defined MX_CODE
@@ -34,7 +35,8 @@ filter_midi_velocityscale(MidiFilter* self,
 		return;
 	}
 
-	const uint8_t vel = (buffer[2] & 0x7f);
+	const uint8_t vel  = (buffer[2] & 0x7f);
+	const float offset = *(self->cfg[5]);
 
 	if (mst == MIDI_NOTEON && vel == 0 ) {
 		mst = MIDI_NOTEOFF;
@@ -44,19 +46,21 @@ filter_midi_velocityscale(MidiFilter* self,
 	buf[0] = buffer[0];
 	buf[1] = buffer[1];
 
+
 	switch(mst) {
 		case MIDI_NOTEON:
 			{
-				const float gain = *(self->cfg[1]);
-				const float off = *(self->cfg[2]);
-				buf[2] = RAIL(rintf((float)vel * gain +off), 1, 127);
+				const float nmin = *(self->cfg[1]);
+				const float nmax = *(self->cfg[2]);
+				const float oneoff = (nmax-nmin)/126.0;
+				buf[2] = RAIL(rintf((float)vel * (nmax-nmin) / 126.0  + nmin - oneoff + offset), 1, 127);
 			}
 			break;
 		case MIDI_NOTEOFF:
 			{
-				const float gain = *(self->cfg[3]);
-				const float off = *(self->cfg[4]);
-				buf[2] = RAIL(rintf((float)vel * gain +off), 1, 127);
+				const float nmin = *(self->cfg[3]);
+				const float nmax = *(self->cfg[4]);
+				buf[2] = RAIL(rintf((float)vel * (nmax-nmin) / 127.0  + nmin + offset), 0, 127);
 			}
 			break;
 	}
