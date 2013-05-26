@@ -26,25 +26,34 @@ filter_midi_randvelocity(MidiFilter* self,
 	const uint8_t vel = buffer[2] & 0x7f;
 	int mst = buffer[0] & 0xf0;
 
+	if (size != 3
+			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
+			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+		 )
+	{
+		forge_midimessage(self, tme, buffer, size);
+		return;
+	}
+
 	if (mst == MIDI_NOTEON && vel ==0 ) {
 		mst = MIDI_NOTEOFF;
 	}
 
-	if (size == 3
-			&& (mst == MIDI_NOTEON || (mst == MIDI_NOTEOFF && vel != 0) )
-			&& (floor(*self->cfg[0]) == 0 || chs == chn)
-		 )
-	{
-		uint8_t buf[3];
-		const float rf = *(self->cfg[1]);
-		const float rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
-		buf[0] = buffer[0];
-		buf[1] = buffer[1];
-		buf[2] = RAIL(rintf(buffer[2] + rnd), 1, 127);
-		forge_midimessage(self, tme, buf, size);
-	} else {
-		forge_midimessage(self, tme, buffer, size);
+	uint8_t buf[3];
+	const float rf = *(self->cfg[1]);
+	const float rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
+	buf[0] = buffer[0];
+	buf[1] = buffer[1];
+
+	switch (mst) {
+		case MIDI_NOTEON:
+			buf[2] = RAIL(rintf(buffer[2] + rnd), 1, 127);
+			break;
+		case MIDI_NOTEOFF:
+			buf[2] = RAIL(rintf(buffer[2] + rnd), 0, 127);
+			break;
 	}
+	forge_midimessage(self, tme, buf, size);
 }
 
 #endif
