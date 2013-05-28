@@ -78,6 +78,51 @@ forge_midimessage(MidiFilter* self,
 #include "filters.c"
 #undef MX_CODE
 
+/**
+ * Update the current position based on a host message.  This is called by
+ * run() when a time:Position is received.
+ */
+static void
+update_position(MidiFilter* self, const LV2_Atom_Object* obj)
+{
+	const MidiFilterURIs* uris = &self->uris;
+
+	// Received new transport position/speed
+	LV2_Atom *beat = NULL, *bpm = NULL, *speed = NULL;
+	LV2_Atom *fps = NULL, *frame = NULL;
+	lv2_atom_object_get(obj,
+	                    uris->time_barBeat, &beat,
+	                    uris->time_beatsPerMinute, &bpm,
+	                    uris->time_speed, &speed,
+	                    uris->time_frame, &frame,
+	                    uris->time_fps, &fps,
+	                    NULL);
+	if (bpm && bpm->type == uris->atom_Float) {
+		// Tempo changed, update BPM
+		self->bpm = ((LV2_Atom_Float*)bpm)->body;
+		self->available_info |= NFO_BPM;
+	}
+	if (speed && speed->type == uris->atom_Float) {
+		// Speed changed, e.g. 0 (stop) to 1 (play)
+		self->speed = ((LV2_Atom_Float*)speed)->body;
+		self->available_info |= NFO_SPEED;
+	}
+	if (beat && beat->type == uris->atom_Float) {
+		const float samples_per_beat = 60.0f / self->bpm * self->samplerate;
+		self->bar_beats    = ((LV2_Atom_Float*)beat)->body;
+		self->beat_beats   = self->bar_beats - floorf(self->bar_beats);
+		self->pos_bbt      = self->beat_beats * samples_per_beat;
+		self->available_info |= NFO_BEAT;
+	}
+	if (fps && fps->type == uris->atom_Float) {
+		self->frames_per_second = ((LV2_Atom_Float*)frame)->body;
+		self->available_info |= NFO_FPS;
+	}
+	if (frame && frame->type == uris->atom_Long) {
+		self->pos_frame = ((LV2_Atom_Long*)frame)->body;
+		self->available_info |= NFO_FRAME;
+	}
+}
 /******************************************************************************
  * LV2
  */
@@ -111,6 +156,12 @@ run(LV2_Handle instance, uint32_t n_samples)
 		if (ev->body.type == self->uris.midi_MidiEvent) {
 			self->filter_fn(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
+		else if (ev->body.type == self->uris.atom_Blank) {
+			const LV2_Atom_Object* obj = (LV2_Atom_Object*)&ev->body;
+			if (obj->body.otype == self->uris.time_Position) {
+				update_position(self, obj);
+			}
+		}
 		ev = lv2_atom_sequence_next(ev);
 	}
 
@@ -136,6 +187,15 @@ map_mf_uris(LV2_URID_Map* map, MidiFilterURIs* uris)
 	uris->atom_Blank         = map->map(map->handle, LV2_ATOM__Blank);
 	uris->midi_MidiEvent     = map->map(map->handle, LV2_MIDI__MidiEvent);
 	uris->atom_Sequence      = map->map(map->handle, LV2_ATOM__Sequence);
+
+	uris->atom_Long           = map->map(map->handle, LV2_ATOM__Long);
+	uris->atom_Float          = map->map(map->handle, LV2_ATOM__Float);
+	uris->time_Position       = map->map(map->handle, LV2_TIME__Position);
+	uris->time_barBeat        = map->map(map->handle, LV2_TIME__barBeat);
+	uris->time_beatsPerMinute = map->map(map->handle, LV2_TIME__beatsPerMinute);
+	uris->time_speed          = map->map(map->handle, LV2_TIME__speed);
+	uris->time_frame          = map->map(map->handle, LV2_TIME__frame);
+	uris->time_fps            = map->map(map->handle, LV2_TIME__framesPerSecond);
 }
 
 static LV2_Handle
@@ -163,6 +223,7 @@ instantiate(const LV2_Descriptor*         descriptor,
 	map_mf_uris(self->map, &self->uris);
 	lv2_atom_forge_init(&self->forge, self->map);
 	self->samplerate = rate;
+	self->bpm = 120;
 
 	if (0) ;
 #define MX_FILTER

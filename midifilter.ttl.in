@@ -8,6 +8,7 @@
 @prefix mflt:  <http://gareus.org/oss/lv2/midifilter#> .
 @prefix pprops:<http://lv2plug.in/ns/ext/port-props#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
+@prefix time:  <http://lv2plug.in/ns/ext/time#> .
 
 <http://gareus.org/rgareus#me>
 	a foaf:Person ;

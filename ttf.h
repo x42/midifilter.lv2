@@ -24,7 +24,7 @@
 #define MAINTAINER <HTTPP/gareus.org/rgareus#me>
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
 
-#define TTF_DEFAULTDEF(DOAPNAME) \
+#define TTF_DEF(DOAPNAME, INSUPPORTS) \
 	a lv2:Plugin ; \
 	doap:name DOAPNAME ; \
 	doap:license <HTTPP/usefulinc.com/doap/licenses/gpl> ; \
@@ -36,7 +36,7 @@
 		a atom:AtomPort , \
 			lv2:InputPort ; \
 		atom:bufferType atom:Sequence ; \
-		atom:supports MIDIEXTURI ; \
+		atom:supports MIDIEXTURI INSUPPORTS; \
 		lv2:index 0 ; \
 		lv2:symbol "midiin" ; \
 		lv2:name "MIDI In" \
@@ -58,6 +58,8 @@
 		lv2:maximum 192000 ; \
 		lv2:portProperty lv2:reportsLatency, lv2:integer, pprops:notOnGUI; \
 	]
+
+#define TTF_DEFAULTDEF(DOAPNAME) TTF_DEF(DOAPNAME,)
 
 #define TTF_PORT(TYPE, IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
 	[ \

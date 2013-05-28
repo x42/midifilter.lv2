@@ -3,6 +3,7 @@
 
 #include "lv2/lv2plug.in/ns/lv2core/lv2.h"
 #include "lv2/lv2plug.in/ns/ext/atom/atom.h"
+#include "lv2/lv2plug.in/ns/ext/time/time.h"
 #include "lv2/lv2plug.in/ns/ext/atom/forge.h"
 #include "lv2/lv2plug.in/ns/ext/urid/urid.h"
 #include "lv2/lv2plug.in/ns/ext/midi/midi.h"
@@ -37,6 +38,14 @@ typedef struct {
 	LV2_URID atom_Blank;
 	LV2_URID midi_MidiEvent;
 	LV2_URID atom_Sequence;
+	LV2_URID atom_Float;
+	LV2_URID atom_Long;
+	LV2_URID time_Position;
+	LV2_URID time_barBeat;
+	LV2_URID time_beatsPerMinute;
+	LV2_URID time_speed;
+	LV2_URID time_frame;
+	LV2_URID time_fps;
 } MidiFilterURIs;
 
 
@@ -45,6 +54,14 @@ typedef struct {
 	int size;
 	int reltime;
 } MidiEventQueue;
+
+enum {
+	NFO_BPM = 1,
+	NFO_SPEED = 2,
+	NFO_BEAT = 4,
+	NFO_FRAME = 8,
+	NFO_FPS = 16
+};
 
 typedef struct _MidiFilter{
 	LV2_Atom_Forge forge;
@@ -66,6 +83,15 @@ typedef struct _MidiFilter{
 	int     memI[127];
 	int     memCI[16][127];
 	uint8_t memCM[16][127];
+
+	int    available_info; // bit-f
+	float  bpm;
+	float  speed;  // Transport speed (usually 0=stop, 1=play)
+	float  bar_beats;
+	float  beat_beats;
+	uint32_t pos_bbt;
+	long int pos_frame;
+	float    frames_per_second;
 
 	MidiEventQueue *memQ;
 	uint32_t n_samples;
