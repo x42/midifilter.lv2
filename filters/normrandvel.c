@@ -52,15 +52,19 @@ filter_midi_normrandvel(MidiFilter* self,
 
     float U = 2.0* random() / (float)RAND_MAX - 1;//rand E(-1,1)
     float S = SQUARE(U) + SQUARE(self->memF[0]);//map 2 random vars to unit circle
-    uint8_t timeout = 0;
-    while(S>=1)//repull RV if outside unit circle
+
+    if(S>=1)//repull RV if outside unit circle
     {
-        if(timeout++>2)
+        U = 2.0* random() / (float)RAND_MAX - 1;
+        S = SQUARE(U) + SQUARE(self->memF[0]);
+        if(S>=1)
         {
             U = 2.0* random() / (float)RAND_MAX - 1;
             S = SQUARE(U) + SQUARE(self->memF[0]);
-        }else{//guarantee an exit, velocity will be unchanged
-            U=0;
+            if(S>=1)
+            {//guarantee an exit, velocity will be unchanged
+                U=0;
+            }
         }
     }
 
