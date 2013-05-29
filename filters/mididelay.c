@@ -3,9 +3,15 @@ MFD_FILTER(mididelay)
 #ifdef MX_TTF
 
 	mflt:mididelay
-	TTF_DEFAULTDEF("MIDI Delayline")
-	, TTF_IPORT( 0, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm)
-	, TTF_IPORT(1, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0,
+	TTF_DEF("MIDI Delayline", ; atom:supports time:Position)
+	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0.0, 1.0,  1.0,
+			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0.0 ] ;
+			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			)
+
+	, TTF_IPORT( 1, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm)
+	, TTF_IPORT(2, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0,
 			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
@@ -14,7 +20,7 @@ MFD_FILTER(mididelay)
 			lv2:scalePoint [ rdfs:label "Two Bars" ; rdf:value 8.0 ] ;
 			lv2:scalePoint [ rdfs:label "Four Bars" ; rdf:value 16.0 ] ;
 			)
-	, TTF_IPORTFLOAT( 2, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0)
+	, TTF_IPORTFLOAT( 3, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0)
 	.
 
 #elif defined MX_CODE
@@ -54,11 +60,21 @@ filter_midi_mididelay(MidiFilter* self,
 		const uint8_t* const buffer,
 		const uint32_t size)
 {
-	uint32_t delay = floor(self->samplerate * (*self->cfg[1]) * 60.0 / (*self->cfg[0]));
-	float rnd_val = self->samplerate * (*self->cfg[2]) * 60.0 / (*self->cfg[0]);
+	float bpm = (*self->cfg[1]);
+	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
+		bpm = self->bpm;
+	}
+	if (bpm <= 0) bpm = 60;
+
+	uint32_t delay = floor(self->samplerate * (*self->cfg[2]) * 60.0 / bpm);
+	float rnd_val = self->samplerate * (*self->cfg[3]) * 60.0 / bpm;
 	float rnd_off = 0;
 
 	if (delay < 0) delay = 0;
+
+#ifdef SYMMETRIC_RND
+	delay += rnd_val;
+#endif
 
 
 	if (rnd_val > 0 && delay > 0) {
@@ -66,7 +82,7 @@ filter_midi_mididelay(MidiFilter* self,
 		rnd_val +=  MIN(rnd_val, delay);
 	}
 	if (rnd_val > 0) {
-		delay += rnd_off + rnd_val * random() / (float)RAND_MAX;
+		delay += rintf(rnd_off + rnd_val * (float)random() / (float)RAND_MAX);
 	}
 	
 	if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
@@ -86,7 +102,7 @@ filter_midi_mididelay(MidiFilter* self,
 		// keep track of absolute time of latest note-on/off
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
-		delay = MAX(delay, mididelay_noteon_mindelay(self, chn, key));
+		delay = MAX(delay, mididelay_noteon_mindelay(self, chn, key)); // XXX SPEED
 		self->memCI[chn][key] = delay;
 	}
 
@@ -104,8 +120,24 @@ filter_midi_mididelay(MidiFilter* self,
 	MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 	memcpy(qm->buf, buffer, size);
 	qm->size = size;
-	qm->reltime = tme + delay;
+	qm->reltime = tme + delay; /// *  1.0/SPEED
 	self->memI[2] = (self->memI[2] + 1) % self->memI[0];
+}
+
+static void
+filter_preproc_mididelay(MidiFilter* self)
+{
+#ifdef SYMMETRIC_RND
+	// TODO unify -- calc once per cycle -- not for every midi-note
+	float bpm = (*self->cfg[1]);
+	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
+		bpm = self->bpm;
+	}
+	if (bpm <= 0) bpm = 60;
+
+	// use random -fact as latency..
+	self->latency = self->samplerate * (*self->cfg[3]) * 60.0 / bpm;
+#endif
 }
 
 static void
@@ -115,8 +147,17 @@ filter_postproc_mididelay(MidiFilter* self)
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
-	const uint32_t n_samples = self->n_samples;
+	const uint32_t n_samples = self->n_samples;  /// * SPEED
 	int skipped = 0;
+
+#if 0
+	if ((self->available_info & (NFO_BEAT|NFO_SPEED)) == (NFO_BEAT|NFO_SPEED)) {
+		if (self->memI[3] != self->elapsed_len && self->speed !=0) {
+			printf("pos changed %d -> %d\n", self->memI[3], self->elapsed_len);
+			self->memI[3] = self->elapsed_len;
+		}
+	}
+#endif
 
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
@@ -133,21 +174,30 @@ filter_postproc_mididelay(MidiFilter* self)
 
 		if (off == woff) break;
 	}
+
+#if 0
+	// TODO check overflow
+	self->memI[3] += self->n_samples;
+#endif
 }
 
 void filter_init_mididelay(MidiFilter* self) {
 	int c,k;
 	srandom ((unsigned int) time (NULL));
-	self->memI[0] = self->samplerate / 16.0;
+	self->memI[0] = MAX(self->samplerate / 16.0, 16);
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
+	self->preproc_fn = filter_preproc_mididelay;
 	self->postproc_fn = filter_postproc_mididelay;
 	self->cleanup_fn = filter_cleanup_mididelay;
 
 	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
 		self->memCI[c][k] = -1; // current key delay
 	}
+#if 0
+	self->memI[3] = 0; // tme
+#endif
 }
 
 #endif
