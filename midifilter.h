@@ -82,6 +82,7 @@ typedef struct _MidiFilter{
 	float   memF[16];
 	int     memI[127];
 	int     memCI[16][127];
+	short   memCS[16][127];
 	uint8_t memCM[16][127];
 
 	int    available_info; // bit-f
