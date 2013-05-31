@@ -4,7 +4,10 @@ MFD_FILTER(enforcescale)
 
 	mflt:enforcescale
 	TTF_DEFAULTDEF("MIDI Enforce Scale")
-	, TTF_IPORT(0, "scale", "Scale",  0.0, 11.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
+	, TTF_IPORT(1, "scale", "Scale",  0.0, 11.0,  0.0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "C Major"  ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "C# Major" ; rdf:value 1.0 ] ;
@@ -18,13 +21,16 @@ MFD_FILTER(enforcescale)
 			lv2:scalePoint [ rdfs:label "A Major"  ; rdf:value 9.0 ] ;
 			lv2:scalePoint [ rdfs:label "A# Major" ; rdf:value 10.0 ] ;
 			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11.0 ] ;
+			rdfs:comment "Limit note-on/off messages to this scale."
 			)
-	, TTF_IPORT(1, "mode", "Mode",  0.0, 2.0,  0.0, \
+	, TTF_IPORT(2, "mode", "Mode",  0.0, 2.0,  0.0, \
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ] ;
+			rdfs:comment "Behaviour towards of off-key notes."
 			)
+	rdfs:comment "Filter note-on/off events depending on musical scale. If the key is changed note-off events of are sent for all active off-key notes." ; 
 	.
 
 #elif defined MX_CODE
@@ -43,8 +49,9 @@ filter_midi_enforcescale(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int scale = RAIL(floor(*self->cfg[0]), 0, 11);
-	const int mode  = RAIL(floor(*self->cfg[1]), 0, 2);
+	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const int scale = RAIL(floor(*self->cfg[1]), 0, 11);
+	const int mode  = RAIL(floor(*self->cfg[2]), 0, 2);
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
@@ -52,6 +59,7 @@ filter_midi_enforcescale(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
+			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
 			)
 	{
 		forge_midimessage(self, tme, buffer, size);
@@ -123,8 +131,8 @@ filter_midi_enforcescale(MidiFilter* self,
 }
 
 static void filter_preproc_enforcescale(MidiFilter* self) {
-	if (floor(self->lcfg[0]) == floor(*self->cfg[0])) return;
-	const int scale = RAIL(floor(*self->cfg[0]), 0, 11);
+	if (floor(self->lcfg[1]) == floor(*self->cfg[1])) return;
+	const int scale = RAIL(floor(*self->cfg[1]), 0, 11);
 
 	int c,k;
 	uint8_t buf[3];
