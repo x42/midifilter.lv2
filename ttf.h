@@ -25,7 +25,7 @@
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
 
 #define TTF_DEF(DOAPNAME, INSUPPORTS) \
-	a lv2:Plugin ; \
+	a lv2:Plugin, lv2:FilterPlugin ; \
 	doap:name DOAPNAME ; \
 	doap:license <HTTPP/usefulinc.com/doap/licenses/gpl> ; \
   lv2:project <HTTPP/gareus.org/oss/lv2/midifilter> ; \
