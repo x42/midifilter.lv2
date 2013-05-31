@@ -4,8 +4,11 @@ MFD_FILTER(normrandvel)
 
     mflt:normrandvel
     TTF_DEFAULTDEF("MIDI Velocity Randomization (Normal)")
-    , TTF_IPORT(0, "channel", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
+    , TTF_IPORT(0, "channel", "Filter Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
     , TTF_IPORTFLOAT(1, "dev", "Velocity Standard Deviation", 0.0, 64.0, 8.0)
+    rdfs:comment "Randomize Velocity of Midi notes (both note on and note off) according to a normalized random distribution."
     .
 
 #elif defined MX_CODE

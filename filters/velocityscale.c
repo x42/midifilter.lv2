@@ -4,13 +4,16 @@ MFD_FILTER(velocityscale)
 
 	mflt:velocityscale
 	TTF_DEFAULTDEF("MIDI Velocity Adjust")
-	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
+	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
 	, TTF_IPORTFLOAT(1, "onmin",  "Note-on Min",       1.0, 127.0,   1.0)
 	, TTF_IPORTFLOAT(2, "onmax",  "Note-on Max",       0.0, 127.0, 127.0)
 	, TTF_IPORTFLOAT(3, "onoff",  "Note-on Offset",  -64.0,  64.0,   0.0)
 	, TTF_IPORTFLOAT(4, "offmin", "Note-off Min",      0.0, 127.0,   0.0)
 	, TTF_IPORTFLOAT(5, "offmax", "Note-off Max",      0.0, 127.0, 127.0)
 	, TTF_IPORTFLOAT(6, "offoff", "Note-off Offset", -64.0,  64.0,   0.0)
+	rdfs:comment "Change the velocity of note events with separate controls for Note-on and Note-off. The input range 1 - 127 is mapped to the range between Min and Max. If Min is greater than Max, the range is reversed. The offsets value is added to the velocity event after mapping the Min/Max range."
 	.
 
 #elif defined MX_CODE

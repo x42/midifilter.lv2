@@ -6,6 +6,7 @@ MFD_FILTER(sostenuto)
 	TTF_DEFAULTDEF("MIDI Sostenuto")
 	, TTF_IPORT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
 	, TTF_IPORTTOGGLE( 1, "pedal",  "Enable", 1.0)
+	rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal."
 	.
 
 #elif defined MX_CODE
