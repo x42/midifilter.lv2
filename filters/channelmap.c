@@ -42,13 +42,13 @@ filter_midi_channelmap(MidiFilter* self,
 
 	int chn = buffer[0]&0x0f;
 	switch (buffer[0] & 0xf0) {
-		case 0x80: // note off
-		case 0x90: // note on
-		case 0xA0: // Polyphonic Key Pressure (Aftertouch)
-		case 0xB0: // control change
-		case 0xC0: // program change
-		case 0xD0: // Channel Pressure (After-touch)
-		case 0xE0: // pitch wheel
+		case MIDI_NOTEOFF:
+		case MIDI_NOTEON:
+		case MIDI_POLYKEYPRESSURE:
+		case MIDI_CONTROLCHANGE:
+		case MIDI_PROGRAMCHANGE:
+		case MIDI_CHANNELPRESSURE:
+		case MIDI_PITCHBEND:
 			if(*self->cfg[chn] == 0) return;
 			chn = midi_limit_chn(floor(-1 + *(self->cfg[chn])));
 			buf[0] = (buffer[0] & 0xf0) | chn;
