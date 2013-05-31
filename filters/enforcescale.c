@@ -102,8 +102,8 @@ filter_midi_enforcescale(MidiFilter* self,
 			note = key + transp;
 			if (midi_valid(note)) {
 				buf[1] = note;
-				self->memCM[chn][note]++;
-				if (self->memCM[chn][note] == 1)
+				self->memCS[chn][note]++;
+				if (self->memCS[chn][note] == 1)
 					forge_midimessage(self, tme, buf, size);
 			}
 			self->memCI[chn][key] = transp;
@@ -112,11 +112,11 @@ filter_midi_enforcescale(MidiFilter* self,
 			note = key + self->memCI[chn][key];
 			if (midi_valid(note)) {
 				buf[1] = note;
-				if (self->memCM[chn][note] > 0) {
-					self->memCM[chn][note]--;
-					if (self->memCM[chn][note] == 0)
+				if (self->memCS[chn][note] > 0) {
+					self->memCS[chn][note]--;
+					if (self->memCS[chn][note] == 0)
 						forge_midimessage(self, tme, buf, size);
-						self->memCI[chn][key] = 0;
+					self->memCI[chn][key] = 0;
 				}
 			}
 			break;
@@ -139,7 +139,7 @@ static void filter_preproc_enforcescale(MidiFilter* self) {
 	buf[2] = 0;
 	for (c=0; c < 16; ++c) {
 		for (k=0; k < 127; ++k) {
-			if (self->memCM[c][k] ==0) continue;
+			if (self->memCS[c][k] ==0) continue;
 
 			if (filter_enforcescale_check(scale, k)) {
 				self->memCI[c][k] = 0;
@@ -150,7 +150,7 @@ static void filter_preproc_enforcescale(MidiFilter* self) {
 			buf[1] = midi_limit_val(k);
 			buf[2] = 0;
 			forge_midimessage(self, 0, buf, 3);
-			self->memCM[c][k] = 0;
+			self->memCS[c][k] = 0;
 			self->memCI[c][k] = 0;
 		}
 	}
@@ -160,7 +160,7 @@ static void filter_init_enforcescale(MidiFilter* self) {
 	int c,k;
 	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
 		self->memCI[c][k] = 0; // current key transpose
-		self->memCM[c][k] = 0; // count note-on per key
+		self->memCS[c][k] = 0; // count note-on per key
 	}
 	self->preproc_fn = filter_preproc_enforcescale;
 }
