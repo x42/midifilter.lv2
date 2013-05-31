@@ -109,6 +109,12 @@
 	lv2:scalePoint [ rdfs:label ZEROLABEL; rdf:value  0.0 ] ; \
 	PORTENUM16
 
+#define DOC_CHANZ \
+	rdfs:comment "MIDI Channel number 1..16 (0: disable channel)"
+
+#define DOC_CHANF \
+	rdfs:comment "MIDI Channel (1..16) on which the filter is active; 0: any). Data on other channels is passed though unmodified."
+
 #define NOTENAMES \
 	lv2:scalePoint [ rdfs:label "C"  ; rdf:value 0.0 ] ; \
 	lv2:scalePoint [ rdfs:label "C#" ; rdf:value 1.0 ] ; \

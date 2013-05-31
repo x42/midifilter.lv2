@@ -4,15 +4,23 @@ MFD_FILTER(keyrange)
 
 	mflt:keyrange
 	TTF_DEFAULTDEF("MIDI Key-Range Filter")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
-	, TTF_IPORT(1, "lower", "Lowest Note",  0.0, 127.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
-	, TTF_IPORT(2, "upper", "Highest Note",  0.0, 127.0,  127.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
+	, TTF_IPORT(1, "lower", "Lowest Note",  0.0, 127.0,  0.0,
+			lv2:portProperty lv2:integer; units:unit units:midiNote ;
+			rdfs:comment "lower end of note-range (inclusive)")
+	, TTF_IPORT(2, "upper", "Highest Note",  0.0, 127.0,  127.0,
+			lv2:portProperty lv2:integer; units:unit units:midiNote ;
+			rdfs:comment "upper end of note-range (inclusive)")
 	, TTF_IPORT(3, "mode", "Operation Mode",  0.0, 3.0,  1.0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Bypass"  ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Include Range"  ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Exclude Range"  ; rdf:value 2.0 ] ;
+			rdfs:comment ""
 			)
+	rdfs:comment "This filter allows to define a range of allowed midi notes. Notes-on/off events outside the allowed range are discarded. If the range changes, note-off events are sent to currently active notes that end up outside the valid range." ; 
 	.
 
 #elif defined MX_CODE

@@ -4,7 +4,7 @@ MFD_FILTER(mapkeyscale)
 
 	mflt:mapkeyscale
 	TTF_DEFAULTDEF("MIDI Keys Transpose")
-	, TTF_IPORT( 0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any"))
+	, TTF_IPORT( 0, "channelf", "Filter Channel",  0.0, 16.0,  0.0, PORTENUMZ("Any") DOC_CHANF)
 	, TTF_IPORT( 1, "k0",  "C",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT( 2, "k1",  "C#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT( 3, "k2",  "D",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
@@ -17,6 +17,7 @@ MFD_FILTER(mapkeyscale)
 	, TTF_IPORT(10, "k9",  "A",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT(11, "k10", "A#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT(12, "k11", "B",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
+	rdfs:comment "Flexible 12-tone map. Allows to change note within an octave to another note in the same octave-range +- 12 semitones. Notes can also be masked (disabled). The setting can be changed dynamically: Note-on/off events will be sent accordingly.";
 	.
 
 #elif defined MX_CODE

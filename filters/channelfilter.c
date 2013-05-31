@@ -20,6 +20,7 @@ MFD_FILTER(channelfilter)
 	, TTF_IPORTTOGGLE(13, "chn14", "Channel 14", 1.0)
 	, TTF_IPORTTOGGLE(14, "chn15", "Channel 15", 1.0)
 	, TTF_IPORTTOGGLE(15, "chn16", "Channel 16", 1.0)
+	rdfs:comment "Simple MIDI channel filter. Only data for selected channels may pass. This filter only affects midi-data which is channel relevant (ie note-on/off, control and program changes, key and channel pressure and pitchbend). MIDI-SYSEX and Realtime message are always passed on. This plugin is intended for live-use, button-control. See also 'Midi Channel Map' filter." ; 
 	.
 
 #elif defined MX_CODE
