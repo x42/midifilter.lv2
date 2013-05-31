@@ -6,6 +6,7 @@ MFD_FILTER(mididup)
 	TTF_DEFAULTDEF("MIDI Channel Unisono")
 	, TTF_IPORTINT(0, "chs", "Source Channel",  1.0, 16.0,  1.0)
 	, TTF_IPORTINT(1, "chd", "Duplicate to Channel",  1.0, 16.0,  2.0)
+	rdfs:comment "Duplicate MIDI events from one channel to another."
 	.
 
 #elif defined MX_CODE

@@ -10,7 +10,8 @@ MFD_FILTER(mididelay)
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
 
-	, TTF_IPORT( 1, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm)
+	, TTF_IPORT(1, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
+			rdfs:comment "base unit for the delay-time")
 	, TTF_IPORT(2, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0,
 			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;
@@ -19,8 +20,10 @@ MFD_FILTER(mididelay)
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;
 			lv2:scalePoint [ rdfs:label "Two Bars" ; rdf:value 8.0 ] ;
 			lv2:scalePoint [ rdfs:label "Four Bars" ; rdf:value 16.0 ] ;
-			)
-	, TTF_IPORTFLOAT( 3, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0)
+			rdfs:comment "delay length in base-unit")
+	, TTF_IPORT( 3, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0,
+			rdfs:comment "randomization factor")
+	rdfs:comment "MIDI delay line. Delay all MIDI events by a given time which is give as BPM and beats. If the delay includes a random factor, this effect takes care of always keeping note on/off events sequential regardles of the randomization."
 	.
 
 #elif defined MX_CODE
