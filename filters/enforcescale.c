@@ -43,6 +43,21 @@ static int filter_enforcescale_check(int scale, uint8_t key) {
 	return major_scale[(key - scale + 12) % 12];
 }
 
+static inline void filter_enforcescale_panic(MidiFilter* self, uint32_t tme) {
+	int c,k;
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+		if (self->memCS[c][k] > 0) {
+			uint8_t buf[3];
+			buf[0] = MIDI_NOTEOFF | c;
+			buf[1] = k;
+			buf[2] = 0;
+			forge_midimessage(self, tme, buf, 3);
+		}
+		self->memCI[c][k] = 0; // current key transpose
+		self->memCS[c][k] = 0; // count note-on per key
+	}
+}
+
 static void
 filter_midi_enforcescale(MidiFilter* self,
 		uint32_t tme,
@@ -56,6 +71,14 @@ filter_midi_enforcescale(MidiFilter* self,
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
 	uint8_t mst = buffer[0] & 0xf0;
+
+	if (size == 3
+			&& mst == MIDI_CONTROLCHANGE
+			&& (buffer[1]&0x7f) == 123
+			&& (buffer[2]&0x7f) == 0)
+	{
+		filter_enforcescale_panic(self, tme);
+	}
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
