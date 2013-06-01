@@ -9,10 +9,10 @@ MFD_FILTER(keysplit)
 			lv2:portProperty lv2:integer; units:unit units:midiNote ;
 			rdfs:comment "Given note and all higher notes are sent to 'upper-manual'."
 			)
-	, TTF_IPORT(2, "channel0", "Channel Lower",  1.0, 16.0,  1.0, PORTENUM16;
+	, TTF_IPORT(2, "channel0", "Channel Lower",  1.0, 16.0,  1.0, PORTENUM16
 			rdfs:comment "MIDI channel of 'lower-manual'.")
 	, TTF_IPORT(3, "transp0", "Transpose Lower",  -48.0, 48.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
-	, TTF_IPORT(4, "channel1", "Channel Upper",  1.0, 16.0,  2.0, PORTENUM16;
+	, TTF_IPORT(4, "channel1", "Channel Upper",  1.0, 16.0,  2.0, PORTENUM16
 			rdfs:comment "MIDI channel of 'upper-manual'.")
 	, TTF_IPORT(5, "transp1", "Transpose Upper",  -48.0, 48.0,  0.0, lv2:portProperty lv2:integer; units:unit units:midiNote)
 	; rdfs:comment "Change midi-channel number depending on note. The plugin keeps track of transposed midi-notes in case and sends note-off events accordinly if the range is changed even if a note is active. However the split-point and channel-assignments for each manual should only be changed when no notes are currently played. "
