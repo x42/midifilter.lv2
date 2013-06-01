@@ -8,7 +8,7 @@ MFD_FILTER(normrandvel)
 			PORTENUMZ("Any")
 			DOC_CHANF)
     , TTF_IPORTFLOAT(1, "dev", "Velocity Standard Deviation", 0.0, 64.0, 8.0)
-    rdfs:comment "Randomize Velocity of Midi notes (both note on and note off) according to a normalized random distribution."
+    ; rdfs:comment "Randomize Velocity of Midi notes (both note on and note off) according to a normalized random distribution."
     .
 
 #elif defined MX_CODE

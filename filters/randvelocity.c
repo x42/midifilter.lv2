@@ -8,7 +8,7 @@ MFD_FILTER(randvelocity)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 127.0,  8.0)
-	rdfs:comment "Randomize Velocity of Midi notes (both note on and note off)."
+	; rdfs:comment "Randomize Velocity of Midi notes (both note on and note off)."
 	.
 
 #elif defined MX_CODE

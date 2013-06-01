@@ -30,7 +30,7 @@ MFD_FILTER(enforcescale)
 			lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2.0 ] ;
 			rdfs:comment "Behaviour towards of off-key notes."
 			)
-	rdfs:comment "Filter note-on/off events depending on musical scale. If the key is changed note-off events of are sent for all active off-key notes." ; 
+	; rdfs:comment "Filter note-on/off events depending on musical scale. If the key is changed note-off events of are sent for all active off-key notes." ; 
 	.
 
 #elif defined MX_CODE

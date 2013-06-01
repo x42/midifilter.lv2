@@ -20,7 +20,7 @@ MFD_FILTER(keyrange)
 			lv2:scalePoint [ rdfs:label "Exclude Range"  ; rdf:value 2.0 ] ;
 			rdfs:comment ""
 			)
-	rdfs:comment "This filter allows to define a range of allowed midi notes. Notes-on/off events outside the allowed range are discarded. If the range changes, note-off events are sent to currently active notes that end up outside the valid range." ; 
+	; rdfs:comment "This filter allows to define a range of allowed midi notes. Notes-on/off events outside the allowed range are discarded. If the range changes, note-off events are sent to currently active notes that end up outside the valid range." ; 
 	.
 
 #elif defined MX_CODE

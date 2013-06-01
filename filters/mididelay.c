@@ -23,7 +23,7 @@ MFD_FILTER(mididelay)
 			rdfs:comment "delay length in base-unit")
 	, TTF_IPORT( 3, "delayRandom", "Randomize [Beats]", 0.0, 1.0,  0.0,
 			rdfs:comment "randomization factor")
-	rdfs:comment "MIDI delay line. Delay all MIDI events by a given time which is give as BPM and beats. If the delay includes a random factor, this effect takes care of always keeping note on/off events sequential regardles of the randomization."
+	; rdfs:comment "MIDI delay line. Delay all MIDI events by a given time which is give as BPM and beats. If the delay includes a random factor, this effect takes care of always keeping note on/off events sequential regardles of the randomization."
 	.
 
 #elif defined MX_CODE

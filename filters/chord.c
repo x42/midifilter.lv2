@@ -33,7 +33,7 @@ MFD_FILTER(midichord)
 	, TTF_IPORTTOGGLE( 9, "c11", "11th", 0.0)
 	, TTF_IPORTTOGGLE(10, "c13", "13th", 0.0)
 	, TTF_IPORTTOGGLE(11, "_8",  "bass", 0.0)
-	rdfs:comment "" ;
+	; rdfs:comment "" ;
 	.
 
 #elif defined MX_CODE

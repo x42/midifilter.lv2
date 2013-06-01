@@ -20,7 +20,7 @@ MFD_FILTER(channelmap)
 	, TTF_IPORT(13, "chn14", "Channel 14 to", 1.0, 16.0, 14.0, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT(14, "chn15", "Channel 15 to", 1.0, 16.0, 15.0, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT(15, "chn16", "Channel 16 to", 1.0, 16.0, 16.0, PORTENUMZ("Off") DOC_CHANZ)
-	rdfs:comment "Rewrite midi-channel number. This filter only affects midi-data which is channel relevant (ie note-on/off, control and program changes, key and channel pressure and pitchbend). MIDI-SYSEX and Realtime message are always passed thru unmodified." ; 
+	; rdfs:comment "Rewrite midi-channel number. This filter only affects midi-data which is channel relevant (ie note-on/off, control and program changes, key and channel pressure and pitchbend). MIDI-SYSEX and Realtime message are always passed thru unmodified." ; 
 	.
 
 #elif defined MX_CODE

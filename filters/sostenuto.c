@@ -9,7 +9,7 @@ MFD_FILTER(sostenuto)
 			DOC_CHANF)
 	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
 	, TTF_IPORTTOGGLE( 2, "pedal",  "Enable", 1.0)
-	rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal."
+	; rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal."
 	.
 
 #elif defined MX_CODE

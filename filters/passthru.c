@@ -4,7 +4,7 @@ MFD_FILTER(passthru)
 
 	mflt:passthru
 	TTF_DEFAULTDEF("MIDI Thru")
-	rdfs:comment "MIDI All pass. This plugin has no effect and is intended as example."
+	; rdfs:comment "MIDI All pass. This plugin has no effect and is intended as example."
 	.
 
 #elif defined MX_CODE
