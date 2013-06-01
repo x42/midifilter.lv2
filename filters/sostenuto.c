@@ -4,8 +4,11 @@ MFD_FILTER(sostenuto)
 
 	mflt:sostenuto
 	TTF_DEFAULTDEF("MIDI Sostenuto")
-	, TTF_IPORT( 0, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
-	, TTF_IPORTTOGGLE( 1, "pedal",  "Enable", 1.0)
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
+	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
+	, TTF_IPORTTOGGLE( 2, "pedal",  "Enable", 1.0)
 	rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal."
 	.
 
@@ -90,11 +93,22 @@ filter_midi_sostenuto(MidiFilter* self,
 		const uint8_t* const buffer,
 		const uint32_t size)
 {
-	const uint32_t delay = floor(self->samplerate * RAIL((*self->cfg[0]), 0, 120));
-	const int state = RAIL(*self->cfg[1], 0, 1);
+	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const uint32_t delay = floor(self->samplerate * RAIL((*self->cfg[1]), 0, 120));
+	const int state = RAIL(*self->cfg[2], 0, 1);
 
-	uint8_t mst = buffer[0] & 0xf0;
+	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t vel = buffer[2] & 0x7f;
+	uint8_t mst = buffer[0] & 0xf0;
+
+	if (size != 3
+			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
+			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			)
+	{
+		forge_midimessage(self, tme, buffer, size);
+		return;
+	}
 
 	if (mst == MIDI_NOTEON && vel ==0 ) {
 		mst = MIDI_NOTEOFF;
@@ -148,14 +162,14 @@ filter_preproc_sostenuto(MidiFilter* self)
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
-	const int state = RAIL(*self->cfg[1], 0, 1);
+	const int state = RAIL(*self->cfg[2], 0, 1);
 
-	if (   self->lcfg[0] == *self->cfg[0]
-			&& self->lcfg[1] == *self->cfg[1]) {
+	if (   self->lcfg[1] == *self->cfg[1]
+			&& self->lcfg[2] == *self->cfg[2]) {
 		return;
 	}
 
-	const float diff = *self->cfg[0] - self->lcfg[0];
+	const float diff = *self->cfg[1] - self->lcfg[1];
 	const int delay = rint(self->samplerate * diff);
 
 	for (i=0; i < max_delay; ++i) {
