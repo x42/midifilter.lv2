@@ -38,27 +38,31 @@ MFD_FILTER(midichord)
 
 #elif defined MX_CODE
 
-// TODO non-global var
-static const short major_scale[12] = {
-	1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1
-};
+static inline int filter_midichord_isonscale(int base) {
+	const short major_scale[12] = {
+		1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1
+	};
+	return major_scale[base];
+}
 
-// TODO non-global var
-static const short chord_scale[12][10] = {
-/* 1  3  5  6   7  OC   9  11  13   BS */
-	{0, 4, 7, 9, 11, 12, 14, 17, 21, -12 },
-	{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-	{0, 3, 7, 9, 10, 12, 14, 17, 21, -12 },
-	{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-	{0, 3, 7, 8, 10, 12, 13, 17, 20, -12 },
-	{0, 4, 7, 9, 11, 12, 14, 18, 21, -12 },
-	{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-	{0, 4, 7, 9, 10, 12, 14, 17, 21, -12 },
-	{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-	{0, 3, 7, 8, 10, 12, 14, 17, 20, -12 },
-	{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-	{0, 3, 6, 8, 10, 12, 13, 16, 19, -12 },
-};
+static inline int filter_midichord_halftoneoffset(int base, int interval) {
+	const short chord_scale[12][10] = {
+	/* 1  3  5  6   7  OC   9  11  13   BS */
+		{0, 4, 7, 9, 11, 12, 14, 17, 21, -12 },
+		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 3, 7, 9, 10, 12, 14, 17, 21, -12 },
+		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 3, 7, 8, 10, 12, 13, 17, 20, -12 },
+		{0, 4, 7, 9, 11, 12, 14, 18, 21, -12 },
+		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 4, 7, 9, 10, 12, 14, 17, 21, -12 },
+		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 3, 7, 8, 10, 12, 14, 17, 20, -12 },
+		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 3, 6, 8, 10, 12, 13, 16, 19, -12 },
+	};
+	return chord_scale[base][interval];
+}
 
 static inline void filter_midichord_noteon(MidiFilter* self, uint32_t tme, uint8_t chn, int note, uint8_t vel) {
 	uint8_t buf[3];
@@ -85,6 +89,22 @@ static inline void filter_midichord_noteoff(MidiFilter* self, uint32_t tme, uint
 	}
 }
 
+static inline void filter_midichord_panic(MidiFilter* self, uint32_t tme) {
+	int c,k;
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+		if (self->memCS[c][k] > 0) {
+			uint8_t buf[3];
+			buf[0] = MIDI_NOTEOFF | c;
+			buf[1] = k;
+			buf[2] = 0;
+			forge_midimessage(self, tme, buf, 3);
+		}
+		self->memCI[c][k] = -1000; // current chord for this key
+		self->memCS[c][k] = 0; // count note-on per key
+		self->memCM[c][k] = 0; // last known velocity for this key
+	}
+}
+
 static void
 filter_midi_midichord(MidiFilter* self,
 		uint32_t tme,
@@ -103,6 +123,14 @@ filter_midi_midichord(MidiFilter* self,
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
 
+	if (size == 3
+			&& mst == MIDI_CONTROLCHANGE
+			&& (buffer[1]&0x7f) == 123
+			&& (buffer[2]&0x7f) == 0)
+	{
+		filter_midichord_panic(self, tme);
+	}
+
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
 			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
@@ -114,9 +142,9 @@ filter_midi_midichord(MidiFilter* self,
 
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
-	const int tonika = (key + scale) % 12;
+	const int tonika = (key + 12 - scale) % 12;
 
-	if (! major_scale[tonika]) {
+	if (! filter_midichord_isonscale(tonika)) {
 		chord = 1;
 	}
 
@@ -126,14 +154,14 @@ filter_midi_midichord(MidiFilter* self,
 			self->memCM[chn][key] = vel;
 			for (i=0; i < 10 ; ++i) {
 				if (!(chord & (1<<i))) continue;
-				filter_midichord_noteon(self, tme, chn, key + chord_scale[tonika][i], vel);
+				filter_midichord_noteon(self, tme, chn, key + filter_midichord_halftoneoffset(tonika, i), vel);
 			}
 			break;
 		case MIDI_NOTEOFF:
 			chord = self->memCI[chn][key];
 			for (i=0; i < 10 ; ++i) {
 				if (!(chord & (1<<i))) continue;
-				filter_midichord_noteoff(self, tme, chn, key + chord_scale[tonika][i], vel);
+				filter_midichord_noteoff(self, tme, chn, key + filter_midichord_halftoneoffset(tonika, i), vel);
 			}
 			self->memCI[chn][key] = -1000;
 			self->memCM[chn][key] = 0;
@@ -142,7 +170,7 @@ filter_midi_midichord(MidiFilter* self,
 			for (i=0; i < 10 ; ++i) {
 				uint8_t buf[3];
 				if (!(chord & (1<<i))) continue;
-				int note = key + chord_scale[tonika][i];
+				int note = key + filter_midichord_halftoneoffset(tonika, i);
 				if (midi_valid(note)) {
 					buf[0] = buffer[0];
 					buf[1] = note;
@@ -161,7 +189,7 @@ static void filter_preproc_midichord(MidiFilter* self) {
 
 	for (i=0; i < 10; ++i) {
 		if ((*self->cfg[i+2]) != 0) newchord |= 1<<i;
-		if (floor(self->lcfg[i+1]) != floor(*self->cfg[i+1])) {
+		if (floor(self->lcfg[i+2]) != floor(*self->cfg[i+2])) {
 			identical_cfg = 0;
 		}
 	}
@@ -176,32 +204,40 @@ static void filter_preproc_midichord(MidiFilter* self) {
 	for (c=0; c < 16; ++c) {
 		for (k=0; k < 127; ++k) {
 			if (self->memCM[c][k] == 0) continue;
+			if (self->memCI[c][k] == -1000) continue;
 
 			const uint8_t vel = self->memCM[c][k];
-			const int t0 = (k + oldscale) % 12;
-			const int t1 = (k + newscale) % 12;
+			const int t0 = (k + 12 - oldscale) % 12;
+			const int t1 = (k + 12 - newscale) % 12;
 
 			const int oldchord = self->memCI[c][k];
 			int chord = newchord;
 
-			if (! major_scale[t1]) {
+			if (! filter_midichord_isonscale(t1)) {
 				chord = 1;
 			}
 
 			for (i=0; i < 10 ; ++i) {
 
-				// TODO honor scale-changes
+				if ((chord & (1<<i)) == (oldchord & (1<<i))
+						&& !(chord & (1<<i))) {
+					continue;
+				}
 
-				if ((chord & (1<<i)) && (oldchord & (1<<i)))  continue;
+				if ((chord & (1<<i)) == (oldchord & (1<<i))
+						&& (filter_midichord_halftoneoffset(t0, i) == filter_midichord_halftoneoffset(t1, i))
+						&& t0 == t1) {
+						continue;
+				}
 
 				if (oldchord & (1<<i)) {
-					filter_midichord_noteoff(self, 0, c, k + chord_scale[t0][i], 0);
+					filter_midichord_noteoff(self, 0, c, k + filter_midichord_halftoneoffset(t0, i), 0);
 				}
 				if (chord & (1<<i)) {
-					filter_midichord_noteon(self, 0, c, k + chord_scale[t1][i], vel);
+					filter_midichord_noteon(self, 0, c, k + filter_midichord_halftoneoffset(t1, i), vel);
 				}
-				self->memCI[c][k] = newchord;
 			}
+			self->memCI[c][k] = chord;
 		}
 	}
 }
@@ -209,7 +245,7 @@ static void filter_preproc_midichord(MidiFilter* self) {
 static void filter_init_midichord(MidiFilter* self) {
 	int c,k;
 	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
-		self->memCI[c][k] = 0; // current chord for this key
+		self->memCI[c][k] = -1000; // current chord for this key
 		self->memCS[c][k] = 0; // count note-on per key
 		self->memCM[c][k] = 0; // last known velocity for this key
 	}
