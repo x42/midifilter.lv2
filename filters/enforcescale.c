@@ -40,7 +40,7 @@ static int filter_enforcescale_check(int scale, uint8_t key) {
 	const short major_scale[12] = {
 		1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1
 	};
-	return major_scale[(key + scale + 12) % 12];
+	return major_scale[(key - scale + 12) % 12];
 }
 
 static void
