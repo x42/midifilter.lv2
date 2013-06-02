@@ -120,6 +120,11 @@ filter_midi_mididelay(MidiFilter* self,
 	}
 #endif
 
+	if (size > 3) {
+		//forge_midimessage(self, tme, buffer, size);  // XXX may arrive out of order
+		return;
+	}
+
 	MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 	memcpy(qm->buf, buffer, size);
 	qm->size = size;
