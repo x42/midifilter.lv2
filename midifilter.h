@@ -95,6 +95,8 @@ typedef struct _MidiFilter{
 	float    frames_per_second;
 
 	MidiEventQueue *memQ;
+	MidiEventQueue *memS;
+
 	uint32_t n_samples;
 	double samplerate;
 
