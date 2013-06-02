@@ -9,15 +9,15 @@ MFD_FILTER(midistrum)
 			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
-	, TTF_IPORT( 1, "mode",  "Strum Mode", 0.0, 3.0,  2.0,
+	, TTF_IPORT(1, "bpm",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
+			rdfs:comment "base unit for the time (unless host provides BPM)")
+	, TTF_IPORT( 2, "mode",  "Strum Mode", 0.0, 3.0,  2.0,
 			lv2:scalePoint [ rdfs:label "Always Down (low notes first)" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Always Up (high notes first)" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Alternate" ; rdf:value 2.0 ] ;
-			lv2:scalePoint [ rdfs:label "Beat" ; rdf:value 3.0 ] ;
+			lv2:scalePoint [ rdfs:label "Up/Down Beat" ; rdf:value 3.0 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
-	, TTF_IPORT(2, "bpm",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
-			rdfs:comment "base unit for the time (unless host provides BPM)")
 	, TTF_IPORT(3, "collect", "Note Collect Timeout [ms]", 0.0, 300,  15,
 			rdfs:comment "Time to wait for chord to be 'complete'. Keys pressed withing given timeframe will be combined into one chord.")
 	, TTF_IPORT(4, "duration", "Strum Duration in Beats", 0.0, 4.0, .25,
@@ -55,7 +55,7 @@ static void
 filter_midistrum_process(MidiFilter* self, int tme)
 {
 	int i;
-	const int max_collect = rintf(self->samplerate * (*self->cfg[3]) / 1000.0);
+	const int max_collect = 1 + rintf(self->samplerate * (*self->cfg[3]) / 1000.0);
 	if (self->memI[5] == 0) return; // no notes collected
 
 	if (self->memI[4] + max_collect > self->memI[3] + tme) { // TODO handle time overflow
@@ -69,7 +69,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	// TODO  check that all fit in buffer
 	// if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) { return; }
 
-	float bpm = (*self->cfg[2]);
+	float bpm = (*self->cfg[1]);
 	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
 		bpm = self->bpm;
 	}
@@ -77,7 +77,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	const int strum_time = floor(self->samplerate * (*self->cfg[4]) * 60.0 / bpm);
 
 	int dir = 0; // 0: down (low notes first), 1: up (high-notes first)
-	switch ((int) floor(*self->cfg[1])) {
+	switch ((int) floor(*self->cfg[2])) {
 		case 0: // always down
 			break;
 		case 1: // always up
@@ -140,6 +140,8 @@ filter_midi_midistrum(MidiFilter* self,
 		return;
 	}
 
+	// TODO handle midi-panic
+
 	if (size != 3 || !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)) {
 		if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
 			return; // queue full
@@ -152,14 +154,14 @@ filter_midi_midistrum(MidiFilter* self,
 		return;
 	}
 
-	float bpm = (*self->cfg[2]);
+	float bpm = (*self->cfg[1]);
 	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
 		bpm = self->bpm;
 	}
 	if (bpm <= 0) bpm = 60;
 
 	const int strum_time = floor(self->samplerate * (*self->cfg[4]) * 60.0 / bpm);
-	const int max_collect = rintf(self->samplerate * (*self->cfg[3]) / 1000.0);
+	const int max_collect = 1 + rintf(self->samplerate * (*self->cfg[3]) / 1000.0);
 
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
@@ -221,7 +223,7 @@ filter_midi_midistrum(MidiFilter* self,
 static void
 filter_preproc_midistrum(MidiFilter* self)
 {
-	self->latency = rint(self->samplerate * (*self->cfg[3]) / 1000.0);
+	self->latency = 1 + rint(self->samplerate * (*self->cfg[3]) / 1000.0);
 }
 
 static void
