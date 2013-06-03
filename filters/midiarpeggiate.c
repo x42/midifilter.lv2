@@ -86,10 +86,11 @@ filter_midistrum_process(MidiFilter* self, int tme)
 		case 2: // alternate
 			dir = (self->memI[6]) ? 1 : 0;
 			break;
-		case 3: // depending on beat..
-			// TODO compensate for latency...
+		case 3: // depending on beat.. 1,2,3,4 down ;; 1+,2+,3+,4+ up
+			// compensate for latency, round off inacurracies on beat boundaries.
 			if ((self->available_info & NFO_BEAT)) {
-				if (self->beat_beats > 0.5) {
+				const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
+				if (ROUND_PARTIAL_BEATS(self->beat_beats + ((tme - max_collect) / samples_per_beat), 12.0) >= 0.5) {
 					dir = 1;
 				}
 			}

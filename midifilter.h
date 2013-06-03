@@ -26,6 +26,7 @@
 #define SQUARE(a) ( (a) * (a) )
 #endif
 
+#define ROUND_PARTIAL_BEATS(X,Y) ( rint( (Y) * (X)) / (Y) - floor(rint( (Y) * (X)) / (Y)) )
 #define MAXCFG 16
 
 #define LOOP_CFG(FN) \
