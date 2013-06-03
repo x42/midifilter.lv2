@@ -89,9 +89,9 @@ static inline void filter_midichord_noteoff(MidiFilter* self, uint32_t tme, uint
 	}
 }
 
-static inline void filter_midichord_panic(MidiFilter* self, uint32_t tme) {
-	int c,k;
-	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+static inline void filter_midichord_panic(MidiFilter* self, uint8_t c, uint32_t tme) {
+	int k;
+	for (k=0; k < 127; ++k) {
 		if (self->memCS[c][k] > 0) {
 			uint8_t buf[3];
 			buf[0] = MIDI_NOTEOFF | c;
@@ -125,10 +125,10 @@ filter_midi_midichord(MidiFilter* self,
 
 	if (size == 3
 			&& mst == MIDI_CONTROLCHANGE
-			&& (buffer[1]&0x7f) == 123
+			&& ( (buffer[1]&0x7f) == 123 || (buffer[1]&0x7f) == 120 )
 			&& (buffer[2]&0x7f) == 0)
 	{
-		filter_midichord_panic(self, tme);
+		filter_midichord_panic(self, chn, tme);
 	}
 
 	if (size != 3
