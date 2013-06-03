@@ -128,6 +128,30 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	self->memI[5] = 0;
 }
 
+static inline void filter_midistrum_panic(MidiFilter* self, uint32_t tme) {
+	int i,c,k;
+	const int max_delay = self->memI[0];
+	for (i=0; i < max_delay; ++i) {
+		self->memQ[i].size = 0;
+	}
+	self->memI[1] = 0; // read-pointer
+	self->memI[2] = 0; // write-pointer
+
+	self->memI[4] = 0; // collection stattime
+	self->memI[5] = 0; // collected notes
+	self->memI[6] = 0; // stroke direction
+
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+		if (self->memCS[c][k]) {
+			uint8_t buf[3];
+			buf[0] = MIDI_NOTEOFF | c;
+			buf[1] = k; buf[2] = 0;
+			forge_midimessage(self, tme, buf, 3);
+		}
+		self->memCS[c][k] = 0; // count note-on per key
+	}
+}
+
 void
 filter_midi_midistrum(MidiFilter* self,
 		const uint32_t tme,
@@ -141,7 +165,13 @@ filter_midi_midistrum(MidiFilter* self,
 		return;
 	}
 
-	// TODO handle midi-panic
+	if (size == 3
+			&& mst == MIDI_CONTROLCHANGE
+			&& (buffer[1]&0x7f) == 123
+			&& (buffer[2]&0x7f) == 0)
+	{
+		filter_midistrum_panic(self, tme);
+	}
 
 	if (size != 3 || !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)) {
 		if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
@@ -204,15 +234,12 @@ filter_midi_midistrum(MidiFilter* self,
 
 	/* delay note-off by max-latency (= collection-time + strum-time) */
 	else if (mst == MIDI_NOTEOFF) {
-		// TODO align note-off -> whole chord
-		// ie. keep track of note-on timing..
-		// also prevent dup. note on, on, off, off sequences
-
-		// TODO make delay as short as possible
 		int delay = max_collect + strum_time;
-#if 0
-		printf("note off! delay %d + %d = %d\n", max_collect, strum_time, delay);
-#endif
+		if (self->memI[5] > 0) {
+			// TODO filter out ignored dups from above
+			delay -= tme + self->memI[3] - self->memI[4];
+		}
+
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, buffer, size);
 		qm->size = size;
@@ -243,7 +270,32 @@ filter_postproc_midistrum(MidiFilter* self)
 		const int off = (i + roff) % max_delay;
 		if (self->memQ[off].size > 0) {
 			if (self->memQ[off].reltime < n_samples) {
-				forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+
+				if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEON) {
+					const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
+					const uint8_t key = self->memQ[off].buf[1] & 0x7f;
+					self->memCS[chn][key]++;
+					if (self->memCS[chn][key] > 1) { // send a note-off first
+						uint8_t buf[3];
+						buf[0] = MIDI_NOTEOFF | chn;
+						buf[1] = key; buf[2] = 0;
+						forge_midimessage(self, self->memQ[off].reltime, buf, 3);
+					}
+					forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+				}
+				else if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEOFF) {
+					const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
+					const uint8_t key = self->memQ[off].buf[1] & 0x7f;
+					if (self->memCS[chn][key] > 0) {
+						self->memCS[chn][key]--;
+						if (self->memCS[chn][key] == 0) {
+							forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+						}
+					}
+				} else {
+					forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+				}
+
 				self->memQ[off].size = 0;
 				if (!skipped) self->memI[1] = (self->memI[1] + 1) % max_delay;
 			} else {
@@ -259,6 +311,7 @@ filter_postproc_midistrum(MidiFilter* self)
 }
 
 void filter_init_midistrum(MidiFilter* self) {
+	int c,k;
 	srandom ((unsigned int) time (NULL));
 
 	self->memI[0] = MAX(self->samplerate / 16.0, 16);
@@ -275,6 +328,10 @@ void filter_init_midistrum(MidiFilter* self) {
 	self->preproc_fn = filter_preproc_midistrum;
 	self->postproc_fn = filter_postproc_midistrum;
 	self->cleanup_fn = filter_cleanup_midistrum;
+
+	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+		self->memCS[c][k] = 0; // count note-on per key
+	}
 }
 
 #endif
