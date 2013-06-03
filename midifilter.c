@@ -108,9 +108,9 @@ update_position(MidiFilter* self, const LV2_Atom_Object* obj)
 		self->available_info |= NFO_SPEED;
 	}
 	if (beat && beat->type == uris->atom_Float) {
-		const float samples_per_beat = 60.0f / self->bpm * self->samplerate;
+		const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
 		self->bar_beats    = ((LV2_Atom_Float*)beat)->body;
-		self->beat_beats   = self->bar_beats - floorf(self->bar_beats);
+		self->beat_beats   = self->bar_beats - floor(self->bar_beats);
 		self->pos_bbt      = self->beat_beats * samples_per_beat;
 		self->available_info |= NFO_BEAT;
 	}
@@ -167,6 +167,17 @@ run(LV2_Handle instance, uint32_t n_samples)
 
 	if (self->postproc_fn) {
 		self->postproc_fn(self);
+	}
+
+	/* increment position for next cycle */
+	if (self->available_info & NFO_BEAT) {
+		const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
+		self->bar_beats    += (double) n_samples / samples_per_beat;
+		self->beat_beats   = self->bar_beats - floor(self->bar_beats);
+		self->pos_bbt      = self->beat_beats * samples_per_beat;
+	}
+	if (self->available_info & NFO_FRAME) {
+		self->pos_frame += n_samples;
 	}
 
 out:

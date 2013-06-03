@@ -89,8 +89,8 @@ typedef struct _MidiFilter{
 	int    available_info; // bit-f
 	float  bpm;
 	float  speed;  // Transport speed (usually 0=stop, 1=play)
-	float  bar_beats;
-	float  beat_beats;
+	double   bar_beats;
+	double   beat_beats;
 	uint32_t pos_bbt;
 	long int pos_frame;
 	float    frames_per_second;
