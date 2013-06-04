@@ -29,14 +29,14 @@ MFD_FILTER(midistrum)
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;
 			rdfs:comment "delay length in base-unit")
-	/*
-	, TTF_IPORT(5, "randspeed", "Randomize Strum Speed", 0.0, 1.0,  0.0,
-			rdfs:comment "duration randomization factor")
-	, TTF_IPORT(6, "adjvelocity", "Adjust Velocity", -1.0, 1.0,  0.0,
+	, TTF_IPORT(5, "adjspeed", "Strum Acceleration", -1.0, 1.0,  0.0,
 			rdfs:comment "")
-	, TTF_IPORT(7, "randvelocity", "Randomize Velocity", 0.0, 1.0,  0.0,
-			rdfs:comment "velodity randomization factor")
-	*/
+	, TTF_IPORT(6, "adjvelocity", "Strum Velocity", -1.0, 1.0,  0.0,
+			rdfs:comment "")
+	, TTF_IPORT(7, "randspeed", "Randomize Acceleration", 0.0, 1.0,  0.0,
+			rdfs:comment "")
+	, TTF_IPORT(8, "randvelocity", "Randomize Velocity", 0.0, 1.0,  0.0,
+			rdfs:comment "")
 	; rdfs:comment ""
 	.
 
@@ -99,6 +99,19 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	int reltime = MSC_DIFF(self->memI[4], self->memI[3]);
 	int tdiff = strum_time / self->memI[5];
 
+
+	float spdcfg = (*self->cfg[5]);
+	float velcfg = (*self->cfg[6]);
+
+	spdcfg +=  (*self->cfg[7]) * (2.0 * random() / (float)RAND_MAX - 1.0);
+	velcfg +=  (*self->cfg[8]) * (2.0 * random() / (float)RAND_MAX - 1.0);
+
+	spdcfg = RAIL(spdcfg, -1.0, 1.0);
+
+	const float veladj = RAIL(velcfg, -1.0, 1.0);
+	const float spdadj = fabsf(spdcfg);
+	const int   spddir = spdcfg < 0 ? 1 : 0;
+
 	/* sort notes by strum direction.. */
 	for (i=0; i < self->memI[5]; ++i) {
 		int nextup = -1;
@@ -113,14 +126,30 @@ filter_midistrum_process(MidiFilter* self, int tme)
 			}
 		}
 
-		// TODO randomness
-
 		if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) { break; }
+
+		/* velocity adjustment */
+		int vel = self->memS[nextup].buf[2] & 0x7f;
+		const float p0 = (float)(i+1.0) / (float)(self->memI[5] + 1.0);
+
+		vel -= fabsf(veladj) * 32.0;
+		if (veladj < 0)
+			vel += fabsf(veladj) * 64.0 * p0;
+		else
+			vel += fabsf(veladj) * 64.0 * (1.0 - p0);
+		self->memS[nextup].buf[2] = RAIL(vel, 1, 127);
+
+		/* speed adjustment */
+		const float p1 = (float)(i+1.0) / (float)(self->memI[5]);
+		float sfact = pow(spdadj+1.0, p1) - spdadj;
+		if (spddir) {
+			sfact = sfact ==0 ? 0 : 1.0 / sqrt(sfact);
+		}
 
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, self->memS[nextup].buf, self->memS[nextup].size);
 		qm->size = self->memS[nextup].size;
-		qm->reltime = reltime + tdiff * i;
+		qm->reltime = reltime + rint((float)(tdiff * i) * sfact);
 		self->memI[2] = (self->memI[2] + 1) % self->memI[0];
 		self->memS[nextup].size = 0; // mark as processed
 	}
