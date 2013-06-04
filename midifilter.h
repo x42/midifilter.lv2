@@ -145,6 +145,8 @@ static int midi_valid(const int);
  * e.g. midi pitchbend */
 static int midi_14bit(const uint8_t * const);
 
+static int midi_is_panic(const uint8_t * const b, const int size);
+
 /** calculate a random number according to a modified Marsaglia polar method
  * approaching a normal distribution, should be more "human"
  *

@@ -123,11 +123,7 @@ filter_midi_midichord(MidiFilter* self,
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
 
-	if (size == 3
-			&& mst == MIDI_CONTROLCHANGE
-			&& ( (buffer[1]&0x7f) == 123 || (buffer[1]&0x7f) == 120 )
-			&& (buffer[2]&0x7f) == 0)
-	{
+	if (midi_is_panic(buffer, size)) {
 		filter_midichord_panic(self, chn, tme);
 	}
 

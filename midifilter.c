@@ -51,6 +51,14 @@ static int midi_14bit(const uint8_t * const b) {
 	return ((b[1]) | (b[2]<<7));
 }
 
+static int midi_is_panic(const uint8_t * const b, const int s) {
+	if (s == 3
+			&& (b[0] & 0xf0) == MIDI_CONTROLCHANGE
+			&& ( (b[1]&0x7f) == 123 || (b[1]&0x7f) == 120 )
+			&& (b[2]&0x7f) == 0)
+		return 1;
+	return 0;
+}
 
 static float normrand(const float dev) {
 	static char initialized = 0;
