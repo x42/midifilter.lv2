@@ -128,20 +128,22 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	self->memI[5] = 0;
 }
 
-static inline void filter_midistrum_panic(MidiFilter* self, uint32_t tme) {
-	int i,c,k;
+static inline void filter_midistrum_panic(MidiFilter* self, uint8_t c, uint32_t tme) {
+	int i,k;
 	const int max_delay = self->memI[0];
 	for (i=0; i < max_delay; ++i) {
+		if (self->memQ[i].size == 3
+				&& (self->memQ[i].buf[0] & 0xf0) != 0xf0
+				&& (self->memQ[i].buf[0] & 0x0f) != c)
+			continue;
 		self->memQ[i].size = 0;
 	}
-	self->memI[1] = 0; // read-pointer
-	self->memI[2] = 0; // write-pointer
 
 	self->memI[4] = 0; // collection stattime
 	self->memI[5] = 0; // collected notes
 	self->memI[6] = 0; // stroke direction
 
-	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
+	for (k=0; k < 127; ++k) {
 		if (self->memCS[c][k]) {
 			uint8_t buf[3];
 			buf[0] = MIDI_NOTEOFF | c;
@@ -167,10 +169,10 @@ filter_midi_midistrum(MidiFilter* self,
 
 	if (size == 3
 			&& mst == MIDI_CONTROLCHANGE
-			&& (buffer[1]&0x7f) == 123
+			&& ( (buffer[1]&0x7f) == 123 || (buffer[1]&0x7f) == 120 )
 			&& (buffer[2]&0x7f) == 0)
 	{
-		filter_midistrum_panic(self, tme);
+		filter_midistrum_panic(self, buffer[0]&0x0f, tme);
 	}
 
 	if (size != 3 || !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)) {
