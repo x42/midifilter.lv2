@@ -28,15 +28,15 @@ MFD_FILTER(midistrum)
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;
-			rdfs:comment "delay length in base-unit")
+			rdfs:comment "")
 	, TTF_IPORT(5, "adjspeed", "Strum Acceleration", -1.0, 1.0,  0.0,
-			rdfs:comment "")
-	, TTF_IPORT(6, "adjvelocity", "Strum Velocity", -1.0, 1.0,  0.0,
-			rdfs:comment "")
+			rdfs:comment "Accellerate/Decelerate over the time of the strum. The total duration is unchange. If the value is greater than zero, early notes are further apart and later notes will be closer together.")
+	, TTF_IPORT(6, "adjvelocity", "Velocity Change", -112.0, 112.0,  0.0,
+			rdfs:comment "Modify velocity over stroke time. If the value is greater than zero, later notes will played louder.")
 	, TTF_IPORT(7, "randspeed", "Randomize Acceleration", 0.0, 1.0,  0.0,
-			rdfs:comment "")
+			rdfs:comment "Amount of randomization to apply to the accel/decel setting. value of 1.0 means to add a random-number of the full-range (-1..1) to the given value.")
 	, TTF_IPORT(8, "randvelocity", "Randomize Velocity", 0.0, 1.0,  0.0,
-			rdfs:comment "")
+			rdfs:comment "Amount of randomization to apply to the acceleation value. A value of 1.0 means to add a random-number of the full-range (-112..112) to the given value.")
 	; rdfs:comment ""
 	.
 
@@ -100,8 +100,8 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	int tdiff = strum_time / self->memI[5];
 
 
-	float spdcfg = (*self->cfg[5]);
-	float velcfg = (*self->cfg[6]);
+	float spdcfg = -(*self->cfg[5]);
+	float velcfg = (*self->cfg[6]) / -112.0;
 
 	spdcfg +=  (*self->cfg[7]) * (2.0 * random() / (float)RAND_MAX - 1.0);
 	velcfg +=  (*self->cfg[8]) * (2.0 * random() / (float)RAND_MAX - 1.0);
@@ -132,11 +132,11 @@ filter_midistrum_process(MidiFilter* self, int tme)
 		int vel = self->memS[nextup].buf[2] & 0x7f;
 		const float p0 = (float)(i+1.0) / (float)(self->memI[5] + 1.0);
 
-		vel -= fabsf(veladj) * 32.0;
+		vel -= fabsf(veladj) * 56.0;
 		if (veladj < 0)
-			vel += fabsf(veladj) * 64.0 * p0;
+			vel += fabsf(veladj) * 112.0 * p0;
 		else
-			vel += fabsf(veladj) * 64.0 * (1.0 - p0);
+			vel += fabsf(veladj) * 112.0 * (1.0 - p0);
 		self->memS[nextup].buf[2] = RAIL(vel, 1, 127);
 
 		/* speed adjustment */
