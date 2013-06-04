@@ -8,6 +8,12 @@ MFD_FILTER(randvelocity)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 127.0,  8.0)
+	, TTF_IPORT( 2, "mode",  "Random Mode", 0.0, 1.0,  1.0,
+			lv2:scalePoint [ rdfs:label "Absolute (equal distribution)" ; rdf:value 0.0 ] ;
+			lv2:scalePoint [ rdfs:label "Normalized (standard deviation)" ; rdf:value 1.0 ] ;
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			rdfs:comment ""
+			)
 	; rdfs:comment "Randomize Velocity of Midi notes (both note on and note off)."
 	.
 
@@ -25,28 +31,35 @@ filter_midi_randvelocity(MidiFilter* self,
 {
 	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
 	const int chn = buffer[0] & 0x0f;
-
-	const uint8_t vel = buffer[2] & 0x7f;
 	int mst = buffer[0] & 0xf0;
 
 	if (size != 3
-			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
+			|| !(mst == MIDI_NOTEON || (mst == MIDI_NOTEOFF))
 			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
-		 )
+			)
 	{
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
+
+	const uint8_t vel = buffer[2] & 0x7f;
 
 	if (mst == MIDI_NOTEON && vel ==0 ) {
 		mst = MIDI_NOTEOFF;
 	}
 
 	uint8_t buf[3];
-	const float rf = *(self->cfg[1]);
-	const float rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
 	buf[0] = buffer[0];
 	buf[1] = buffer[1];
+
+	const float rf = *(self->cfg[1]);
+	float rnd;
+
+	if (*(self->cfg[2])) {
+		rnd = -rf + 2.0 * rf * random() / (float)RAND_MAX;
+	} else {
+		rnd = normrand(rf);
+	}
 
 	switch (mst) {
 		case MIDI_NOTEON:
