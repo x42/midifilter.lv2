@@ -111,10 +111,7 @@ filter_midi_enforcescale(MidiFilter* self,
 
 	int note;
 	uint8_t buf[3];
-
-	buf[0] = buffer[0];
-	buf[1] = buffer[1];
-	buf[2] = buffer[2];
+	memcpy(buf, buffer, 3);
 
 	switch (mst) {
 		case MIDI_NOTEON:
