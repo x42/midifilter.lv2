@@ -51,6 +51,35 @@ static int midi_14bit(const uint8_t * const b) {
 	return ((b[1]) | (b[2]<<7));
 }
 
+
+static float normrand(const float dev) {
+	static char initialized = 0;
+	static float randmem;
+
+	if (!initialized) {
+		randmem =  2.0 * random() / (float)RAND_MAX - 1;
+		initialized = 1;
+	}
+
+	float U = 2.0 * random() / (float)RAND_MAX - 1; //rand E(-1,1)
+	float S = SQUARE(U) + SQUARE(randmem); //map 2 random vars to unit circle
+
+	if(S >= 1.0f) {
+		//repull RV if outside unit circle
+		U = 2.0* random() / (float)RAND_MAX - 1;
+		S = SQUARE(U) + SQUARE(randmem);
+		if(S >= 1.0f) {
+			U = 2.0* random() / (float)RAND_MAX - 1;
+			S = SQUARE(U) + SQUARE(randmem);
+			if(S >= 1.0f) {
+				U=0;
+			}
+		}
+	}
+	randmem = U; //store RV for next round
+	return U ? (dev * U * sqrt(-2.0 * log(S) / S)) : 0;
+}
+
 /**
  * add a midi message to the output port
  */

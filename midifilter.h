@@ -132,10 +132,26 @@ void forge_midimessage(MidiFilter* self,
 		extension_data \
 };
 
+/** return a valid midi-value, limit to range 0..127 */
 static int midi_limit_val(const int);
+
+/** return a valid midi-channel, limit to range 0..15 */
 static int midi_limit_chn(const int);
+
+/** return non-zero (true) if value is in 0..127 */
 static int midi_valid(const int);
+
+/** return 14bit integer value of buffer[2], buffer[1]
+ * e.g. midi pitchbend */
 static int midi_14bit(const uint8_t * const);
+
+/** calculate a random number according to a modified Marsaglia polar method
+ * approaching a normal distribution, should be more "human"
+ *
+ * @param dev standard deviation
+ * @return unbound value with average 0.0 (most values (~67%) will be within -dev .. dev, but range is -inf .. inf)
+ */
+static float normrand(const float dev);
 
 #define MIDI_NOTEOFF         0x80
 #define MIDI_NOTEON          0x90
