@@ -58,7 +58,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	const int max_collect = 1 + rintf(self->samplerate * (*self->cfg[3]) / 1000.0);
 	if (self->memI[5] == 0) return; // no notes collected
 
-	if (self->memI[4] + max_collect > self->memI[3] + tme) { // TODO handle time overflow
+	if (MSC_DIFF(self->memI[3], self->memI[4]) + tme < 0) {
 		/* collection time not over */
 		if (self->memI[5] < MAX_STRUM_CHORDNOTES) {
 			/* buffer is not full, either */
@@ -66,8 +66,6 @@ filter_midistrum_process(MidiFilter* self, int tme)
 		}
 	}
 
-	// TODO  check that all fit in buffer
-	// if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) { return; }
 
 	float bpm = (*self->cfg[1]);
 	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
@@ -98,7 +96,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	}
 	self->memI[6] = !dir;
 
-	int reltime = self->memI[4] + max_collect - self->memI[3];
+	int reltime = MSC_DIFF(self->memI[4], self->memI[3]);
 	int tdiff = strum_time / self->memI[5];
 
 	/* sort notes by strum direction.. */
@@ -116,6 +114,8 @@ filter_midistrum_process(MidiFilter* self, int tme)
 		}
 
 		// TODO randomness
+
+		if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) { break; }
 
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, self->memS[nextup].buf, self->memS[nextup].size);
@@ -208,13 +208,12 @@ filter_midi_midistrum(MidiFilter* self,
 	if (mst == MIDI_NOTEON) {
 		int i;
 		if (self->memI[5] == 0) {
-			self->memI[4] = tme + self->memI[3];
+			self->memI[4] = (tme + max_collect + self->memI[3]) % MSC_MAX;
 		}
 
 		// check if note-on for this key is already queued -> skip
 		for (i=0; i < self->memI[5]; ++i) {
 			if (self->memS[i].size == 3 && self->memS[i].buf[2] == key) {
-				// TODO mark -> no dup note-off
 				return;
 			}
 		}
@@ -222,24 +221,21 @@ filter_midi_midistrum(MidiFilter* self,
 		MidiEventQueue *qm = &(self->memS[self->memI[5]]);
 		memcpy(qm->buf, buffer, size);
 		qm->size = size;
-		qm->reltime = tme + self->memI[3]; // TODO time-wrap
 		self->memI[5]++;
-#if 0
-		printf("note on #%d! %d / %d || %d %d\n", 
-				self->memI[5],
-				tme + self->memI[3], self->memI[4],
-				tme + self->memI[3] - self->memI[4], max_collect);
-#endif
 	}
 
 	/* delay note-off by max-latency (= collection-time + strum-time) */
 	else if (mst == MIDI_NOTEOFF) {
-		int delay = max_collect + strum_time;
+#if 0 // TODO -- shorten delay time IF possible
+		int delay = strum_time + 1;
 		if (self->memI[5] > 0) {
-			// TODO filter out ignored dups from above
-			delay -= tme + self->memI[3] - self->memI[4];
+			delay += 1 + MSC_DIFF(self->memI[4], (self->memI[3] + tme)%MSC_MAX);
+			printf("add.. %d\n" , MSC_DIFF(self->memI[4], (self->memI[3] + tme)%MSC_MAX));
 		}
-
+#else
+		const int delay = strum_time + max_collect;
+#endif
+		// TODO filter out ignored dups from (ignored note-on) above
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, buffer, size);
 		qm->size = size;
@@ -307,7 +303,7 @@ filter_postproc_midistrum(MidiFilter* self)
 		if (off == woff) break;
 	}
 
-	self->memI[3] = self->memI[3] + n_samples; // TODO overflow check
+	self->memI[3] = (self->memI[3] + n_samples)%MSC_MAX;
 }
 
 void filter_init_midistrum(MidiFilter* self) {

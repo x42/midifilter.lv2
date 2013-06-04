@@ -27,6 +27,14 @@
 #endif
 
 #define ROUND_PARTIAL_BEATS(X,Y) ( rint( (Y) * (X)) / (Y) - floor(rint( (Y) * (X)) / (Y)) )
+
+/* /monotonic/ sample count */
+#define MSC_MAX (1<<29)
+#define MSC_DIFF(NOW, THEN) ( abs((NOW) - (THEN)) < (MSC_MAX>>1) \
+		? ( (NOW) - (THEN) ) \
+		: ( (NOW) > (THEN) ? ((NOW) - (THEN) - MSC_MAX) : (MSC_MAX - (THEN) + (NOW)) ) \
+		)
+
 #define MAXCFG 16
 
 #define LOOP_CFG(FN) \
