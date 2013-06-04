@@ -11,12 +11,14 @@ MFD_FILTER(midistrum)
 			)
 	, TTF_IPORT(1, "bpm",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
 			rdfs:comment "base unit for the time (unless host provides BPM)")
-	, TTF_IPORT( 2, "mode",  "Strum Mode", 0.0, 3.0,  2.0,
+	, TTF_IPORT( 2, "mode",  "Strum Direction", 0.0, 3.0,  2.0,
 			lv2:scalePoint [ rdfs:label "Always Down (low notes first)" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Always Up (high notes first)" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Alternate" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Up/Down Beat" ; rdf:value 3.0 ] ;
+			lv2:scalePoint [ rdfs:label "Up/Down 8th" ; rdf:value 4.0 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			rdfs:comment ""
 			)
 	, TTF_IPORT(3, "collect", "Note Collect Timeout [ms]", 0.0, 300,  15,
 			rdfs:comment "Time to wait for chord to be 'complete'. Keys pressed withing given timeframe will be combined into one chord.")
@@ -85,10 +87,18 @@ filter_midistrum_process(MidiFilter* self, int tme)
 			dir = (self->memI[6]) ? 1 : 0;
 			break;
 		case 3: // depending on beat.. 1,2,3,4 down ;; 1+,2+,3+,4+ up
-			// compensate for latency, round off inacurracies on beat boundaries.
 			if ((self->available_info & NFO_BEAT)) {
 				const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
 				if (ROUND_PARTIAL_BEATS(self->beat_beats + ((tme - max_collect) / samples_per_beat), 12.0) >= 0.5) {
+					dir = 1;
+				}
+			}
+			break;
+		case 4: // depending on 8th
+			if ((self->available_info & NFO_BEAT)) {
+				const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
+				const float pos = ROUND_PARTIAL_BEATS(self->beat_beats + ((tme - max_collect) / samples_per_beat), 16.0) * 2.0;
+				if ( pos - floor(pos) >= 0.5) {
 					dir = 1;
 				}
 			}
