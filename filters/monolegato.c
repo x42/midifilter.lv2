@@ -7,7 +7,7 @@ MFD_FILTER(monolegato)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	; rdfs:comment "hold a note until the next note arrives. Play the same note again to switch it off."
+	; rdfs:comment "Hold a note until the next note arrives. -- Play the same note again to switch it off."
 	.
 
 #elif defined MX_CODE

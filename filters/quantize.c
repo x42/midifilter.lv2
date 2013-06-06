@@ -17,14 +17,13 @@ MFD_FILTER(quantize)
 			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
-			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;
-			rdfs:comment "")
+			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ])
 	, TTF_IPORT(3, "mindur", "Note-off behaviour", 0.0, 1.0,  1.0,
 			lv2:scalePoint [ rdfs:label "Quantize as is (may result in zero duration)" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Enforce minimum duration of one grid unit" ; rdf:value 1.0 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
-	; rdfs:comment ""
+	; rdfs:comment "Live event quantization. This filter aligns incoming MIDI events to a fixed time-grid. Since the effect operates on a live-stream it will introduce latency: Events will be delayed until the next 'tick'. If the plugin-host provides BBT information, the events are aligned to the host's clock otherwise the effect runs on its own time."
 	.
 
 #elif defined MX_CODE
