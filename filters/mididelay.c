@@ -109,7 +109,7 @@ filter_midi_mididelay(MidiFilter* self,
 		self->memCI[chn][key] = delay;
 	}
 
-	if (size == 3 && mst == MIDI_NOTEOFF) {
+	else if (size == 3 && mst == MIDI_NOTEOFF) {
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
 		if(self->memCI[chn][key] >= 0) {
