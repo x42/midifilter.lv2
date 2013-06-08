@@ -14,7 +14,7 @@ MFD_FILTER(mididelay)
 			rdfs:comment "base unit for the delay-time")
 	, TTF_IPORT(2, "delayBeats", "Delay Beats 4/4", 0.0, 16.0,  1.0,
 			lv2:scalePoint [ rdfs:label "No Delay" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;
+			lv2:scalePoint [ rdfs:label "Eighth" ; rdf:value 0.5 ] ;
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;

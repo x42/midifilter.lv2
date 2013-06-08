@@ -14,7 +14,7 @@ MFD_FILTER(quantize)
 	, TTF_IPORT(2, "quant", "Quantization Grid", .00390625, 4.0, .25,
 			lv2:scalePoint [ rdfs:label "32th" ; rdf:value 0.125 ] ;
 			lv2:scalePoint [ rdfs:label "16th" ; rdf:value 0.25 ] ;
-			lv2:scalePoint [ rdfs:label "Eigth" ; rdf:value 0.5 ] ;
+			lv2:scalePoint [ rdfs:label "Eighth" ; rdf:value 0.5 ] ;
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ])
