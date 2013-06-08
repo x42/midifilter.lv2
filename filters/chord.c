@@ -89,7 +89,7 @@ static inline void filter_midichord_noteoff(MidiFilter* self, uint32_t tme, uint
 	}
 }
 
-static inline void filter_midichord_panic(MidiFilter* self, uint8_t c, uint32_t tme) {
+static inline void filter_midichord_panic(MidiFilter* self, const uint8_t c, const uint32_t tme) {
 	int k;
 	for (k=0; k < 127; ++k) {
 		if (self->memCS[c][k] > 0) {

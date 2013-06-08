@@ -43,7 +43,7 @@ static int filter_enforcescale_check(int scale, uint8_t key) {
 	return major_scale[(key - scale + 12) % 12];
 }
 
-static inline void filter_enforcescale_panic(MidiFilter* self, uint8_t c, uint32_t tme) {
+static inline void filter_enforcescale_panic(MidiFilter* self, const uint8_t c, const uint32_t tme) {
 	int k;
 	for (k=0; k < 127; ++k) {
 		if (self->memCS[c][k] > 0) {

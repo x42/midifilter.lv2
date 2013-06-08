@@ -167,7 +167,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	self->memI[5] = 0;
 }
 
-static inline void filter_midistrum_panic(MidiFilter* self, uint8_t c, uint32_t tme) {
+static inline void filter_midistrum_panic(MidiFilter* self, const uint8_t c, const uint32_t tme) {
 	int i,k;
 	const int max_delay = self->memI[0];
 	for (i=0; i < max_delay; ++i) {
