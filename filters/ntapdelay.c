@@ -3,11 +3,10 @@ MFD_FILTER(ntabdelay)
 #ifdef MX_TTF
 
 	mflt:ntabdelay
-	TTF_DEFAULTDEF("MIDI Tap Delay")
+	TTF_DEF("MIDI N-Tap Delay", ; atom:supports time:Position)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	TTF_DEF("MIDI N-Tap Delay", ; atom:supports time:Position)
 	, TTF_IPORT( 1, "bpmsrc",  "BPM source", 0.0, 1.0,  1.0,
 			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
