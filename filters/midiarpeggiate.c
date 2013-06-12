@@ -32,14 +32,15 @@ MFD_FILTER(midistrum)
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ] ;
 			rdfs:comment "")
 	, TTF_IPORT(5, "adjspeed", "Strum Acceleration", -1.0, 1.0,  0.0,
-			rdfs:comment "Accellerate/Decelerate over the time of the strum. The total duration is unchange. If the value is greater than zero, early notes are further apart and later notes will be closer together.")
+			rdfs:comment "Accellerate/Decelerate over the time of the strum. The total duration remains unchanged. If the value is greater than zero, early notes are further apart and later notes will be closer together.")
 	, TTF_IPORT(6, "adjvelocity", "Velocity Change", -112.0, 112.0,  0.0,
 			rdfs:comment "Modify velocity over stroke time. If the value is greater than zero, later notes will played louder.")
 	, TTF_IPORT(7, "randspeed", "Randomize Acceleration", 0.0, 1.0,  0.0,
-			rdfs:comment "Amount of randomization to apply to the accel/decel setting. value of 1.0 means to add a random-number of the full-range (-1..1) to the given value.")
+			rdfs:comment "Amount of randomization to apply to the accel/decel setting. A Value of 1.0 means to add a random-number of the full-range (-1..1) to the given value.")
 	, TTF_IPORT(8, "randvelocity", "Randomize Velocity", 0.0, 1.0,  0.0,
 			rdfs:comment "Amount of randomization to apply to the acceleation value. A value of 1.0 means to add a random-number of the full-range (-112..112) to the given value.")
-	; rdfs:comment ""
+	; rdfs:comment """A midi arpeggio effect intended to simulate strumming a string instrument (e.g. guitar). A chord is 'collected' and the single notes of the chord are played back spread out over time.
+	The collection timeout allows for the effect to be played live with midi-keyboard. If the effect is used with a sequencer that provide chords with all notes at the exact time, it should be set to zero."""
 	.
 
 #elif defined MX_CODE
