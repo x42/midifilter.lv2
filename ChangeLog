@@ -1,6 +1,10 @@
-2013-05-25 (unreleased)  Robin Gareus <robin@gareus.org>
+2013-06-16 (0.1.1)  Robin Gareus <robin@gareus.org>
+* add some more built-in doc
+
+2013-06-09 (0.1.0)  Robin Gareus <robin@gareus.org>
 * fix transpose plugin -- check for parameter change in every process cycle
 * add 'enforce scale' plugin
+* many more new plugins.
 
 2013-05-24 (0.0.3)  Robin Gareus <robin@gareus.org>
 * new plugins:
