@@ -33,7 +33,7 @@ MFD_FILTER(midichord)
 	, TTF_IPORTTOGGLE( 9, "c11", "11th", 0.0)
 	, TTF_IPORTTOGGLE(10, "c13", "13th", 0.0)
 	, TTF_IPORTTOGGLE(11, "_8",  "bass", 0.0)
-	; rdfs:comment "" ;
+	; rdfs:comment "Harmonizer - make chords from single (fundamental) note in a given musical scale. The scale as well as intervals can be automated freely (currently held chords will change). Note-ons are latched, for multiple/combined chords only single note-on/off will be triggered for the duration of the combined chords. If a off-scale note is given, it will be passed through - no chord is allocated. Note: Combine this effect with the 'MIDI Enforce Scale' filter to weed them out." ;
 	.
 
 #elif defined MX_CODE

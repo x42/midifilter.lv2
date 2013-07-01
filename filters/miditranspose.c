@@ -8,6 +8,7 @@ MFD_FILTER(miditranspose)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTINT(1, "transpose", "Transpose",  -72.0, 72.0, 0.0)
+	; rdfs:comment "Simple chromatic transpose of midi notes and key-pressure. Notes that end up outside the valid range 0..127 are discarded.";
 	.
 
 #elif defined MX_CODE

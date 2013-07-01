@@ -14,7 +14,7 @@ MFD_FILTER(randvelocity)
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			rdfs:comment ""
 			)
-	; rdfs:comment "Randomize Velocity of Midi notes (both note on and note off)."
+	; rdfs:comment "Randomize Velocity of MIDI notes (both note on and note off)."
 	.
 
 #elif defined MX_CODE
