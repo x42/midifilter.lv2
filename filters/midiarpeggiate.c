@@ -248,6 +248,15 @@ filter_midi_midistrum(MidiFilter* self,
 		if (self->memI[5] == 0) {
 			self->memI[4] = (tme + max_collect + self->memI[3]) % MSC_MAX;
 		}
+#if 0
+		if ((self->available_info & NFO_BEAT)) {
+			const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
+			printf("NOTE ON: %ld, %f  || %f\n",
+					self->pos_frame + tme,
+					self->bar_beats + (float)tme / samples_per_beat,
+					self->beat_beats + (float)tme / samples_per_beat);
+		}
+#endif
 
 		// check if note-on for this key is already queued -> skip
 		for (i=0; i < self->memI[5]; ++i) {
