@@ -1,8 +1,8 @@
-MFD_FILTER(ntabdelay)
+MFD_FILTER(ntapdelay)
 
 #ifdef MX_TTF
 
-	mflt:ntabdelay
+	mflt:ntapdelay
 	TTF_DEF("MIDI N-Tap Delay", ; atom:supports time:Position)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
@@ -35,7 +35,7 @@ MFD_FILTER(ntabdelay)
 #elif defined MX_CODE
 
 static void
-filter_cleanup_ntabdelay(MidiFilter* self)
+filter_cleanup_ntapdelay(MidiFilter* self)
 {
 	free(self->memQ);
 }
@@ -65,7 +65,7 @@ static inline void filter_ntapdelay_panic(MidiFilter* self, const uint8_t c, con
 }
 
 void
-filter_midi_ntabdelay(MidiFilter* self,
+filter_midi_ntapdelay(MidiFilter* self,
 		const uint32_t tme,
 		const uint8_t* const buffer,
 		const uint32_t size)
@@ -138,7 +138,7 @@ filter_midi_ntabdelay(MidiFilter* self,
 }
 
 static void
-filter_preproc_ntabdelay(MidiFilter* self)
+filter_preproc_ntapdelay(MidiFilter* self)
 {
 	int i,c,k;
 
@@ -179,7 +179,7 @@ filter_preproc_ntabdelay(MidiFilter* self)
 }
 
 static void
-filter_postproc_ntabdelay(MidiFilter* self)
+filter_postproc_ntapdelay(MidiFilter* self)
 {
 	int i,c,k;
 	const int max_delay = self->memI[0];
@@ -287,16 +287,16 @@ filter_postproc_ntabdelay(MidiFilter* self)
 	}
 }
 
-void filter_init_ntabdelay(MidiFilter* self) {
+void filter_init_ntapdelay(MidiFilter* self) {
 	int c,k;
 	srandom ((unsigned int) time (NULL));
 	self->memI[0] = MAX(self->samplerate / 8.0, 256);
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
-	self->preproc_fn = filter_preproc_ntabdelay;
-	self->postproc_fn = filter_postproc_ntabdelay;
-	self->cleanup_fn = filter_cleanup_ntabdelay;
+	self->preproc_fn = filter_preproc_ntapdelay;
+	self->postproc_fn = filter_postproc_ntapdelay;
+	self->cleanup_fn = filter_cleanup_ntapdelay;
 
 	for (c=0; c < 16; ++c) for (k=0; k < 127; ++k) {
 		self->memCS[c][k] = 0; // count note-on per key post-delay
