@@ -3,22 +3,31 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 13 MIDI event filters have been implemented:
+So far 23 MIDI event filters have been implemented:
 
-*   Channel Map -- map any MIDI-channel to another MIDI-channel
 *   Channel Filter -- discard messages per Channel
-*   Delay -- delay MIDI events with optional radomization
+*   Channel Map -- map any MIDI-channel to another MIDI-channel
 *   Enforce Scale -- force midi notes on given musical scale
-*   Keysplit -- split note on/off/pressure messages to different channels & optionally transpose
-*   NoSensing -- strip MIDI Active-Sensing events
-*   Sostenuto -- delay note-off messages, emulate a piano sostenuto pedal
+*   Eventblocker -- notch style message filter. Suppress specific messages.
+*   Keyrange -- discard notes-on/off events outside an give range
+*   Keysplit -- change midi-channel number depending on note (and optionally transpose)
+*   Mapscale -- flexible 12-tone map
+*   Chord -- harmonizer - create chords from a single note in a given musical scale
+*   Delay -- delay MIDI events with optional radomization
+*   Dup -- unisono - duplicate MIDI events from one channel to another
+*   Strum -- arpeggio effect intended to simulate strumming a stringed instrument (e.g. guitar)
 *   Transpose -- chromatic transpose MIDI notes
-*   Passthru -- no operation, just pass the MIDI event through (example)
-*   Unison  -- duplicate events from one MIDI channel to another
-*   Velocity -- modify note velocity by constant factor
+*   Legato -- Hold a note until the next note arrives
+*   NoSensing -- strip MIDI Active-Sensing events
+*   NoDup -- MIDI duplicate blocker. Filter out overlapping note on/off and duplicate messages.
+*   NoteToggle -- toggle notes: play a note to turn it on, play it again to turn it off.
+*   nTabDelay -- repeat notes N times (incl tempo-ramps -- eurotechno hell yeah)
+*   Passthru -- no operation, just pass the MIDI event through (example plugin)
+*   Quantize -- live midi event quantization
 *   Velocity Randomizer -- randomly change velocity of note-on events
-*   Velocity Randomizer (Normal) -- change velocity of note-on events according to normalized random distribution
-
+*   Sostenuto -- delay note-off messages, emulate a piano sostenuto pedal
+*   Velocity Range -- filter MIDI note events according to velocity.
+*   Velocity Scale -- modify note velocity by constant factor and offset
 
 Install
 -------
