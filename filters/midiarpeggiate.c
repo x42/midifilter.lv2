@@ -39,8 +39,7 @@ MFD_FILTER(midistrum)
 			rdfs:comment "Amount of randomization to apply to the accel/decel setting. A Value of 1.0 means to add a random-number of the full-range (-1..1) to the given value.")
 	, TTF_IPORT(8, "randvelocity", "Randomize Velocity", 0.0, 1.0,  0.0,
 			rdfs:comment "Amount of randomization to apply to the acceleation value. A value of 1.0 means to add a random-number of the full-range (-112..112) to the given value.")
-	; rdfs:comment """A midi arpeggio effect intended to simulate strumming a string instrument (e.g. guitar). A chord is 'collected' and the single notes of the chord are played back spread out over time.
-	The collection timeout allows for the effect to be played live with midi-keyboard. If the effect is used with a sequencer that provide chords with all notes at the exact time, it should be set to zero."""
+	; rdfs:comment """A midi arpeggio effect intended to simulate strumming a stringed instrument (e.g. guitar). A chord is 'collected' and the single notes of the chord are played back spread out over time. The 'Note Collect Timeout' allows for the effect to be played live with midi-keyboard, it compensates for a human not pressing keys at the same point in time. If the effect is used with a sequencer that can send chords with all note-on at the exactly time, it should be set to zero."""
 	.
 
 #elif defined MX_CODE
