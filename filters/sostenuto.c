@@ -93,7 +93,7 @@ filter_midi_sostenuto(MidiFilter* self,
 		const uint8_t* const buffer,
 		const uint32_t size)
 {
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint32_t delay = floor(self->samplerate * RAIL((*self->cfg[1]), 0, 120));
 	const int state = RAIL(*self->cfg[2], 0, 1);
 
@@ -103,7 +103,7 @@ filter_midi_sostenuto(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			)
 	{
 		forge_midimessage(self, tme, buffer, size);

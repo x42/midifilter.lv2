@@ -45,10 +45,10 @@ filter_midi_mapkeyscale(MidiFilter* self,
 		uint32_t size)
 {
 	int i;
-	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	int keymap[12];
 	for (i=0; i < 12; ++i) {
-		keymap[i] = RAIL(floor(*self->cfg[i+1]), -13, 12);
+		keymap[i] = RAIL(floorf(*self->cfg[i+1]), -13, 12);
 	}
 
 	const uint8_t chn = buffer[0] & 0x0f;
@@ -60,7 +60,7 @@ filter_midi_mapkeyscale(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			)
 	{
 		forge_midimessage(self, tme, buffer, size);
@@ -122,8 +122,8 @@ static void filter_preproc_mapkeyscale(MidiFilter* self) {
 	int identical_cfg = 1;
 	int keymap[12];
 	for (i=0; i < 12; ++i) {
-		keymap[i] = RAIL(floor(*self->cfg[i+1]), -13, 12);
-		if (floor(self->lcfg[i+1]) != floor(*self->cfg[i+1])) {
+		keymap[i] = RAIL(floorf(*self->cfg[i+1]), -13, 12);
+		if (floorf(self->lcfg[i+1]) != floorf(*self->cfg[i+1])) {
 			identical_cfg = 0;
 		}
 	}
@@ -137,7 +137,7 @@ static void filter_preproc_mapkeyscale(MidiFilter* self) {
 			int note;
 			const int n = 1 + k%12;
 			if (!self->memCM[c][k]) continue;
-			if (floor(self->lcfg[n]) == floor(*self->cfg[n])) continue;
+			if (floorf(self->lcfg[n]) == floorf(*self->cfg[n])) continue;
 
 			note = k + self->memCI[c][k];
 

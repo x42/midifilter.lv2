@@ -19,8 +19,8 @@ filter_midi_mididup(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
-	const int chd = midi_limit_chn(floor(*self->cfg[1]) -1);
+	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
+	const int chd = midi_limit_chn(floorf(*self->cfg[1]) -1);
 
 	const int chn = buffer[0] & 0x0f;
 	const int msg = buffer[0] & 0xf0;

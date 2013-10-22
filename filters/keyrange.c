@@ -31,14 +31,14 @@ filter_midi_keyrange(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int mode = RAIL(floor(*self->cfg[3]),0, 3);
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const int mode = RAIL(floorf(*self->cfg[3]),0, 3);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			|| mode == 0
 		 )
 	{
@@ -46,8 +46,8 @@ filter_midi_keyrange(MidiFilter* self,
 		return;
 	}
 
-	const uint8_t low = midi_limit_val(floor(*self->cfg[1]));
-	const uint8_t upp = midi_limit_val(floor(*self->cfg[2]));
+	const uint8_t low = midi_limit_val(floorf(*self->cfg[1]));
+	const uint8_t upp = midi_limit_val(floorf(*self->cfg[2]));
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
 
@@ -72,18 +72,18 @@ filter_midi_keyrange(MidiFilter* self,
 }
 
 static void filter_preproc_keyrange(MidiFilter* self) {
-	if (   floor(self->lcfg[1]) == floor(*self->cfg[1])
-			&& floor(self->lcfg[2]) == floor(*self->cfg[2])
-			&& floor(self->lcfg[3]) == floor(*self->cfg[3])
+	if (   floorf(self->lcfg[1]) == floorf(*self->cfg[1])
+			&& floorf(self->lcfg[2]) == floorf(*self->cfg[2])
+			&& floorf(self->lcfg[3]) == floorf(*self->cfg[3])
 			) return;
 
 	int c,k;
 	uint8_t buf[3];
 	buf[2] = 0;
 
-	const int mode = RAIL(floor(*self->cfg[3]),0, 3);
-	const uint8_t low = midi_limit_val(floor(*self->cfg[1]));
-	const uint8_t upp = midi_limit_val(floor(*self->cfg[2]));
+	const int mode = RAIL(floorf(*self->cfg[3]),0, 3);
+	const uint8_t low = midi_limit_val(floorf(*self->cfg[1]));
+	const uint8_t upp = midi_limit_val(floorf(*self->cfg[2]));
 
 	for (c=0; c < 16; ++c) {
 		for (k=0; k < 127; ++k) {

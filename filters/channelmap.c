@@ -51,7 +51,7 @@ filter_midi_channelmap(MidiFilter* self,
 		case MIDI_CHANNELPRESSURE:
 		case MIDI_PITCHBEND:
 			if(*self->cfg[chn] == 0) return;
-			chn = midi_limit_chn(floor(-1 + *(self->cfg[chn])));
+			chn = midi_limit_chn(floorf(-1 + *(self->cfg[chn])));
 			buf[0] = (buffer[0] & 0xf0) | chn;
 			break;
 		default:

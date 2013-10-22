@@ -77,7 +77,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 	const int strum_time = floor(self->samplerate * (*self->cfg[4]) * 60.0 / bpm);
 
 	int dir = 0; // 0: down (low notes first), 1: up (high-notes first)
-	switch ((int) floor(*self->cfg[2])) {
+	switch ((int) floorf(*self->cfg[2])) {
 		case 0: // always down
 			break;
 		case 1: // always up
@@ -98,7 +98,7 @@ filter_midistrum_process(MidiFilter* self, int tme)
 			if ((self->available_info & NFO_BEAT)) {
 				const double samples_per_beat = 60.0 / self->bpm * self->samplerate;
 				const float pos = ROUND_PARTIAL_BEATS(self->beat_beats + ((tme - max_collect) / samples_per_beat), 16.0) * 2.0;
-				if ( pos - floor(pos) >= 0.5) {
+				if ( pos - floorf(pos) >= 0.5) {
 					dir = 1;
 				}
 			}

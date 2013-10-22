@@ -64,9 +64,9 @@ filter_midi_enforcescale(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
-	const int scale = RAIL(floor(*self->cfg[1]), 0, 11);
-	const int mode  = RAIL(floor(*self->cfg[2]), 0, 2);
+	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
+	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
+	const int mode  = RAIL(floorf(*self->cfg[2]), 0, 2);
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
@@ -78,7 +78,7 @@ filter_midi_enforcescale(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			)
 	{
 		forge_midimessage(self, tme, buffer, size);
@@ -147,8 +147,8 @@ filter_midi_enforcescale(MidiFilter* self,
 }
 
 static void filter_preproc_enforcescale(MidiFilter* self) {
-	if (floor(self->lcfg[1]) == floor(*self->cfg[1])) return;
-	const int scale = RAIL(floor(*self->cfg[1]), 0, 11);
+	if (floorf(self->lcfg[1]) == floorf(*self->cfg[1])) return;
+	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
 
 	int c,k;
 	uint8_t buf[3];

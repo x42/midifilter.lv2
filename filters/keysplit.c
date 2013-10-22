@@ -55,11 +55,11 @@ filter_midi_keysplit(MidiFilter* self,
 		mst = MIDI_NOTEOFF;
 	}
 
-	const int split = floor(*self->cfg[1]);
-	const int ch0 = midi_limit_chn(floor(*self->cfg[2]) -1);
-	const int ch1 = midi_limit_chn(floor(*self->cfg[4]) -1);
-	const int transp0 = rint(*self->cfg[3]);
-	const int transp1 = rint(*self->cfg[5]);
+	const uint8_t split = midi_limit_val(floorf(*self->cfg[1]));
+	const int ch0 = midi_limit_chn(floorf(*self->cfg[2]) -1);
+	const int ch1 = midi_limit_chn(floorf(*self->cfg[4]) -1);
+	const int transp0 = rintf(*self->cfg[3]);
+	const int transp1 = rintf(*self->cfg[5]);
 
 	uint8_t buf[3];
 	buf[2] = buffer[2];

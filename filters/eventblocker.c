@@ -64,29 +64,29 @@ filter_midi_eventblocker(MidiFilter* self,
 	/* custom filter */
 	const uint8_t chn = buffer[0] & 0x0f;
 
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[9]) -1);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[9]) -1);
 
 	int block = 1;
 
-	if (floor(*self->cfg[10]) != -1) {
-		const uint8_t df1 = midi_limit_val(floor(*self->cfg[10]));
+	if (floorf(*self->cfg[10]) != -1) {
+		const uint8_t df1 = midi_limit_val(floorf(*self->cfg[10]));
 		const uint8_t dd1 = buffer[1] & 0x7f;
 		if (dd1 != df1) block = 0;
 	}
 
-	if (floor(*self->cfg[11]) != -1) {
-		const uint8_t df2 = midi_limit_val(floor(*self->cfg[11]));
+	if (floorf(*self->cfg[11]) != -1) {
+		const uint8_t df2 = midi_limit_val(floorf(*self->cfg[11]));
 		const uint8_t dd2 = buffer[2] & 0x7f;
 		if (dd2 != df2) block = 0;
 	}
 
 	/* pass trhu messages which don't match the channel or data */
-	if (!block || !(floor(*self->cfg[9]) == 0 || chs == chn)) {
+	if (!block || !(floorf(*self->cfg[9]) == 0 || chs == chn)) {
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
 
-	switch ((int)floor(*self->cfg[8])) {
+	switch ((int)floorf(*self->cfg[8])) {
 		case 0: if (mst == MIDI_NOTEOFF) return; break;
 		case 1: if (mst == MIDI_NOTEON) return; break;
 		case 2: if (mst == MIDI_POLYKEYPRESSURE) return; break;

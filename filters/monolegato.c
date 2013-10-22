@@ -18,13 +18,13 @@ filter_midi_monolegato(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
 		forge_midimessage(self, tme, buffer, size);

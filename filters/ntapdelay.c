@@ -83,13 +83,13 @@ filter_midi_ntapdelay(MidiFilter* self,
 
 	forge_midimessage(self, tme, buffer, size);
 
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
 		return;
@@ -123,8 +123,8 @@ filter_midi_ntapdelay(MidiFilter* self,
 	}
 
 	for (i=0; i < RAIL(*self->cfg[4], 0, 128); ++i) {
-		int delay = rint( grid * samples_per_beat * (i+1.0));
-		buf[2] = RAIL(rint(vel + (i+1.0) * (*self->cfg[5])), 1, 127);
+		int delay = rint(grid * samples_per_beat * (i+1.0));
+		buf[2] = RAIL(rintf(vel + (i+1.0) * (*self->cfg[5])), 1, 127);
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, buf, 3);
 		qm->size = size;
@@ -208,7 +208,7 @@ filter_postproc_ntapdelay(MidiFilter* self)
 		}
 
 		while (1) {
-			self->memCM[c][k] = RAIL(rint(self->memCM[c][k] + (*self->cfg[5])), 1, 127);
+			self->memCM[c][k] = RAIL(rintf(self->memCM[c][k] + (*self->cfg[5])), 1, 127);
 			/* enqueue note-off + note-on */
 			MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 			qm->buf[0] = MIDI_NOTEOFF | c;

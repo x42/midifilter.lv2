@@ -44,14 +44,14 @@ filter_midi_scalecc(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int mode = RAIL(floor(*self->cfg[3]),0, 3);
-	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const int mode = RAIL(floorf(*self->cfg[3]),0, 3);
+	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
 			|| !(mst == MIDI_CONTROLCHANGE)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			|| mode == 0
 		 )
 	{
@@ -59,15 +59,15 @@ filter_midi_scalecc(MidiFilter* self,
 		return;
 	}
 
-	const uint8_t low = midi_limit_val(floor(*self->cfg[1]));
-	const uint8_t upp = midi_limit_val(floor(*self->cfg[2]));
+	const uint8_t low = midi_limit_val(floorf(*self->cfg[1]));
+	const uint8_t upp = midi_limit_val(floorf(*self->cfg[2]));
 	const uint8_t param = buffer[1] & 0x7f;
 	const uint8_t value = buffer[2] & 0x7f;
 
 	if ((param >= low && param <= upp) ^ (mode == 2)) {
 		const float mul = (*self->cfg[4]);
 		const float off = (*self->cfg[5]);
-		const int clamp = RAIL(floor(*self->cfg[6]),0, 3);
+		const int clamp = RAIL(floorf(*self->cfg[6]),0, 3);
 		uint8_t buf[3];
 
 		int val = rintf((value * mul) + off);

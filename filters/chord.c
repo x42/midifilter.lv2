@@ -112,8 +112,8 @@ filter_midi_midichord(MidiFilter* self,
 		uint32_t size)
 {
 	int i;
-	const int chs = midi_limit_chn(floor(*self->cfg[0]) -1);
-	const int scale = RAIL(floor(*self->cfg[1]), 0, 11);
+	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
+	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
 
 	int chord = 0;
 	for (i=0; i < 10 ; ++i) {
@@ -129,7 +129,7 @@ filter_midi_midichord(MidiFilter* self,
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
-			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 			)
 	{
 		forge_midimessage(self, tme, buffer, size);
@@ -185,17 +185,17 @@ static void filter_preproc_midichord(MidiFilter* self) {
 
 	for (i=0; i < 10; ++i) {
 		if ((*self->cfg[i+2]) != 0) newchord |= 1<<i;
-		if (floor(self->lcfg[i+2]) != floor(*self->cfg[i+2])) {
+		if (floorf(self->lcfg[i+2]) != floorf(*self->cfg[i+2])) {
 			identical_cfg = 0;
 		}
 	}
-	if (floor(self->lcfg[1]) != floor(*self->cfg[1])) {
+	if (floorf(self->lcfg[1]) != floorf(*self->cfg[1])) {
 			identical_cfg = 0;
 	}
 	if (identical_cfg) return;
 
-	const int newscale = RAIL(floor(*self->cfg[1]), 0, 11);
-	const int oldscale = RAIL(floor(self->lcfg[1]), 0, 11);
+	const int newscale = RAIL(floorf(*self->cfg[1]), 0, 11);
+	const int oldscale = RAIL(floorf(self->lcfg[1]), 0, 11);
 
 	for (c=0; c < 16; ++c) {
 		for (k=0; k < 127; ++k) {
