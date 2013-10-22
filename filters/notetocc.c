@@ -1,0 +1,87 @@
+MFD_FILTER(notetocc)
+
+#ifdef MX_TTF
+
+	mflt:notetocc
+	TTF_DEFAULTDEF("Note2CC")
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+			PORTENUMZ("Any")
+			DOC_CHANF)
+	, TTF_IPORT(1, "mode", "Operation Mode",  0.0, 3.0,  0.0,
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = velocity" ; rdf:value 0.0 ] ;
+			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = key" ; rdf:value 1.0 ] ;
+			lv2:scalePoint [ rdfs:label "All keys, parameter = key, CC-value = velocity" ; rdf:value 2.0 ] ;
+			rdfs:comment "")
+	, TTF_IPORT(2, "param", "CC Parameter",  0.0, 127.0,  0.0,
+			lv2:portProperty lv2:integer;
+			rdfs:comment "unused in 'all keys' mode."
+			)
+	, TTF_IPORT(3, "key", "Active Key (midi-note)",  0.0, 127.0,  48.0,
+			lv2:portProperty lv2:integer; units:unit units:midiNote ;
+			rdfs:comment "only used in 'value = velocity' mode."
+			)
+	; rdfs:comment "Convert MIDI note-on messages to control change messages."
+	.
+
+#elif defined MX_CODE
+
+void filter_init_notetocc(MidiFilter* self) { }
+
+void
+filter_midi_notetocc(MidiFilter* self,
+		uint32_t tme,
+		const uint8_t* const buffer,
+		uint32_t size)
+{
+	const uint8_t chs = midi_limit_chn(floor(*self->cfg[0]) -1);
+	const uint8_t chn = buffer[0] & 0x0f;
+	const uint8_t mst = buffer[0] & 0xf0;
+
+	if (size != 3
+			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
+			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
+		 )
+	{
+		forge_midimessage(self, tme, buffer, size);
+		return;
+	}
+
+	const uint8_t key = buffer[1] & 0x7f;
+	const uint8_t vel = buffer[2] & 0x7f;
+	const int mode = RAIL(floor(*self->cfg[1]),0, 3);
+
+	const uint8_t param = midi_limit_val(floorf(*self->cfg[1]));
+	const uint8_t kfltr = midi_limit_val(floorf(*self->cfg[2]));
+
+	uint8_t buf[3];
+	buf[0] = MIDI_CONTROLCHANGE | chn;
+
+	// TODO, keep track of note-on
+	// send note-off whenever configuration changes
+	// and an active note will be masked..
+
+	switch(mode) {
+		case 0: // single-note, fixed param, value <- velocity
+			if (key != kfltr) {
+				forge_midimessage(self, tme, buffer, size);
+				return;
+			}
+			buf[1] = param;
+			buf[2] = vel;
+			break;
+		case 1: // fixed param, value <- note
+			buf[1] = param;
+			buf[2] = key;
+			break;
+		case 2: // param <- note,  value <- velocity
+			buf[1] = key;
+			buf[2] = vel;
+			break;
+	}
+	if (mst == MIDI_NOTEON) {
+		forge_midimessage(self, tme, buf, 3);
+	}
+}
+
+#endif
