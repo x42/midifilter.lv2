@@ -8,14 +8,22 @@ MFD_FILTER(miditranspose)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTINT(1, "transpose", "Transpose",  -72.0, 72.0, 0.0)
-	; rdfs:comment "Simple chromatic transpose of midi notes and key-pressure. Notes that end up outside the valid range 0..127 are discarded.";
+	, TTF_IPORT(2, "inversion", "Inversion point",  0.0, 127.0, 0.0,
+			lv2:scalePoint [ rdfs:label "Off"; rdf:value  0.0 ] ; \
+			lv2:portProperty lv2:integer; units:unit units:midiNote;
+			rdfs:comment "Chromatic Inversion. Mirror chromatic scale around this point before transposing.")
+	; rdfs:comment "Chromatic transpose of midi notes and key-pressure. If an inversion point is set, the scale is mirrored around this point before transposing. Notes that end up outside the valid range 0..127 are discarded.";
 	.
 
 #elif defined MX_CODE
 
 static void filter_preproc_miditranspose(MidiFilter* self) {
-	if (floorf(self->lcfg[1]) == floorf(*self->cfg[1])) return;
+	if (rintf(self->lcfg[1]) == rintf(*self->cfg[1])
+			&& rintf(self->lcfg[2]) == rintf(*self->cfg[2])
+			) return;
+
 	const int transp = rintf(*(self->cfg[1]));
+	const int invers = rintf(*(self->cfg[2]));
 
 	int c,k;
 	uint8_t buf[3];
@@ -39,10 +47,18 @@ static void filter_preproc_miditranspose(MidiFilter* self) {
 			buf[2] = 0;
 			forge_midimessage(self, 0, buf, 3);
 
+			int note;
+			if (invers <= 0) {
+				note = k;
+			} else {
+				note = invers - (k - invers);
+			}
+			note += transp;
+
 			buf[0] = MIDI_NOTEON | c;
-			buf[1] = midi_limit_val(k + transp);
+			buf[1] = midi_limit_val(note);
 			buf[2] = self->memCM[c][k];
-			self->memCI[c][k] = transp;
+			self->memCI[c][k] = note - k;
 			forge_midimessage(self, 0, buf, 3);
 		}
 #endif
@@ -67,6 +83,7 @@ filter_midi_miditranspose(MidiFilter* self,
 {
 	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const int transp = rintf(*(self->cfg[1]));
+	const int invers = rintf(*(self->cfg[2]));
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
@@ -96,13 +113,18 @@ filter_midi_miditranspose(MidiFilter* self,
 
 	switch (mst) {
 		case MIDI_NOTEON:
-			note = key + transp;
+			if (invers <= 0) {
+				note = key;
+			} else {
+				note = invers - (key - invers);
+			}
+			note += transp;
 			if (midi_valid(note)) {
 				buf[1] = note;
 				forge_midimessage(self, tme, buf, size);
 			}
 			self->memCM[chn][key] = vel;
-			self->memCI[chn][key] = transp;
+			self->memCI[chn][key] = note - key;
 			break;
 		case MIDI_NOTEOFF:
 			note = key + self->memCI[chn][key];
@@ -114,7 +136,12 @@ filter_midi_miditranspose(MidiFilter* self,
 			self->memCI[chn][key] = -1000;
 			break;
 		case MIDI_POLYKEYPRESSURE:
-			note = key + transp;
+			if (invers < 0) {
+				note = key;
+			} else {
+				note = invers - (key - invers);
+			}
+			note += transp;
 			if (midi_valid(note)) {
 				buf[1] = note;
 				forge_midimessage(self, tme, buf, size);
