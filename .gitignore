@@ -1,5 +1,6 @@
 /manifest.ttl
 /midifilter.ttl
+/presets.ttl
 /filters.c
 *.so
 

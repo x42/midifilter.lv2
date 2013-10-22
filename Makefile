@@ -34,7 +34,7 @@ override CFLAGS += `pkg-config --cflags lv2`
 # build target definitions
 default: all
 
-all: manifest.ttl $(LV2NAME).ttl $(targets)
+all: manifest.ttl presets.ttl $(LV2NAME).ttl $(targets)
 
 FILTERS := $(wildcard filters/*.c)
 
@@ -60,7 +60,11 @@ manifest.ttl: manifest.ttl.in ttf.h filters.c
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
 		| uniq \
 		>> manifest.ttl
+	for file in presets/*.ttl; do head -n 3 $$file >> manifest.ttl; echo "rdfs:seeAlso <presets.ttl> ." >> manifest.ttl; done
 
+presets.ttl: presets.ttl.in presets/*.ttl
+	cat presets.ttl.in > presets.ttl
+	cat presets/*.ttl >> presets.ttl
 
 $(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	cat $(LV2NAME).ttl.in > $(LV2NAME).ttl
@@ -80,15 +84,16 @@ $(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
 install: all
 	install -d $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 	install -m755 $(LV2NAME)$(LIB_EXT) $(DESTDIR)$(LV2DIR)/$(BUNDLE)
-	install -m644 manifest.ttl $(LV2NAME).ttl $(DESTDIR)$(LV2DIR)/$(BUNDLE)
+	install -m644 manifest.ttl $(LV2NAME).ttl presets.ttl $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 uninstall:
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/manifest.ttl
+	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/presets.ttl
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/$(LV2NAME).ttl
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/$(LV2NAME)$(LIB_EXT)
 	-rmdir $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 clean:
-	rm -f manifest.ttl $(LV2NAME).ttl $(LV2NAME)$(LIB_EXT)
+	rm -f manifest.ttl presets.ttl $(LV2NAME).ttl $(LV2NAME)$(LIB_EXT)
 
 .PHONY: clean all install uninstall
