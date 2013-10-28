@@ -117,7 +117,7 @@ filter_midi_midichord(MidiFilter* self,
 
 	int chord = 0;
 	for (i=0; i < 10 ; ++i) {
-		if ((*self->cfg[i+2]) != 0) chord |= 1<<i;
+		if ((*self->cfg[i+2]) > 0) chord |= 1<<i;
 	}
 
 	const uint8_t chn = buffer[0] & 0x0f;

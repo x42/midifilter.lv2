@@ -47,7 +47,7 @@ filter_midi_channelfilter(MidiFilter* self,
 		case MIDI_PROGRAMCHANGE:
 		case MIDI_CHANNELPRESSURE:
 		case MIDI_PITCHBEND:
-			if (*(self->cfg[chn])) {
+			if ((*(self->cfg[chn])) > 0) {
 				forge_midimessage(self, tme, buffer, size);
 			}
 			break;

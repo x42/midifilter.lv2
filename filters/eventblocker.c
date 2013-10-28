@@ -46,14 +46,14 @@ filter_midi_eventblocker(MidiFilter* self,
 {
 	const uint8_t mst = buffer[0] & 0xf0;
 
-	if (mst == MIDI_NOTEOFF          && *self->cfg[1]) return;
-	if (mst == MIDI_NOTEON           && *self->cfg[1]) return;
-	if (mst == MIDI_PROGRAMCHANGE    && *self->cfg[2]) return;
-	if (mst == MIDI_CONTROLCHANGE    && *self->cfg[0]) return;
-	if (mst == MIDI_POLYKEYPRESSURE  && *self->cfg[3]) return;
-	if (mst == MIDI_CHANNELPRESSURE  && *self->cfg[4]) return;
-	if (mst == MIDI_PITCHBEND        && *self->cfg[5]) return;
-	if (mst == MIDI_SYSEX            && *self->cfg[6]) return;
+	if (mst == MIDI_NOTEOFF          && (*self->cfg[1]) > 0) return;
+	if (mst == MIDI_NOTEON           && (*self->cfg[1]) > 0) return;
+	if (mst == MIDI_PROGRAMCHANGE    && (*self->cfg[2]) > 0) return;
+	if (mst == MIDI_CONTROLCHANGE    && (*self->cfg[0]) > 0) return;
+	if (mst == MIDI_POLYKEYPRESSURE  && (*self->cfg[3]) > 0) return;
+	if (mst == MIDI_CHANNELPRESSURE  && (*self->cfg[4]) > 0) return;
+	if (mst == MIDI_PITCHBEND        && (*self->cfg[5]) > 0) return;
+	if (mst == MIDI_SYSEX            && (*self->cfg[6]) > 0) return;
 
 	if (size != 3 || !(*self->cfg[7])) {
 		/* long sysex messages */
