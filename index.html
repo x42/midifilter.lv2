@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<html>
+  <head>
+    <style type="text/css">
+table.mystyle
+{
+border-width: 0 0 1px 1px;
+border-spacing: 0;
+border-collapse: collapse;
+border-style: solid;
+}
+ 
+.mystyle td, .mystyle th
+{
+white-space: nowrap;
+margin: 0;
+padding: 4px;
+border-width: 1px 1px 0 0;
+border-style: solid;
+}
+</style>
+  </head>
+  <body>
+    <table class="mystyle">
+      <tr>
+        <th>class</th>
+        <th>name</th>
+        <th>author</th>
+        <th>total_ports</th>
+        <th>control_input_ports</th>
+        <th>audio_input_ports</th>
+        <th>atom_input_ports</th>
+        <th>control_output_ports</th>
+        <th>audio_output_ports</th>
+        <th>atom_output_ports</th>
+        <th>plugin_uri</th>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_channelfilter.xhtml">MIDI Channel Filter</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>19</td>
+        <td>16</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#channelfilter</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_channelmap.xhtml">MIDI Channel Map</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>19</td>
+        <td>16</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#channelmap</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_mididup.xhtml">MIDI Channel Unisono</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>5</td>
+        <td>2</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#mididup</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_midichord.xhtml">MIDI Chord</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>15</td>
+        <td>12</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#midichord</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_miditranspose.xhtml">MIDI Chromatic Transpose</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>6</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#miditranspose</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_mididelay.xhtml">MIDI Delayline</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>7</td>
+        <td>4</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#mididelay</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_nodup.xhtml">MIDI Duplicate Blocker</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>4</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#nodup</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_enforcescale.xhtml">MIDI Enforce Scale</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>6</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#enforcescale</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_eventblocker.xhtml">MIDI Event Filter</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>15</td>
+        <td>12</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#eventblocker</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_keyrange.xhtml">MIDI Key-Range Filter</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>7</td>
+        <td>4</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#keyrange</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_mapkeyscale.xhtml">MIDI Keys Transpose</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>16</td>
+        <td>13</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#mapkeyscale</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_keysplit.xhtml">MIDI Keysplit</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>9</td>
+        <td>6</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#keysplit</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_monolegato.xhtml">MIDI Monophonic Legato</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>4</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#monolegato</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_ntapdelay.xhtml">MIDI N-Tap Delay</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>9</td>
+        <td>6</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#ntapdelay</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_notetoggle.xhtml">MIDI Note Toggle</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>4</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#notetoggle</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_quantize.xhtml">MIDI Quantization</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>7</td>
+        <td>4</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#quantize</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_noactivesensing.xhtml">MIDI Remove Active Sensing</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>3</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#noactivesensing</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_sostenuto.xhtml">MIDI Sostenuto</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>6</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#sostenuto</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_midistrum.xhtml">MIDI Strum</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>12</td>
+        <td>9</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#midistrum</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_passthru.xhtml">MIDI Thru</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>3</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#passthru</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_velocityscale.xhtml">MIDI Velocity Adjust</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>10</td>
+        <td>7</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#velocityscale</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_randvelocity.xhtml">MIDI Velocity Randomization</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>6</td>
+        <td>3</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#randvelocity</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_velocityrange.xhtml">MIDI Velocity-Range Filter</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>7</td>
+        <td>4</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#velocityrange</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_notetocc.xhtml">Note2CC</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>7</td>
+        <td>4</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#notetocc</td>
+      </tr>
+      <tr>
+        <td>Filter</td>
+        <td>
+          <a href="http__gareus.org_oss_lv2_midifilter_scalecc.xhtml">Scale CC Value</a>
+        </td>
+        <td>Robin Gareus</td>
+        <td>10</td>
+        <td>7</td>
+        <td>0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>http://gareus.org/oss/lv2/midifilter#scalecc</td>
+      </tr>
+    </table>
+  </body>
+</html>

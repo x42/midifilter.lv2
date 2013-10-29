@@ -1,0 +1,333 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg">
+  <head>
+    <meta charset="utf-8"/>
+    <title>lv2 Plugin Description: MIDI Channel Map (Filter) - By Robin Gareus</title>
+  </head>
+  <body>
+    <h1>MIDI Channel Map (Filter)</h1>
+    <p>By Robin Gareus<br/><a href="http://gareus.org/oss/lv2/midifilter#channelmap">http://gareus.org/oss/lv2/midifilter#channelmap</a></p>
+    <div style="float:left;margin-top:20px">
+      <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540" version="1.1">
+        <svg:rect xmlns="http://www.w3.org/1999/xhtml" x="300" y="0" width="300" height="540" rx="10" ry="10" style="fill:rgb(220,220,255);stroke-width:2;stroke:rgb(0,0,0);opacity:0.3"/>
+        <svg:a xlink:href="#midiin" target="_top">
+          <svg:foreignObject x="0" y="15" width="40" height="25">
+            <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_atom.svg" width="40" height="25"/>
+          </svg:foreignObject>
+        </svg:a>
+        <svg:line x1="0" y1="40" x2="310" y2="40" style="stroke:rgb(000,155,00);stroke-width:2"/>
+        <svg:text x="40 " y="35" fill="black">0) MIDI In</svg:text>
+        <svg:text x="310" y="35" fill="black">(midiin)</svg:text>
+        <svg:foreignObject x="0" y="55" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="80" x2="310" y2="80" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="75" fill="black">3) Channel  1 to</svg:text>
+        <svg:text x="310" y="75" fill="black">(chn1)</svg:text>
+        <svg:foreignObject x="0" y="85" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="110" x2="310" y2="110" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="105" fill="black">4) Channel  2 to</svg:text>
+        <svg:text x="310" y="105" fill="black">(chn2)</svg:text>
+        <svg:foreignObject x="0" y="115" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="140" x2="310" y2="140" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="135" fill="black">5) Channel  3 to</svg:text>
+        <svg:text x="310" y="135" fill="black">(chn3)</svg:text>
+        <svg:foreignObject x="0" y="145" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="170" x2="310" y2="170" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="165" fill="black">6) Channel  4 to</svg:text>
+        <svg:text x="310" y="165" fill="black">(chn4)</svg:text>
+        <svg:foreignObject x="0" y="175" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="200" x2="310" y2="200" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="195" fill="black">7) Channel  5 to</svg:text>
+        <svg:text x="310" y="195" fill="black">(chn5)</svg:text>
+        <svg:foreignObject x="0" y="205" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="230" x2="310" y2="230" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="225" fill="black">8) Channel  6 to</svg:text>
+        <svg:text x="310" y="225" fill="black">(chn6)</svg:text>
+        <svg:foreignObject x="0" y="235" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="260" x2="310" y2="260" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="255" fill="black">9) Channel  7 to</svg:text>
+        <svg:text x="310" y="255" fill="black">(chn7)</svg:text>
+        <svg:foreignObject x="0" y="265" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="290" x2="310" y2="290" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="285" fill="black">10) Channel  8 to</svg:text>
+        <svg:text x="310" y="285" fill="black">(chn8)</svg:text>
+        <svg:foreignObject x="0" y="295" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="320" x2="310" y2="320" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="315" fill="black">11) Channel  9 to</svg:text>
+        <svg:text x="310" y="315" fill="black">(chn9)</svg:text>
+        <svg:foreignObject x="0" y="325" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="350" x2="310" y2="350" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="345" fill="black">12) Channel 10 to</svg:text>
+        <svg:text x="310" y="345" fill="black">(chn10)</svg:text>
+        <svg:foreignObject x="0" y="355" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="380" x2="310" y2="380" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="375" fill="black">13) Channel 11 to</svg:text>
+        <svg:text x="310" y="375" fill="black">(chn11)</svg:text>
+        <svg:foreignObject x="0" y="385" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="410" x2="310" y2="410" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="405" fill="black">14) Channel 12 to</svg:text>
+        <svg:text x="310" y="405" fill="black">(chn12)</svg:text>
+        <svg:foreignObject x="0" y="415" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="440" x2="310" y2="440" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="435" fill="black">15) Channel 13 to</svg:text>
+        <svg:text x="310" y="435" fill="black">(chn13)</svg:text>
+        <svg:foreignObject x="0" y="445" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="470" x2="310" y2="470" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="465" fill="black">16) Channel 14 to</svg:text>
+        <svg:text x="310" y="465" fill="black">(chn14)</svg:text>
+        <svg:foreignObject x="0" y="475" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="500" x2="310" y2="500" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="495" fill="black">17) Channel 15 to</svg:text>
+        <svg:text x="310" y="495" fill="black">(chn15)</svg:text>
+        <svg:foreignObject x="0" y="505" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="0" y1="530" x2="310" y2="530" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="40" y="525" fill="black">18) Channel 16 to</svg:text>
+        <svg:text x="310" y="525" fill="black">(chn16)</svg:text>
+        <svg:foreignObject x="570" y="15" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_atom.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="590" y1="40" x2="900" y2="40" style="stroke:rgb(000,155,00);stroke-width:2"/>
+        <svg:text x="610" y="35" fill="black">1) MIDI Out</svg:text>
+        <svg:text x="910" y="35" fill="black">(midiout)</svg:text>
+        <svg:foreignObject x="570" y="55" width="40" height="25">
+          <object xmlns="http://www.w3.org/1999/xhtml" type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+        </svg:foreignObject>
+        <svg:line x1="590" y1="80" x2="900" y2="80" style="stroke:rgb(155,000,000);stroke-width:2"/>
+        <svg:text x="610" y="75" fill="black">2) latency (samples)</svg:text>
+        <svg:text x="910" y="75" fill="black">(latency)</svg:text>
+      </svg>
+    </div>
+    <div style="float:left;margin-top:20px">
+      <img src="../screenshots/scrot_http__gareus.org_oss_lv2_midifilter_channelmap.png" alt="jalv.gtk Screenshot"/>
+    </div>
+    <div style="clear:left"/>
+    <div style="float:left;margin-top:20px">
+      <p>One to One MIDI channel matrix</p>
+      <p>The channelmap filter allows to map any MIDI input channel (1-16) to any output channel (1-16) in a 1:1 way. Furthermore, channels can be masked out (off).</p>
+      <p>Possible use-cases: map a specific input channel to a different output channel. Create 'catch-all' by mapping input channels 1-16 to the same output channel, for instance channel 1. Process events on channel 7 only (discarding / stripping other input channels).</p>
+    </div>
+    <div style="clear:left"/>
+    <a href="#chn1"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>3) Channel  1 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">1.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn2"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>4) Channel  2 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">2.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn3"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>5) Channel  3 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">3.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn4"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>6) Channel  4 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">4.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn5"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>7) Channel  5 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">5.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn6"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>8) Channel  6 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">6.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn7"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>9) Channel  7 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">7.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn8"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>10) Channel  8 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">8.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn9"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>11) Channel  9 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">9.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn10"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>12) Channel 10 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">10.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn11"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>13) Channel 11 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">11.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn12"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>14) Channel 12 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">12.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn13"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>15) Channel 13 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">13.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn14"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>16) Channel 14 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">14.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn15"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>17) Channel 15 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">15.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <a href="#chn16"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>18) Channel 16 to</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+INPUT -&gt;()<p>min:
+<span style="float:right;">1.00</span><br/>
+
+max:
+<span style="float:right;">16.00</span><br/>
+
+default:
+<span style="float:right;">16.00</span></p>integer<br/>enumeration<br/><p>scale points:<br/>0.0<span style="float:right;">Off</span><br/>1.0<span style="float:right;">01</span><br/>2.0<span style="float:right;">02</span><br/>3.0<span style="float:right;">03</span><br/>4.0<span style="float:right;">04</span><br/>5.0<span style="float:right;">05</span><br/>6.0<span style="float:right;">06</span><br/>7.0<span style="float:right;">07</span><br/>8.0<span style="float:right;">08</span><br/>9.0<span style="float:right;">09</span><br/>10.0<span style="float:right;">10</span><br/>11.0<span style="float:right;">11</span><br/>12.0<span style="float:right;">12</span><br/>13.0<span style="float:right;">13</span><br/>14.0<span style="float:right;">14</span><br/>15.0<span style="float:right;">15</span><br/>16.0<span style="float:right;">16</span><br/></p></div>
+    <div style="clear:left;margin-top:60px;"/>
+    <a href="#latency"/>
+    <div style="background:rgb(250,250,250);color:rgb(20,20,20);border-style:dotted;margin:10px;padding:5px;width:400px"><h2>2) latency (samples)</h2><object type="image/svg+xml" data="../svg_icons/lv2_port_type_control.svg" width="40" height="25"/>
+CONTROL
+OUTPUT ()-&gt;<p>min:
+<span style="float:right;">.00</span><br/>
+
+max:
+<span style="float:right;">192 000.00</span><br/>
+
+default:
+<span style="float:right;">NaN</span></p>integer<br/></div>
+    <div style="clear:left"/>
+    <hr/>
+    <small>Page generated with lv2xinfo, xmlstarlet, lv2x2xhtml.sh - see <a href="https://github.com/7890/lv2_utils">github repo</a></small>
+  </body>
+</html>
