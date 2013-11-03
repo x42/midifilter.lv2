@@ -2,6 +2,7 @@
 /midifilter.ttl
 /presets.ttl
 /filters.c
+/doc
 *.so
 
 *.swp
