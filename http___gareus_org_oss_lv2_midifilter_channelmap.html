@@ -5,6 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  <title>MIDI Channel Map [LV2 Plugin Doc]</title>
   <style type="text/css">
 body {font-size:12px; background:#888;}
+h1, h2, h3 {margin:.25em .5em;}
 .plugintable {border:0px; border-spacing:0; border-collapse:separate; margin:0em auto;}
 .plugintable td div {min-height:20px;}
 .plugintable td {padding:.5em 2em 0em 2em; border-width:0; cursor:crosshair;}
@@ -26,9 +27,9 @@ p.port {background-position:top left; line-height:24px; padding-left:28px; backg
 .controlport {background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAAZiS0dEAL8AvwC//ggzigAAAphJREFUSMe1lcFKG1EUhr9MTE0WJTZhFEID3TQJmAxZSXHVuOgg6XvoVsjGZfYBN67yEq5mMc0iheJAwWKYVFBXXdi0sdgaW6qZxEw3Z8oQTWIUBy4DM/f8373n3PsfeOQnMOGfIiN4y1wXuAYGMtxpAAoQBqJATN4RAbkieAlcAGdAB7iS7xMBQRF8ASwCaSAJPANCMscBzoET4BA4AL4IsD8OEBShHFAAljRNy+i6Pp/L5WaTyaTiOA7tdnvQbDa7pmme2rZ9BHwE3gNN4JcfEhhKSxTIA2+B16VSabFYLM6OK6JhGN1KpXIgAANoyO4G3oo9UAR4CawCb5aXl/MrKyuheDw+9pSkUqmZbDar1mq1CNADvgug7wcEgTjwClgtlUpL6+vroc3NTdLpNJMgiURCUVU1ZllWXwAt4C/gKr70xIC0pmkZLy3VapVKpcLx8fHE814sFmc1TcsAGdEKesL+/Cd1XZ/3B04D0XVdBZ6LljIMCAPRXC53o6jVapW1tbWJAImNilbAD/DqEFpYWFBuC67X6xQKBRqNxkiAxIb8N1+Zxle2trbY2NiYyov8gGug1263B6Mm5/N56vX6SDGJ7fu9yQMMxEs6zWaze1/nlNhz8akbgA5wYprm6X0Bpmn+EH+68G6yH/ATOLRt+8gwjKl3YRhG17btQzG/M0n5/5vs1cAFnlqWNZfNZtVEInGnQ7C3t9cvl8ufgTrwAfgqtnEDcAl0gSe1Wi2iqmoslUrNTFp5uVz2zK4mO/jj1SA41KF6wG+pR8+yrP7+/n7Idd0n4XA4GI1GA47j0Gq1Bru7u1fb29vfdnZ2Pon4O7HrjpeeuzaczFDDcR/ScEa1zLmhlnn9kJY5rukHfOm8U9N/9Ocf6hEA/E8MtboAAAAASUVORK5CYII=);}
 .atomport {background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAAZiS0dEAAAAAAD/1EFU8gAABgNJREFUSMd1Vl1sFNcV/u7szs56/1mPYddh1waSwCLHtEBC3IeE2rR5SyVXSsgTAr8FMK4fkKJKVZ30AQmCQc4bUiPFlvsAQnKhxrbMQ6WkaaAOqtsmNI5jE3vNj9cs++fd2Z25Xx98bTlVe6Qjzcy9852/e893QFKQdJHUSXpJBknGSL5C8hTJqyRnrl+/vro9sV3G4jF56dKlMskZtXZK7Y2TDJH0kTQUnuYG4AGgA/ACqFMaBpAEEAcQnpycDHR2dta1tbXZQhPo+VWPd+Xpivl+3/thtSeJNSkAqAKoACgDqAiSMQBBAFGlEQBbADQCeNG27d26rrcuLy9nTNO0FJAuNLE19yz3j1AodB/ADIAlAEUAqwCeAcgAWHEDeBHAVgUYA1CvIogC2Ham58yud0++WzFN01beAYBr9tvZZ6m9qb3pxTSVQ1kFXlTg3wNYECTfU8BxAFu/uPPFNsdxvLpb96ZSKU84HI46jlMCYKnQodJpBAIB/9jYWC6dTldzuZyte/RaU7Kp2N7evgBgEcACSI6S/Ovp06dXIEDDa8hIJCIjkYj0+Xw0vAYPHz4sR0ZGLJJ5kvmxsbHKwYMHZTAUYLQ+Kvf9aJ/9atur1UQyYbvdbnrrvLJSqXxJchwkH1y5ciUHgFevXi2QfETyMcnsyMiI5TiOTdJ56+23JASoaRo7OjokSYekE2+MS5JPSS6QnCeZDoaCsuWllhrJBZB8dvTo0VpTc5ND8gnJB0qftLa2OiTt27dvS8MwODExIUnKYDDIY8eOkaTjcrmoHPqG5L9IzvX29pbNBlOSLLkBFOONcUMI4QFAlWMBQEsvpcXzLzyvvfHzN1CpVNa/I5/PrxXC69XC4TDn5+fdzc3NGgANgPbV11+5UntSBCBA8s8k7ytPllUUmenp6ZIQgiQlN0m1Wt38Ktva2uT+A/ttFUWa5JNgMCjHx8cLJB+C5EckJ48fP5577fXXaiQL/f391UQyIb1e74aBUqlETdMIAXZ3n96wMDExIS98eME2vAYdxymcPXvWat3Xaqt63AXJbpKDJKfNBlN2d3fbqVSKxWJRBkPBDSDDMAiBNQWYzWZJkrdu3ZLXrl2TJG1d16mcWiY5TfKPbnWlLQB232/7Vk+eOumnpCwWi0JKiXWp1WobzxCAbdtrj0KI9doJTUDTNGwWDUADgNCjR498vb29PkpWAsGANjc3R7tmb2ycmppagyGwo3kHTNMEABCkx+ORLpfLtZReWh34aMDauXNnFEAIQBwkh0h+9tz25+zJyckcySzJ3MuvvOxsrgFJlstl5vP5HxS5r6/P0T06LctaUYXOxGIxOTg4WFov8pezs7MLuq6vn+dFdRqehkIh+nw+/j/ZtWsXY7EY7927V1T/fEdy8fLly6vJZFKSXNUAbBscGqzfEt0iAUjV0CwAtZaWFlkqlZw3f/EmYvEYVK45MDDAaDSKGzdukCQaGxu5Oe+HDh2yl5aWhMogvzt//nxenfnHJL9X1z5z8+ZNa3R01CHpWJZlG16DbrebXV1dUqVOCk2QZIlkhuRDko9Te/fY9Wa9Q3IRJMdJTkWjUVv36PJE14nip599uvL5538pfDL4iRUKhej3+9n2kzZnbHyslM1mC+fOnasmEgkZiUToD/jZ09NT7T7TXT5y5IgVDAalEILz83P/JDkpSP5GMdL2/v7+3cPDww3pdNrTvKNZdrR3OBc+vOArr5b/V7v2dv6y0ziw/0C1rq6uWigUbCmlvSe1J//O0XfmAKQBLAqSPwOQUEZMAAEAPkUiW4eGhhLDfxgOjP5pdEXdGah1r9BE2KpYMx6P56EimaLSZcUHi4JkUrGYqejSp4w0AnjBtu3dukdvzSxnMvX19ZZqeJ79B34cOfz6TwsXL168C+A+gAeK1YoAcpspc93yExW6R3F0EgDcbnfkzp07D82GhvjvPvig0tnZWTvRdcL37/vfaH+7OzUDYBbA3wF8C+Dpps6wCqACkpoaMQw1coTUCPKDseXjj39f9vv9BMCmpiapOOMWyV+TbCfZRDLy32PLfwDTRmvpPWEoTgAAAABJRU5ErkJggg==);}
 dt,.desc {font-style:italic;}
-dd {margin-left:1em;}
+dd {margin-left:1em; white-space: pre-line; white-space: pre; white-space: pre-wrap; word-wrap: break-word;}
 ul {padding:0 0 0 1.25em; margin:0;}
-p.backlink {margin-bottom:1em;}
+p.backlink {margin: .5em 2.0em 0 1.0em; float:left;}
 p.docs {max-width:30em;}
 img.screenshot {max-width:100%; margin:.5em auto .25em auto; cursor:pointer;}
 #pluginmeta {margin:0 1em; padding:1em; border:1px solid #ccc; float:left; max-width:22em; background-color:#fff;}
@@ -81,10 +82,10 @@ div.footer {margin:1em auto; font-size:80%; color:#444; text-align:center; width
   </script>
   </head>
   <body>
-<h1><a name="top"/>LV2 Doc &laquo;MIDI Channel Map&raquo;
+<p class="backlink"><a href="index.html">Back to Index</a></p>
+<h1 class="title"><a name="top"/>LV2 Doc &laquo;MIDI Channel Map&raquo;
  [Filter]
 </h1>
-<p class="backlink"><a href="index.html">Back to Index</a></p>
 <div id="pluginmeta"><dl>
 <p class="desc">Description</p>
 <p class="docs">Rewrite midi-channel number. This filter only affects midi-data which is channel relevant (ie note-on/off, control and program changes, key and channel pressure and pitchbend). MIDI-SYSEX and Realtime message are always passed thru unmodified.</p>
@@ -968,6 +969,6 @@ var num_ports=19;
 </div>
 <!-- end of page !-->
 <div style="clear:both;"></div>
-<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated at 2013-10-31 20:10:54 GMT</div>
+<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated on 2013-11-03 02:51:45 GMT</div>
  </body>
  </html>
