@@ -41,4 +41,4 @@ if test "$a" != "y" -a "$a" != "Y"; then
 	exit
 fi
 
-cd doc && git add *.html *.png && git commit "update documentation" && git push
+cd doc && git add *.html *.png && git commit -m "update documentation" && git push
