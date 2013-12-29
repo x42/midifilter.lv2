@@ -8,7 +8,11 @@ MFD_FILTER(sostenuto)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s)
-	, TTF_IPORTTOGGLE( 2, "pedal",  "Enable", 1.0)
+	, TTF_IPORT( 2, "pedal",  "Pedal Mode", 0.0, 2.0, 1.0, \
+			lv2:scalePoint [ rdfs:label "off" ; rdf:value  0.0 ] ; \
+			lv2:scalePoint [ rdfs:label "on" ; rdf:value  1.0 ] ; \
+			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value  2.0 ] ; \
+			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration; )
 	; rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal."
 	.
 
@@ -84,7 +88,6 @@ filter_postproc_sostenuto(MidiFilter* self)
 
 		if (off == woff) break;
 	}
-
 }
 
 void
@@ -95,11 +98,18 @@ filter_midi_sostenuto(MidiFilter* self,
 {
 	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint32_t delay = floor(self->samplerate * RAIL((*self->cfg[1]), 0, 120));
-	const int state = RAIL(*self->cfg[2], 0, 1);
+
+	const int pedal = RAIL(*self->cfg[2], 0, 2);
+	int state;
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t vel = buffer[2] & 0x7f;
 	uint8_t mst = buffer[0] & 0xf0;
+
+	/* pedal CC 64 -- TODO make CC (and theshold) configurable !? */
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64) {
+		self->memI[16 + chn] = vel > 63 ? 1 : 0;
+	}
 
 	if (size != 3
 			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)
@@ -108,6 +118,13 @@ filter_midi_sostenuto(MidiFilter* self,
 	{
 		forge_midimessage(self, tme, buffer, size);
 		return;
+	}
+
+	switch(pedal) {
+		default:
+		case 0: state = 0; break;
+		case 1: state = 1; break;
+		case 2: state = self->memI[16 + chn]; break;
 	}
 
 	if (mst == MIDI_NOTEON && vel ==0 ) {
@@ -162,18 +179,41 @@ filter_preproc_sostenuto(MidiFilter* self)
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
-	const int state = RAIL(*self->cfg[2], 0, 1);
+	const int pedal = RAIL(*self->cfg[2], 0, 2);
+	int state;
 
-	if (   self->lcfg[1] == *self->cfg[1]
-			&& self->lcfg[2] == *self->cfg[2]) {
+	if (self->lcfg[1] == *self->cfg[1]
+			&& (self->lcfg[2] == *self->cfg[2] && self->lcfg[2] < 2)) {
+		/* no change: same pedal state for all channels and same time */
+		for (i=32; i < 48; ++i) {
+			/* remember per channel pedal state */
+			self->memI[i] = pedal & 1;
+		}
 		return;
 	}
+
+	/* adjust time if changed || per-channel pedal state */
 
 	const float diff = *self->cfg[1] - self->lcfg[1];
 	const int delay = rint(self->samplerate * diff);
 
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
+
+		if (pedal == 2) {
+			const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
+			const int ostate = self->memI[32 + chn];
+			state = self->memI[16 + chn];
+
+			if (self->lcfg[1] == *self->cfg[1] && state == ostate) {
+				/* no change: same pedal state for this channels and same time */
+				if (off == woff) break;
+				continue;
+			}
+		} else {
+			state = pedal & 1;
+		}
+
 		if (self->memQ[off].size > 0) {
 			if (state == 0) {
 				self->memQ[off].reltime = 0;
@@ -187,14 +227,28 @@ filter_preproc_sostenuto(MidiFilter* self)
 	self->memI[3] = 1;
 	filter_postproc_sostenuto(self);
 	self->memI[3] = -1;
+
+	/* remember per channel pedal state */
+	for (i=16; i < 32; ++i) {
+		if (pedal < 2) {
+			self->memI[16+i] = pedal & 1;
+		} else {
+			self->memI[16+i] = self->memI[i];
+		}
+	}
 }
 
-void filter_init_sostenuto(MidiFilter* self) {
+static void filter_init_sostenuto(MidiFilter* self) {
 	srandom ((unsigned int) time (NULL));
 	self->memI[0] = self->samplerate / 16.0;
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
 	self->memI[3] = -1; // max time-offset
+	self->memI[4] = 0;  // prev state
+	for (uint32_t i = 16; i < 16; ++i) {
+		self->memI[i] = 0; // per channel pedal (CC64)
+		self->memI[16 + i] = 1; // previous pedal state (default = on)
+	}
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
 	self->postproc_fn = filter_postproc_sostenuto;
 	self->preproc_fn = filter_preproc_sostenuto;
