@@ -20,7 +20,6 @@ MFD_FILTER(scalecc)
 			lv2:scalePoint [ rdfs:label "Exclude Range" ; rdf:value 2.0 ] ;
 			rdfs:comment "")
 	, TTF_IPORT(4, "valmul",  "Value Scale",   -10.0, 10.0, 1.0,
-			units:unit units:factor;
 			rdfs:comment "")
 	, TTF_IPORT(5, "valoff",  "Value Offset",  -64.0, 64.0, 0.0,
 			lv2:portProperty lv2:integer;
