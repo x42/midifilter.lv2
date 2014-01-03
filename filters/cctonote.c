@@ -21,12 +21,15 @@ MFD_FILTER(cctonote)
 			lv2:portProperty lv2:integer; units:unit units:midiNote ;
 			rdfs:comment "only used in 'velocity = value' mode."
 			)
-	; rdfs:comment "Convert MIDI control change messages to note-on/off messages. Note off is queued 128 samples later."
+	; rdfs:comment "Convert MIDI control change messages to note-on/off messages. Note off is queued 10msec later."
 	.
 
 #elif defined MX_CODE
 
 
+/* check queued messages for existing note-off for given key/channel
+ * if found, send it immediately
+ */
 static int cctonote_check_queue(MidiFilter* self,
 		uint8_t chn,
 		uint8_t key,
@@ -53,7 +56,7 @@ static int cctonote_check_queue(MidiFilter* self,
 		}
 		// Found matching queued note-off, send it now
 		forge_midimessage(self, tme, self->memQ[off].buf, 3);
-		// .. and remove it from the queue
+		// ...and remove it from the queue
 		self->memQ[off].size = 0;
 	}
 	return 0;
@@ -118,6 +121,7 @@ void filter_init_cctonote(MidiFilter* self) {
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
 	self->memI[3] = -1; // max time-offset
+	self->memI[4] = self->samplerate * .01; // note-off delay in samples
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
 
 	int c,k;
@@ -141,11 +145,16 @@ filter_midi_cctonote(MidiFilter* self,
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t mst = buffer[0] & 0xf0;
 
+	const bool filter_dups = false;
+	// TODO intercept CC-121 -> 'reset all controllers'
+	// -> clear previous state for dup-filter
+
 	if (size != 3
 			|| mst != MIDI_CONTROLCHANGE
 			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
+		/* bypass all message that we're not supposed to filter */
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
@@ -187,12 +196,12 @@ filter_midi_cctonote(MidiFilter* self,
 	self->memI[3] = -1;
 
 	/* check if key/value changed */
-	if (self->memCI[chn][param] != value) {
+	if (!filter_dups || self->memCI[chn][param] != value) {
 		/* remember key/value */
 		self->memCI[chn][param] = value;
 
 		/* check if Note-off is queued -> send immediately */
-		// TODO: think: flush all for this channel if mode==1 !?
+		// TODO: think: flush _all_ for this channel if mode==1 !?
 		cctonote_check_queue(self, chn, buf[1], tme);
 
 		/* send note on */
@@ -205,7 +214,7 @@ filter_midi_cctonote(MidiFilter* self,
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, buf, size);
 		qm->size = size;
-		qm->reltime = tme + 128; // TODO make configurable, SR dependentt ??
+		qm->reltime = tme + self->memI[4];
 		self->memI[2] = (self->memI[2] + 1) % self->memI[0];
 	}
 }
