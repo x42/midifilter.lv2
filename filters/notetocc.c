@@ -51,8 +51,8 @@ filter_midi_notetocc(MidiFilter* self,
 	const uint8_t vel = buffer[2] & 0x7f;
 	const int mode = RAIL(floorf(*self->cfg[1]),0, 3);
 
-	const uint8_t param = midi_limit_val(floorf(*self->cfg[1]));
-	const uint8_t kfltr = midi_limit_val(floorf(*self->cfg[2]));
+	const uint8_t param = midi_limit_val(floorf(*self->cfg[2]));
+	const uint8_t kfltr = midi_limit_val(floorf(*self->cfg[3]));
 
 	uint8_t buf[3];
 	buf[0] = MIDI_CONTROLCHANGE | chn;
