@@ -151,7 +151,7 @@ update_position(MidiFilter* self, const LV2_Atom_Object* obj)
 		self->available_info |= NFO_BEAT;
 	}
 	if (fps && fps->type == uris->atom_Float) {
-		self->frames_per_second = ((LV2_Atom_Float*)frame)->body;
+		self->frames_per_second = ((LV2_Atom_Float*)fps)->body;
 		self->available_info |= NFO_FPS;
 	}
 	if (frame && frame->type == uris->atom_Long) {
