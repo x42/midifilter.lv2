@@ -45,6 +45,7 @@
 
 typedef struct {
 	LV2_URID atom_Blank;
+	LV2_URID atom_Object;
 	LV2_URID midi_MidiEvent;
 	LV2_URID atom_Sequence;
 	LV2_URID atom_Float;

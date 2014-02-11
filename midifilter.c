@@ -192,7 +192,7 @@ run(LV2_Handle instance, uint32_t n_samples)
 		if (ev->body.type == self->uris.midi_MidiEvent) {
 			self->filter_fn(self, ev->time.frames, (uint8_t*)(ev+1), ev->body.size);
 		}
-		else if (ev->body.type == self->uris.atom_Blank) {
+		else if (ev->body.type == self->uris.atom_Blank || ev->body.type == self->uris.atom_Object) {
 			const LV2_Atom_Object* obj = (LV2_Atom_Object*)&ev->body;
 			if (obj->body.otype == self->uris.time_Position) {
 				update_position(self, obj);
@@ -232,6 +232,7 @@ static inline void
 map_mf_uris(LV2_URID_Map* map, MidiFilterURIs* uris)
 {
 	uris->atom_Blank         = map->map(map->handle, LV2_ATOM__Blank);
+	uris->atom_Object        = map->map(map->handle, LV2_ATOM__Object);
 	uris->midi_MidiEvent     = map->map(map->handle, LV2_MIDI__MidiEvent);
 	uris->atom_Sequence      = map->map(map->handle, LV2_ATOM__Sequence);
 
