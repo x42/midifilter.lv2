@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  <title>Note2CC [LV2 Plugin Doc]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  <title>MapCC [LV2 Plugin Doc]</title>
   <link rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEACABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEBAAGxsbAB0dHQA5Kx4ANywhAD0wJABAMSIAQDEjAEEyJABDMyUAQDQmAEM0JQAyMjIAQzQmAEY2JgA0NDQASzclAEY3KQBHNyoASDgoAEk4KQBFOCwATDkoAE86JQBKOSsATTonAFA8KQBMPCwASDwwAFE+KwBUPyoAPT09AFJBMABTQTAAVkIuAFZCLwBWQy8AV0Y2AF1ILwBfTDIAXEs6AF9NNABeTDoAY040AGhPMABjTTkAbVE5AGhSPQBrVTsAalU/AGxbSQBzXUAAeWJEAF9fXwB1ZEsAc2RPAHpoTwB8aU8Agm9XAIFuXQB/b14AgXJeAIp1WQCHdl8AinhjAIt4ZgCPeWYAi3lqAI97YgCPfGwAkX1sAJB/aQCYgmYAmYFqAJOCcQCCgoIAmohyAJqHdgCXiXYAmIp3AJeKeACZi3YAn4xxAJmLeACZi3kAmox+AI2NjQCekIIAo5N/AKOUiACnl38AqpeGAK2bhQComo0AqpuJALCciwCsnpIAs6GLALKijgC0opIAsKKUALGklwCyppIAuKWWALCmnQC1p5kAtqiWALWnnACxp54AsKifALSrogC5rJ8AuK2fAL+uoQC+sqYAwrWjAMK1qAC1tbUAx7epAMe4rgDIvLEAy7ywAMi+rgDIvbIAzL2xAMzCsgDMwbYAzsOwAM3DuQDSxLcA08W5AMTExADSyLcA1Mm9ANbNvQDUzcUA2M7DAM3NzQDf1swA39fNANfX1wDi28oA5d3OAOfe1QDd3d0A5t7XAN/f3wDn4NkA4ODgAObk3gDr5t0A5ubmAO7n4ADv6toA8uvcAPLs3ADv6+QA9e7eAPPu3wDw7OcA9O3mAPfv4QD27uYA8O/qAPjw5QD48esA9/byAPT29AD39/cA+Pj4APz59AD5+vcA/vz3APz//gD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAr6mSkqivr6iXqa+pkpKpr6+MAQ+DqamDNYOokAIflK+viQBLH5KSH1YfklYMdamvr4kASx+Skh9WH5JWDHWpr6+MAQ+DqamDNYOokAIflK+vqZKSqK+vqJepr6mSkqmvrx0aFxgUEw4LDQkIBwYDrxsmVFFOTz89UDcQGRYSEQQgLZ6bmaFmjZ1/JyQjIh4FJTCgfTY4U5qFpECEho8pCiozpXosMXORRaJpcI5HKxU8NKZ+LkKfiEOKljlYiy8cbXesk2OArXJMeKpeRJw6IW55rphqo6diWmSre5WHPihogoF8dHZxZ2FcX1tSSUgyr2xva2VgXVlXVU1KRkE7r4YhAACAAQAAgAEAAIABAACAAQAAhiEAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAA=" />
   <style type="text/css">
 body {font-size:12px; background:#aaa; min-width:82em;}
@@ -86,15 +86,15 @@ div.footer {margin:1em auto; font-size:80%; color:#444; text-align:center; width
   </head>
   <body>
 <p class="backlink"><a href="index.html">Back to Index</a></p>
-<h1 class="title"><a name="top"/>LV2 Doc &laquo;Note2CC&raquo;
+<h1 class="title"><a name="top"/>LV2 Doc &laquo;MapCC&raquo;
  [Filter]
 </h1>
 <div id="pluginmeta">
 <p class="desc">Description</p>
-<p class="docs">Convert MIDI note-on messages to control change messages.</p>
+<p class="docs">Change one control message into another -- combine with scalecc to modify/scale the actual value.</p>
 <dl>
- <dt>Title</dt><dd>Note2CC</dd>
- <dt>URI</dt><dd><a href="http://gareus.org/oss/lv2/midifilter#notetocc">http://gareus.org/oss/lv2/midifilter#notetocc</a></dd>
+ <dt>Title</dt><dd>MapCC</dd>
+ <dt>URI</dt><dd><a href="http://gareus.org/oss/lv2/midifilter#mapcc">http://gareus.org/oss/lv2/midifilter#mapcc</a></dd>
  <dt>Class</dt><dd>Filter</dd>
  <dt>Author</dt><dd>Robin Gareus</dd>
  <dt>Author's Email</dt><dd>mailto:robin@gareus.org</dd>
@@ -106,14 +106,14 @@ div.footer {margin:1em auto; font-size:80%; color:#444; text-align:center; width
 <li>Hard Realtime Capable</li>
 </ul></dd>
 </dl>
-<div class="screenshot"><img alt="Screenshot" class="screenshot" src="http___gareus_org_oss_lv2_midifilter_notetocc.png" onclick="showimg();" /></div>
+<div class="screenshot"><img alt="Screenshot" class="screenshot" src="http___gareus_org_oss_lv2_midifilter_mapcc.png" onclick="showimg();" /></div>
 </div>
 <div id="lightbox" style="display:none;" onclick="hideimg();">
-<div><img alt="Screenshot" src="http___gareus_org_oss_lv2_midifilter_notetocc.png"/></div>
+<div><img alt="Screenshot" src="http___gareus_org_oss_lv2_midifilter_mapcc.png"/></div>
 </div>
 <div id="portwrapper">
 <script type="text/javascript">
-var num_ports=7;
+var num_ports=6;
 </script>
 <div id="plugintable"><table class="plugintable">
 <tr><td></td><td class="ptbl ptblTL">&nbsp;</td><td class="ptbl ptblTC">&nbsp;</td><td class="ptbl ptblTR">&nbsp;</td><td></td></tr>
@@ -157,24 +157,10 @@ var num_ports=7;
 </p>
 </div>
 </div></td><td class="bgR controlport" onmouseover="showdoc(2);" onmouseout="showdoc(-1);" onclick="jumpto(2);">2) latency (samples)</td></tr>
-<tr><td class="bgL controlport" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);">4) Operation Mode</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);"><div>(mode)<div class="portinfo" id="port4" style="display:none">
-<h3>4) Operation Mode</h3>
+<tr><td class="bgL controlport" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);">4) CC Input</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);"><div>(ccin)<div class="portinfo" id="port4" style="display:none">
+<h3>4) CC Input</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs"></p>
-<p class="desc">Port Properties:</p>
-<ul>
-<li class="portproperty">Enumeration
-</li>
-<li class="portproperty">Integer</li>
-</ul>
-<p>
-</p>
-</div>
-</div></td><td class="pbody"><div>&nbsp;</div></td><td class="pbody ptbl ptblRR"></td><td></td></tr>
-<tr><td class="bgL controlport" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);">5) CC Parameter</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);"><div>(param)<div class="portinfo" id="port5" style="display:none">
-<h3>5) CC Parameter</h3>
-<p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs">unused in 'all keys' mode.</p>
+<p class="docs">The control to change</p>
 <p class="desc">Port Property:</p>
 <ul>
 <li class="portproperty">Integer</li>
@@ -183,10 +169,10 @@ var num_ports=7;
 </p>
 </div>
 </div></td><td class="pbody"><div>&nbsp;</div></td><td class="pbody ptbl ptblRR"></td><td></td></tr>
-<tr><td class="bgL controlport" onmouseover="showdoc(6);" onmouseout="showdoc(-1);" onclick="jumpto(6);">6) Active Key (midi-note)</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(6);" onmouseout="showdoc(-1);" onclick="jumpto(6);"><div>(key)<div class="portinfo" id="port6" style="display:none">
-<h3>6) Active Key (midi-note)</h3>
+<tr><td class="bgL controlport" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);">5) CC Output</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);"><div>(ccout)<div class="portinfo" id="port5" style="display:none">
+<h3>5) CC Output</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs">only used in 'value = velocity' mode.</p>
+<p class="docs">The target controller</p>
 <p class="desc">Port Property:</p>
 <ul>
 <li class="portproperty">Integer</li>
@@ -214,9 +200,9 @@ var num_ports=7;
 <p class="docs">MIDI Channel (1..16) on which the filter is active; 0: any). Data on other channels is passed though unmodified.</p>
 <p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Integer</li>
 <li class="portproperty">Enumeration
 </li>
-<li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
@@ -244,30 +230,9 @@ var num_ports=7;
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
-<h3><a name="portdoc4">4</a>) Operation Mode</h3>
+<h3><a name="portdoc4">4</a>) CC Input</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs"></p>
-<p class="desc">Port Properties:</p>
-<ul>
-<li class="portproperty">Integer</li>
-<li class="portproperty">Enumeration
-</li>
-</ul>
-<p>
-</p>
-<p><span class="desc">Default:</span> 0.000000</p>
-<table class="portrange">
-<tr><th colspan="2">Scale Points</th></tr>
-<tr><th>0.0</th><td>Fixed parameter, CC-value = velocity</td></tr>
-<tr><th>1.0</th><td>Fixed parameter, CC-value = key</td></tr>
-<tr><th>2.0</th><td>All keys, parameter = key, CC-value = velocity</td></tr>
-</table>
-</div>
-<div class="port">
-<div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
-<h3><a name="portdoc5">5</a>) CC Parameter</h3>
-<p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs">unused in 'all keys' mode.</p>
+<p class="docs">The control to change</p>
 <p class="desc">Port Property:</p>
 <ul>
 <li class="portproperty">Integer</li>
@@ -283,9 +248,9 @@ var num_ports=7;
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
-<h3><a name="portdoc6">6</a>) Active Key (midi-note)</h3>
+<h3><a name="portdoc5">5</a>) CC Output</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="docs">only used in 'value = velocity' mode.</p>
+<p class="docs">The target controller</p>
 <p class="desc">Port Property:</p>
 <ul>
 <li class="portproperty">Integer</li>
@@ -296,7 +261,7 @@ var num_ports=7;
 <tr><th colspan="2">Range</th></tr>
 <tr><th>min</th><td>0.000000</td></tr>
 <tr><th>max</th><td>127.000000</td></tr>
-<tr><th>default</th><td>48.000000</td></tr>
+<tr><th>default</th><td>0.000000</td></tr>
 </table>
 </div>
 </div>
@@ -333,6 +298,6 @@ var num_ports=7;
 </div>
 <!-- end of page !-->
 <div style="clear:both;"></div>
-<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated on 2014-05-07 13:11:58 GMT</div>
+<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated on 2014-05-07 13:11:11 GMT</div>
  </body>
  </html>
