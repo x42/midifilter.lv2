@@ -1,6 +1,4 @@
-/manifest.ttl
-/midifilter.ttl
-/presets.ttl
+/build
 /filters.c
 /lv2syms
 /doc

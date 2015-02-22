@@ -14,6 +14,7 @@ LV2DIR ?= $(PREFIX)/$(LIBDIR)/lv2
 LOADLIBES=-lm
 LV2NAME=midifilter
 BUNDLE=midifilter.lv2
+BUILDDIR=build/
 targets=
 
 UNAME=$(shell uname)
@@ -35,7 +36,7 @@ ifneq ($(XWIN),)
   override LDFLAGS += -static-libgcc -static-libstdc++
 endif
 
-targets+=$(LV2NAME)$(LIB_EXT)
+targets+=$(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
 # check for build-dependencies
 ifeq ($(shell pkg-config --exists lv2 || echo no), no)
@@ -48,7 +49,7 @@ override CFLAGS += `pkg-config --cflags lv2`
 # build target definitions
 default: all
 
-all: manifest.ttl presets.ttl $(LV2NAME).ttl $(targets)
+all: $(BUILDDIR)manifest.ttl $(BUILDDIR)presets.ttl $(BUILDDIR)$(LV2NAME).ttl $(targets)
 
 FILTERS := $(wildcard filters/*.c)
 
@@ -70,39 +71,43 @@ filters.c: $(FILTERS)
 		done;
 	echo >> filters.c;
 
-manifest.ttl: manifest.ttl.in ttf.h filters.c
-	cat manifest.ttl.in > manifest.ttl
+$(BUILDDIR)manifest.ttl: manifest.ttl.in ttf.h filters.c
+	@mkdir -p $(BUILDDIR)
+	cat manifest.ttl.in > $(BUILDDIR)manifest.ttl
 	gcc -E -I. -DMX_MANIFEST filters.c \
 		| grep -v '^\#' \
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
 		| uniq \
-		>> manifest.ttl
-	for file in presets/*.ttl; do head -n 3 $$file >> manifest.ttl; echo "rdfs:seeAlso <presets.ttl> ." >> manifest.ttl; done
+		>> $(BUILDDIR)manifest.ttl
+	for file in presets/*.ttl; do head -n 3 $$file >> $(BUILDDIR)manifest.ttl; echo "rdfs:seeAlso <presets.ttl> ." >> $(BUILDDIR)manifest.ttl; done
 
-presets.ttl: presets.ttl.in presets/*.ttl
-	cat presets.ttl.in > presets.ttl
-	cat presets/*.ttl >> presets.ttl
+$(BUILDDIR)presets.ttl: presets.ttl.in presets/*.ttl
+	@mkdir -p $(BUILDDIR)
+	cat presets.ttl.in > $(BUILDDIR)presets.ttl
+	cat presets/*.ttl >> $(BUILDDIR)presets.ttl
 
-$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
-	cat $(LV2NAME).ttl.in > $(LV2NAME).ttl
+$(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
+	@mkdir -p $(BUILDDIR)
+	cat $(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
 	gcc -E -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
 		| sed 's/HTTPP/http:\//g' \
 		| uniq \
-		>> $(LV2NAME).ttl
+		>> $(BUILDDIR)$(LV2NAME).ttl
 
-$(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
+$(BUILDDIR)$(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
+	@mkdir -p $(BUILDDIR)
 	$(CC) $(CPPFLAGS) $(CFLAGS) \
-	  -o $(LV2NAME)$(LIB_EXT) $(LV2NAME).c \
+	  -o $(BUILDDIR)$(LV2NAME)$(LIB_EXT) $(LV2NAME).c \
 		-shared $(LV2LDFLAGS) $(LDFLAGS) $(LOADLIBES)
-	$(STRIP) $(STRIPFLAGS) $(LV2NAME)$(LIB_EXT)
+	$(STRIP) $(STRIPFLAGS) $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
 # install/uninstall/clean target definitions
 
 install: all
 	install -d $(DESTDIR)$(LV2DIR)/$(BUNDLE)
-	install -m755 $(LV2NAME)$(LIB_EXT) $(DESTDIR)$(LV2DIR)/$(BUNDLE)
-	install -m644 manifest.ttl $(LV2NAME).ttl presets.ttl $(DESTDIR)$(LV2DIR)/$(BUNDLE)
+	install -m755 $(BUILDDIR)$(LV2NAME)$(LIB_EXT) $(DESTDIR)$(LV2DIR)/$(BUNDLE)
+	install -m644 $(BUILDDIR)manifest.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)presets.ttl $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 uninstall:
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/manifest.ttl
@@ -112,6 +117,7 @@ uninstall:
 	-rmdir $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 clean:
-	rm -f manifest.ttl presets.ttl $(LV2NAME).ttl $(LV2NAME)$(LIB_EXT) lv2syms
+	rm -f $(BUILDDIR)manifest.ttl $(BUILDDIR)presets.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)$(LV2NAME)$(LIB_EXT) lv2syms filters.c
+	-test -d $(BUILDDIR) && rmdir $(BUILDDIR) || true
 
 .PHONY: clean all install uninstall
