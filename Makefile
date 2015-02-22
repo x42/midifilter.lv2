@@ -5,23 +5,37 @@ PREFIX ?= /usr/local
 CFLAGS ?= $(OPTIMIZATIONS) -Wall
 LIBDIR ?= lib
 
+STRIP=strip
+STRIPFLAGS=-s
+
 ###############################################################################
 
 LV2DIR ?= $(PREFIX)/$(LIBDIR)/lv2
 LOADLIBES=-lm
 LV2NAME=midifilter
 BUNDLE=midifilter.lv2
+targets=
 
 UNAME=$(shell uname)
 ifeq ($(UNAME),Darwin)
   LV2LDFLAGS=-dynamiclib
   LIB_EXT=.dylib
+  STRIPFLAGS=-u -r -arch all -s lv2syms
+  targets+=lv2syms
 else
   LV2LDFLAGS=-Wl,-Bstatic -Wl,-Bdynamic
   LIB_EXT=.so
 endif
 
-targets=$(LV2NAME)$(LIB_EXT)
+ifneq ($(XWIN),)
+  CC=$(XWIN)-gcc
+  STRIP=$(XWIN)-strip
+  LV2LDFLAGS=-Wl,-Bstatic -Wl,-Bdynamic -Wl,--as-needed
+  LIB_EXT=.dll
+  override LDFLAGS += -static-libgcc -static-libstdc++
+endif
+
+targets+=$(LV2NAME)$(LIB_EXT)
 
 # check for build-dependencies
 ifeq ($(shell pkg-config --exists lv2 || echo no), no)
@@ -37,6 +51,9 @@ default: all
 all: manifest.ttl presets.ttl $(LV2NAME).ttl $(targets)
 
 FILTERS := $(wildcard filters/*.c)
+
+lv2syms:
+	echo "_lv2_descriptor" > lv2syms
 
 filters.c: $(FILTERS)
 	echo "#include \"ttf.h\"" > filters.c
@@ -78,6 +95,7 @@ $(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) \
 	  -o $(LV2NAME)$(LIB_EXT) $(LV2NAME).c \
 		-shared $(LV2LDFLAGS) $(LDFLAGS) $(LOADLIBES)
+	$(STRIP) $(STRIPFLAGS) $(LV2NAME)$(LIB_EXT)
 
 # install/uninstall/clean target definitions
 
@@ -94,6 +112,6 @@ uninstall:
 	-rmdir $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 clean:
-	rm -f manifest.ttl presets.ttl $(LV2NAME).ttl $(LV2NAME)$(LIB_EXT)
+	rm -f manifest.ttl presets.ttl $(LV2NAME).ttl $(LV2NAME)$(LIB_EXT) lv2syms
 
 .PHONY: clean all install uninstall

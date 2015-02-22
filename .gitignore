@@ -2,8 +2,11 @@
 /midifilter.ttl
 /presets.ttl
 /filters.c
+/lv2syms
 /doc
 *.so
+*.dylib
+*.dll
 
 *.swp
 cscope.*
