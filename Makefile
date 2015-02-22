@@ -3,14 +3,13 @@
 OPTIMIZATIONS ?= -msse -msse2 -mfpmath=sse -ffast-math -fomit-frame-pointer -O3 -fno-finite-math-only
 PREFIX ?= /usr/local
 CFLAGS ?= $(OPTIMIZATIONS) -Wall
-LIBDIR ?= lib
 
 STRIP=strip
 STRIPFLAGS=-s
 
 ###############################################################################
 
-LV2DIR ?= $(PREFIX)/$(LIBDIR)/lv2
+LV2DIR ?= $(PREFIX)/lib/lv2
 LOADLIBES=-lm
 LV2NAME=midifilter
 BUNDLE=midifilter.lv2
