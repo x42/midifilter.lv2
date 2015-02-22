@@ -69,7 +69,7 @@ filter_midi_mididelay(MidiFilter* self,
 	}
 	if (bpm <= 0) bpm = 60;
 
-	uint32_t delay = floor(self->samplerate * (*self->cfg[2]) * 60.0 / bpm);
+	int delay = floor(self->samplerate * (*self->cfg[2]) * 60.0 / bpm);
 	float rnd_val = self->samplerate * (*self->cfg[3]) * 60.0 / bpm;
 	float rnd_off = 0;
 
