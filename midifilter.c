@@ -24,6 +24,11 @@
 #include <math.h>
 #include <time.h>
 
+#ifdef _WIN32
+#define random() rand()
+#define srandom(X) srand(X)
+#endif
+
 #include "midifilter.h"
 
 /******************************************************************************
