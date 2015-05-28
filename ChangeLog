@@ -1,3 +1,12 @@
+2015-05-23 (0.4.0)  Robin Gareus <robin@gareus.org>
+* portablility updates (OSX, windows)
+* fix potential array overflow in delaylines
+
+2014-01-06 (0.3.0)  Robin Gareus <robin@gareus.org>
+* add CC-map filter
+* add CC-to-note
+* sostenuto: allow to use CC64 to control pedal-state
+
 2013-11-19 (0.2.0)  Robin Gareus <robin@gareus.org>
 * new: midiCC value scale/offset/invert filter
 * new: "Note to CC" plugin
