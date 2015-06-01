@@ -17,7 +17,7 @@ MFD_FILTER(mapkeyscale)
 	, TTF_IPORT(10, "k9",  "A",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT(11, "k10", "A#", -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
 	, TTF_IPORT(12, "k11", "B",  -13.0, 12.0, 0.0, lv2:portProperty lv2:integer; lv2:scalePoint [ rdfs:label "Off"; rdf:value  -13.0 ]; units:unit units:midiNote)
-	; rdfs:comment "Flexible 12-tone map. Allow to map a note within an octave to another note in the same octave-range +- 12 semitones. Alternatively notes can also be masked (disabled). If two keys are moapped to the same note, the corresponding note on/events are latched: only the first note on and last note off will be sent. The settings can be changed dynamically: Note-on/off events will be sent accordingly.";
+	; rdfs:comment "Flexible 12-tone map. Allow to map a note within an octave to another note in the same octave-range +- 12 semitones. Alternatively notes can also be masked (disabled). If two keys are mapped to the same note, the corresponding note on/events are latched: only the first note on and last note off will be sent. The settings can be changed dynamically: Note-on/off events will be sent accordingly.";
 	.
 
 #elif defined MX_CODE
