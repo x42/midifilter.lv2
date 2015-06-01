@@ -105,6 +105,9 @@
 	lv2:scalePoint [ rdfs:label "16" ; rdf:value 16.0 ] ; \
 	lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 
+#define SPX(LBL,VAL) \
+	lv2:scalePoint [ rdfs:label LBL ; rdf:value VAL ] ;
+
 #define PORTENUMZ(ZEROLABEL) \
 	lv2:scalePoint [ rdfs:label ZEROLABEL; rdf:value  0.0 ] ; \
 	PORTENUM16
