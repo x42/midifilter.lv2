@@ -1,3 +1,6 @@
+2015-06-08 (0.4.1)  Robin Gareus <robin@gareus.org>
+* key map/transpoe: use an enum with unit semitone
+
 2015-05-23 (0.4.0)  Robin Gareus <robin@gareus.org>
 * portablility updates (OSX, windows)
 * fix potential array overflow in delaylines
