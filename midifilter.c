@@ -216,10 +216,12 @@ run(LV2_Handle instance, uint32_t n_samples)
 		if (self->available_info & NFO_SPEED) {
 			bpm *= self->speed;
 		}
-		const double samples_per_beat = 60.0 * self->samplerate / bpm;
-		self->bar_beats    += (double) n_samples / samples_per_beat;
-		self->beat_beats   = self->bar_beats - floor(self->bar_beats);
-		self->pos_bbt      = self->beat_beats * samples_per_beat;
+		if (bpm != 0) {
+			const double samples_per_beat = 60.0 * self->samplerate / bpm;
+			self->bar_beats    += (double) n_samples / samples_per_beat;
+			self->beat_beats   = self->bar_beats - floor(self->bar_beats);
+			self->pos_bbt      = self->beat_beats * samples_per_beat;
+		}
 	}
 	if (self->available_info & NFO_FRAME) {
 		self->pos_frame += n_samples;
