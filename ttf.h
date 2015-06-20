@@ -27,6 +27,7 @@
 #define TTF_DEF(DOAPNAME, INSUPPORTS) \
 	a lv2:Plugin, lv2:FilterPlugin ; \
 	doap:name DOAPNAME ; \
+	@VERSION@ \
 	doap:license <HTTPP/usefulinc.com/doap/licenses/gpl> ; \
   lv2:project <HTTPP/gareus.org/oss/lv2/midifilter> ; \
 	lv2:optionalFeature lv2:hardRTCapable ; \

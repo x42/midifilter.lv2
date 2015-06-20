@@ -7,6 +7,7 @@ CFLAGS ?= $(OPTIMIZATIONS) -Wall
 STRIP=strip
 STRIPFLAGS=-s
 
+midifilter_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
 ###############################################################################
 
 LV2DIR ?= $(PREFIX)/lib/lv2
@@ -22,9 +23,11 @@ ifeq ($(UNAME),Darwin)
   LIB_EXT=.dylib
   STRIPFLAGS=-u -r -arch all -s lv2syms
   targets+=lv2syms
+  EXTENDED_RE=-E
 else
   LV2LDFLAGS=-Wl,-Bstatic -Wl,-Bdynamic
   LIB_EXT=.so
+  EXTENDED_RE=-r
 endif
 
 ifneq ($(XWIN),)
@@ -36,6 +39,11 @@ ifneq ($(XWIN),)
 endif
 
 targets+=$(BUILDDIR)$(LV2NAME)$(LIB_EXT)
+
+###############################################################################
+# extract versions
+LV2VERSION=$(midifilter_VERSION)
+include git2lv2.mk
 
 # check for build-dependencies
 ifeq ($(shell pkg-config --exists lv2 || echo no), no)
@@ -90,7 +98,7 @@ $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	cat $(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
 	gcc -E -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
-		| sed 's/HTTPP/http:\//g' \
+		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g' \
 		| uniq \
 		>> $(BUILDDIR)$(LV2NAME).ttl
 
