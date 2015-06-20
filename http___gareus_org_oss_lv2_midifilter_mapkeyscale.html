@@ -91,7 +91,7 @@ div.footer {margin:1em auto; font-size:80%; color:#444; text-align:center; width
 </h1>
 <div id="pluginmeta">
 <p class="desc">Description</p>
-<p class="docs">Flexible 12-tone map. Allow to map a note within an octave to another note in the same octave-range +- 12 semitones. Alternatively notes can also be masked (disabled). If two keys are moapped to the same note, the corresponding note on/events are latched: only the first note on and last note off will be sent. The settings can be changed dynamically: Note-on/off events will be sent accordingly.</p>
+<p class="docs">Flexible 12-tone map. Allow to map a note within an octave to another note in the same octave-range +- 12 semitones. Alternatively notes can also be masked (disabled). If two keys are mapped to the same note, the corresponding note on/events are latched: only the first note on and last note off will be sent. The settings can be changed dynamically: Note-on/off events will be sent accordingly.</p>
 <dl>
  <dt>Title</dt><dd>MIDI Keys Transpose</dd>
  <dt>URI</dt><dd><a href="http://gareus.org/oss/lv2/midifilter#mapkeyscale">http://gareus.org/oss/lv2/midifilter#mapkeyscale</a></dd>
@@ -160,8 +160,10 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);">4) C</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(4);" onmouseout="showdoc(-1);" onclick="jumpto(4);"><div>(k0)<div class="portinfo" id="port4" style="display:none">
 <h3>4) C</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
@@ -171,9 +173,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);">5) C#</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(5);" onmouseout="showdoc(-1);" onclick="jumpto(5);"><div>(k1)<div class="portinfo" id="port5" style="display:none">
 <h3>5) C#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -182,9 +186,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(6);" onmouseout="showdoc(-1);" onclick="jumpto(6);">6) D</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(6);" onmouseout="showdoc(-1);" onclick="jumpto(6);"><div>(k2)<div class="portinfo" id="port6" style="display:none">
 <h3>6) D</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -193,9 +199,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(7);" onmouseout="showdoc(-1);" onclick="jumpto(7);">7) D#</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(7);" onmouseout="showdoc(-1);" onclick="jumpto(7);"><div>(k3)<div class="portinfo" id="port7" style="display:none">
 <h3>7) D#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -204,9 +212,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(8);" onmouseout="showdoc(-1);" onclick="jumpto(8);">8) E</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(8);" onmouseout="showdoc(-1);" onclick="jumpto(8);"><div>(k4)<div class="portinfo" id="port8" style="display:none">
 <h3>8) E</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -215,9 +225,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(9);" onmouseout="showdoc(-1);" onclick="jumpto(9);">9) F</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(9);" onmouseout="showdoc(-1);" onclick="jumpto(9);"><div>(k5)<div class="portinfo" id="port9" style="display:none">
 <h3>9) F</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -226,9 +238,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(10);" onmouseout="showdoc(-1);" onclick="jumpto(10);">10) F#</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(10);" onmouseout="showdoc(-1);" onclick="jumpto(10);"><div>(k6)<div class="portinfo" id="port10" style="display:none">
 <h3>10) F#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -237,9 +251,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(11);" onmouseout="showdoc(-1);" onclick="jumpto(11);">11) G</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(11);" onmouseout="showdoc(-1);" onclick="jumpto(11);"><div>(k7)<div class="portinfo" id="port11" style="display:none">
 <h3>11) G</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -248,9 +264,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(12);" onmouseout="showdoc(-1);" onclick="jumpto(12);">12) G#</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(12);" onmouseout="showdoc(-1);" onclick="jumpto(12);"><div>(k8)<div class="portinfo" id="port12" style="display:none">
 <h3>12) G#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -259,9 +277,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(13);" onmouseout="showdoc(-1);" onclick="jumpto(13);">13) A</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(13);" onmouseout="showdoc(-1);" onclick="jumpto(13);"><div>(k9)<div class="portinfo" id="port13" style="display:none">
 <h3>13) A</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -270,9 +290,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(14);" onmouseout="showdoc(-1);" onclick="jumpto(14);">14) A#</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(14);" onmouseout="showdoc(-1);" onclick="jumpto(14);"><div>(k10)<div class="portinfo" id="port14" style="display:none">
 <h3>14) A#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -281,9 +303,11 @@ var num_ports=16;
 <tr><td class="bgL controlport" onmouseover="showdoc(15);" onmouseout="showdoc(-1);" onclick="jumpto(15);">15) B</td><td class="pbody left ptbl ptblLL" onmouseover="showdoc(15);" onmouseout="showdoc(-1);" onclick="jumpto(15);"><div>(k11)<div class="portinfo" id="port15" style="display:none">
 <h3>15) B</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
@@ -340,252 +364,516 @@ var num_ports=16;
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc4">4</a>) C</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (C-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (C#-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (D-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (D#-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (E-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (F-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (F#-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (G-1)</td></tr>
+<tr><th>-4.0</th><td>-4 (G#-1)</td></tr>
+<tr><th>-3.0</th><td>-3 (A-1)</td></tr>
+<tr><th>-2.0</th><td>-2 (A#-1)</td></tr>
+<tr><th>-1.0</th><td>-1 (B-1)</td></tr>
+<tr><th>0.0</th><td>+-0 (C+0)</td></tr>
+<tr><th>1.0</th><td>+1 (C#+0)</td></tr>
+<tr><th>2.0</th><td>+2 (D+0)</td></tr>
+<tr><th>3.0</th><td>+3 (D#+0)</td></tr>
+<tr><th>4.0</th><td>+4 (E+0)</td></tr>
+<tr><th>5.0</th><td>+5 (F+0)</td></tr>
+<tr><th>6.0</th><td>+6 (F#+0)</td></tr>
+<tr><th>7.0</th><td>+7 (G+0)</td></tr>
+<tr><th>8.0</th><td>+8 (G#+0)</td></tr>
+<tr><th>9.0</th><td>+9 (A+0)</td></tr>
+<tr><th>10.0</th><td>+10 (A#+0)</td></tr>
+<tr><th>11.0</th><td>+11 (B+0)</td></tr>
+<tr><th>12.0</th><td>+12 (C+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc5">5</a>) C#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (C#-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (D-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (D#-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (E-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (F-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (F#-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (G-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (G#-1)</td></tr>
+<tr><th>-4.0</th><td>-4 (A-1)</td></tr>
+<tr><th>-3.0</th><td>-3 (A#-1)</td></tr>
+<tr><th>-2.0</th><td>-2 (B-1)</td></tr>
+<tr><th>-1.0</th><td>-1 (C+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (C#+0)</td></tr>
+<tr><th>1.0</th><td>+1 (D+0)</td></tr>
+<tr><th>2.0</th><td>+2 (D#+0)</td></tr>
+<tr><th>3.0</th><td>+3 (E+0)</td></tr>
+<tr><th>4.0</th><td>+4 (F+0)</td></tr>
+<tr><th>5.0</th><td>+5 (F#+0)</td></tr>
+<tr><th>6.0</th><td>+6 (G+0)</td></tr>
+<tr><th>7.0</th><td>+7 (G#+0)</td></tr>
+<tr><th>8.0</th><td>+8 (A+0)</td></tr>
+<tr><th>9.0</th><td>+9 (A#+0)</td></tr>
+<tr><th>10.0</th><td>+10 (B+0)</td></tr>
+<tr><th>11.0</th><td>+11 (C+1)</td></tr>
+<tr><th>12.0</th><td>+12 (C#+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc6">6</a>) D</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (D-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (D#-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (E-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (F-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (F#-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (G-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (G#-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (A-1)</td></tr>
+<tr><th>-4.0</th><td>-4 (A#-1)</td></tr>
+<tr><th>-3.0</th><td>-3 (B-1)</td></tr>
+<tr><th>-2.0</th><td>-2 (C+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (C#+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (D+0)</td></tr>
+<tr><th>1.0</th><td>+1 (D#+0)</td></tr>
+<tr><th>2.0</th><td>+2 (E+0)</td></tr>
+<tr><th>3.0</th><td>+3 (F+0)</td></tr>
+<tr><th>4.0</th><td>+4 (F#+0)</td></tr>
+<tr><th>5.0</th><td>+5 (G+0)</td></tr>
+<tr><th>6.0</th><td>+6 (G#+0)</td></tr>
+<tr><th>7.0</th><td>+7 (A+0)</td></tr>
+<tr><th>8.0</th><td>+8 (A#+0)</td></tr>
+<tr><th>9.0</th><td>+9 (B+0)</td></tr>
+<tr><th>10.0</th><td>+10 (C+1)</td></tr>
+<tr><th>11.0</th><td>+11 (C#+1)</td></tr>
+<tr><th>12.0</th><td>+12 (D-1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc7">7</a>) D#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (D#-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (E-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (F-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (F#-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (G-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (G#-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (A-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (A#-1)</td></tr>
+<tr><th>-4.0</th><td>-4 (B-1)</td></tr>
+<tr><th>-3.0</th><td>-3 (C+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (C#+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (D+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (D#+0)</td></tr>
+<tr><th>1.0</th><td>+1 (E+0)</td></tr>
+<tr><th>2.0</th><td>+2 (F+0)</td></tr>
+<tr><th>3.0</th><td>+3 (F#+0)</td></tr>
+<tr><th>4.0</th><td>+4 (G+0)</td></tr>
+<tr><th>5.0</th><td>+5 (G#+0)</td></tr>
+<tr><th>6.0</th><td>+6 (A+0)</td></tr>
+<tr><th>7.0</th><td>+7 (A#+0)</td></tr>
+<tr><th>8.0</th><td>+8 (B+0)</td></tr>
+<tr><th>9.0</th><td>+9 (C+1)</td></tr>
+<tr><th>10.0</th><td>+10 (C#+1)</td></tr>
+<tr><th>11.0</th><td>+11 (D+1)</td></tr>
+<tr><th>12.0</th><td>+12 (D#+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc8">8</a>) E</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (E-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (F-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (F#-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (G-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (G#-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (A-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (A#-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (B-1)</td></tr>
+<tr><th>-4.0</th><td>-4 (C+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (C#+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (D+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (D#+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (E+0)</td></tr>
+<tr><th>1.0</th><td>+1 (F+0)</td></tr>
+<tr><th>2.0</th><td>+2 (F#+0)</td></tr>
+<tr><th>3.0</th><td>+3 (G+0)</td></tr>
+<tr><th>4.0</th><td>+4 (G#+0)</td></tr>
+<tr><th>5.0</th><td>+5 (A+0)</td></tr>
+<tr><th>6.0</th><td>+6 (A#+0)</td></tr>
+<tr><th>7.0</th><td>+7 (B+0)</td></tr>
+<tr><th>8.0</th><td>+8 (C+1)</td></tr>
+<tr><th>9.0</th><td>+9 (C#+1)</td></tr>
+<tr><th>10.0</th><td>+10 (D+1)</td></tr>
+<tr><th>11.0</th><td>+11 (D#+1)</td></tr>
+<tr><th>12.0</th><td>+12 (E+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc9">9</a>) F</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (F-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (F#-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (G-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (G#-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (A-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (A#-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (B-1)</td></tr>
+<tr><th>-5.0</th><td>-5 (C+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (C#+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (D+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (D#+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (E+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (F+0)</td></tr>
+<tr><th>1.0</th><td>+1 (F#+0)</td></tr>
+<tr><th>2.0</th><td>+2 (G+0)</td></tr>
+<tr><th>3.0</th><td>+3 (G#+0)</td></tr>
+<tr><th>4.0</th><td>+4 (A+0)</td></tr>
+<tr><th>5.0</th><td>+5 (A#+0)</td></tr>
+<tr><th>6.0</th><td>+6 (B+0)</td></tr>
+<tr><th>7.0</th><td>+7 (C+1)</td></tr>
+<tr><th>8.0</th><td>+8 (C#+1)</td></tr>
+<tr><th>9.0</th><td>+9 (D+1)</td></tr>
+<tr><th>10.0</th><td>+10 (D#+1)</td></tr>
+<tr><th>11.0</th><td>+11 (E+1)</td></tr>
+<tr><th>12.0</th><td>+12 (F+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc10">10</a>) F#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (F#-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (G-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (G#-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (A-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (A#-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (B-1)</td></tr>
+<tr><th>-6.0</th><td>-6 (C+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (C#+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (D+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (D#+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (E+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (F+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (F#+0)</td></tr>
+<tr><th>1.0</th><td>+1 (G+0)</td></tr>
+<tr><th>2.0</th><td>+2 (G#+0)</td></tr>
+<tr><th>3.0</th><td>+3 (A+0)</td></tr>
+<tr><th>4.0</th><td>+4 (A#+0)</td></tr>
+<tr><th>5.0</th><td>+5 (B+0)</td></tr>
+<tr><th>6.0</th><td>+6 (C+1)</td></tr>
+<tr><th>7.0</th><td>+7 (C#+1)</td></tr>
+<tr><th>8.0</th><td>+8 (D+1)</td></tr>
+<tr><th>9.0</th><td>+9 (D#+1)</td></tr>
+<tr><th>10.0</th><td>+10 (E+1)</td></tr>
+<tr><th>11.0</th><td>+11 (F+1)</td></tr>
+<tr><th>12.0</th><td>+12 (F#+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc11">11</a>) G</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (G-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (G#-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (A-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (A#-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (B-1)</td></tr>
+<tr><th>-7.0</th><td>-7 (C+0)</td></tr>
+<tr><th>-6.0</th><td>-6 (C#+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (D+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (D#+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (E+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (F+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (F#+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (G+0)</td></tr>
+<tr><th>1.0</th><td>+1 (G#+0)</td></tr>
+<tr><th>2.0</th><td>+2 (A+0)</td></tr>
+<tr><th>3.0</th><td>+3 (A#+0)</td></tr>
+<tr><th>4.0</th><td>+4 (B+0)</td></tr>
+<tr><th>5.0</th><td>+5 (C+1)</td></tr>
+<tr><th>6.0</th><td>+6 (C#+1)</td></tr>
+<tr><th>7.0</th><td>+7 (D+1)</td></tr>
+<tr><th>8.0</th><td>+8 (D#+1)</td></tr>
+<tr><th>9.0</th><td>+9 (E+1)</td></tr>
+<tr><th>10.0</th><td>+10 (F+1)</td></tr>
+<tr><th>11.0</th><td>+11 (F#+1)</td></tr>
+<tr><th>12.0</th><td>+12 (G+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc12">12</a>) G#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (G#-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (A-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (A#-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (B-1)</td></tr>
+<tr><th>-8.0</th><td>-8 (C+0)</td></tr>
+<tr><th>-7.0</th><td>-7 (C#+0)</td></tr>
+<tr><th>-6.0</th><td>-6 (D+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (D#+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (E+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (F+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (F#+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (G+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (G#+0)</td></tr>
+<tr><th>1.0</th><td>+1 (A+0)</td></tr>
+<tr><th>2.0</th><td>+2 (A#+0)</td></tr>
+<tr><th>3.0</th><td>+3 (B+0)</td></tr>
+<tr><th>4.0</th><td>+4 (C+1)</td></tr>
+<tr><th>5.0</th><td>+5 (C#+1)</td></tr>
+<tr><th>6.0</th><td>+6 (D+1)</td></tr>
+<tr><th>7.0</th><td>+7 (D#+1)</td></tr>
+<tr><th>8.0</th><td>+8 (E+1)</td></tr>
+<tr><th>9.0</th><td>+9 (F+1)</td></tr>
+<tr><th>10.0</th><td>+10 (F#+1)</td></tr>
+<tr><th>11.0</th><td>+11 (G+1)</td></tr>
+<tr><th>12.0</th><td>+12 (G#+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc13">13</a>) A</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (A-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (A#-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (B-1)</td></tr>
+<tr><th>-9.0</th><td>-9 (C+0)</td></tr>
+<tr><th>-8.0</th><td>-8 (C#+0)</td></tr>
+<tr><th>-7.0</th><td>-7 (D+0)</td></tr>
+<tr><th>-6.0</th><td>-6 (D#+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (E+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (F+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (F#+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (G+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (G#+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (A+0)</td></tr>
+<tr><th>1.0</th><td>+1 (A#+0)</td></tr>
+<tr><th>2.0</th><td>+2 (B+0)</td></tr>
+<tr><th>3.0</th><td>+3 (C+1)</td></tr>
+<tr><th>4.0</th><td>+4 (C#+1)</td></tr>
+<tr><th>5.0</th><td>+5 (D+1)</td></tr>
+<tr><th>6.0</th><td>+6 (D#+1)</td></tr>
+<tr><th>7.0</th><td>+7 (E+1)</td></tr>
+<tr><th>8.0</th><td>+8 (F+1)</td></tr>
+<tr><th>9.0</th><td>+9 (F#+1)</td></tr>
+<tr><th>10.0</th><td>+10 (G+1)</td></tr>
+<tr><th>11.0</th><td>+11 (G#+1)</td></tr>
+<tr><th>12.0</th><td>+12 (A+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc14">14</a>) A#</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
+<li class="portproperty">Enumeration
+</li>
 <li class="portproperty">Integer</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (A#-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (B-1)</td></tr>
+<tr><th>-10.0</th><td>-10 (C+0)</td></tr>
+<tr><th>-9.0</th><td>-9 (C#+0)</td></tr>
+<tr><th>-8.0</th><td>-8 (D+0)</td></tr>
+<tr><th>-7.0</th><td>-7 (D#+0)</td></tr>
+<tr><th>-6.0</th><td>-6 (E+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (F+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (F#+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (G+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (G#+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (A+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (A#+0)</td></tr>
+<tr><th>1.0</th><td>+1 (B+0)</td></tr>
+<tr><th>2.0</th><td>+2 (C+1)</td></tr>
+<tr><th>3.0</th><td>+3 (C#+1)</td></tr>
+<tr><th>4.0</th><td>+4 (D+1)</td></tr>
+<tr><th>5.0</th><td>+5 (D#+1)</td></tr>
+<tr><th>6.0</th><td>+6 (E+1)</td></tr>
+<tr><th>7.0</th><td>+7 (F+1)</td></tr>
+<tr><th>8.0</th><td>+8 (F#+1)</td></tr>
+<tr><th>9.0</th><td>+9 (G+1)</td></tr>
+<tr><th>10.0</th><td>+10 (G#+1)</td></tr>
+<tr><th>11.0</th><td>+11 (A+1)</td></tr>
+<tr><th>12.0</th><td>+12 (A#+1)</td></tr>
 </table>
 </div>
 <div class="port">
 <div class="toplink"><a href="#top">&nbsp;&uarr;&nbsp;</a></div>
 <h3><a name="portdoc15">15</a>) B</h3>
 <p class="port controlport">(<span>Control</span> <span>Input</span>)</p>
-<p class="desc">Port Property:</p>
+<p class="desc">Port Properties:</p>
 <ul>
 <li class="portproperty">Integer</li>
+<li class="portproperty">Enumeration
+</li>
 </ul>
 <p>
 </p>
-<table class="portrange">
-<tr><th colspan="2">Range</th></tr>
-<tr><th>min</th><td>-13.000000</td></tr>
-<tr><th>max</th><td>12.000000</td></tr>
-<tr><th>default</th><td>0.000000</td></tr>
-</table>
+<p><span class="desc">Default:</span> 0.000000</p>
 <table class="portrange">
 <tr><th colspan="2">Scale Points</th></tr>
 <tr><th>-13.0</th><td>Off</td></tr>
+<tr><th>-12.0</th><td>-12 (B-1)</td></tr>
+<tr><th>-11.0</th><td>-11 (C+0)</td></tr>
+<tr><th>-10.0</th><td>-10 (C#+0)</td></tr>
+<tr><th>-9.0</th><td>-9 (D+0)</td></tr>
+<tr><th>-8.0</th><td>-8 (D#+0)</td></tr>
+<tr><th>-7.0</th><td>-7 (E+0)</td></tr>
+<tr><th>-6.0</th><td>-6 (F+0)</td></tr>
+<tr><th>-5.0</th><td>-5 (F#+0)</td></tr>
+<tr><th>-4.0</th><td>-4 (G+0)</td></tr>
+<tr><th>-3.0</th><td>-3 (G#+0)</td></tr>
+<tr><th>-2.0</th><td>-2 (A+0)</td></tr>
+<tr><th>-1.0</th><td>-1 (A#+0)</td></tr>
+<tr><th>0.0</th><td>+-0 (B+0)</td></tr>
+<tr><th>1.0</th><td>+1 (C+1)</td></tr>
+<tr><th>2.0</th><td>+2 (C#+1)</td></tr>
+<tr><th>3.0</th><td>+3 (D+1)</td></tr>
+<tr><th>4.0</th><td>+4 (D#+1)</td></tr>
+<tr><th>5.0</th><td>+5 (E+1)</td></tr>
+<tr><th>6.0</th><td>+6 (F+1)</td></tr>
+<tr><th>7.0</th><td>+7 (F#+1)</td></tr>
+<tr><th>8.0</th><td>+8 (G+1)</td></tr>
+<tr><th>9.0</th><td>+9 (G#+1)</td></tr>
+<tr><th>10.0</th><td>+10 (A+1)</td></tr>
+<tr><th>11.0</th><td>+11 (A#+1)</td></tr>
+<tr><th>12.0</th><td>+12 (B+1)</td></tr>
 </table>
 </div>
 </div>
@@ -603,10 +891,10 @@ var num_ports=16;
 <p class="port controlport">(<span>Control</span> <span>Output</span>)</p>
 <p class="desc">Port Properties:</p>
 <ul>
-<li class="portproperty">Reports Latency
-</li>
 <li class="portproperty">Integer</li>
 <li class="portproperty">Not On GUI</li>
+<li class="portproperty">Reports Latency
+</li>
 </ul>
 <p>
 </p>
@@ -622,6 +910,6 @@ var num_ports=16;
 </div>
 <!-- end of page !-->
 <div style="clear:both;"></div>
-<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated on 2014-05-07 13:11:16 GMT</div>
+<div class="footer"><hr/>Created by <a href="https://github.com/x42/lv2toweb">lv2toweb</a>. Generated on 2015-06-20 22:31:33 GMT</div>
  </body>
  </html>
