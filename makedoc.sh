@@ -19,7 +19,7 @@ cat >> $OUTDIR/index.html_1 << EOF
 <div style="margin-left:100px;">
 <p><a href="https://github.com/x42/midifilter.lv2">Midifilter.lv2</a> - a collection of MIDI data filters in LV2 plugin format.</p>
 <ul>
-<li>One MIDI input, one MIDI output</li>
+<li>One MIDI input, one MIDI output (no generators, no synths)</li>
 <li>No custom GUI, control inputs only</li>
 <li>Every control can be automated, the plugins handle dynamic parameter changes</li>
 <li>All plugins report their latency to the host (for most of them it is zero)</li>
