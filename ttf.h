@@ -52,7 +52,7 @@
 	] , [ \
 		a lv2:OutputPort, \
 			lv2:ControlPort ; \
-		lv2:name "latency (samples)" ; \
+		lv2:name "latency" ; \
 		lv2:index 2 ; \
 		lv2:symbol "latency" ; \
 		lv2:minimum 0 ; \
