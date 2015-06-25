@@ -11,7 +11,7 @@ MFD_FILTER(midistrum)
 			)
 	, TTF_IPORT(1, "bpm",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
 			rdfs:comment "base unit for the time (unless host provides BPM)")
-	, TTF_IPORT( 2, "mode",  "Strum Direction", 0.0, 3.0,  2.0,
+	, TTF_IPORT( 2, "mode",  "Strum Direction", 0.0, 4.0,  2.0,
 			lv2:scalePoint [ rdfs:label "Always Down (low notes first)" ; rdf:value 0.0 ] ;
 			lv2:scalePoint [ rdfs:label "Always Up (high notes first)" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Alternate" ; rdf:value 2.0 ] ;
