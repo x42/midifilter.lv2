@@ -12,24 +12,24 @@ MFD_FILTER(eventblocker)
 	, TTF_IPORTTOGGLE( 5, "blkpb",   "Block Pitch Bend", 0.0)
 	, TTF_IPORTTOGGLE( 6, "blksx",   "Block Sysex/RT messages", 0.0)
 	, TTF_IPORTTOGGLE( 7, "blkcm",   "Block custom message", 0.0)
-	, TTF_IPORT(8, "cmt", "Custom Message Type",  0.0, 6.0,  0.0,
+	, TTF_IPORT(8, "cmt", "Custom Message Type",  0, 6, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "Note Off (0x8x)"  ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Note On (0x9x)"  ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "Polykey Pressure (0xAx)"  ; rdf:value 2.0 ] ;
-			lv2:scalePoint [ rdfs:label "Control Change (0xBx)"  ; rdf:value 3.0 ] ;
-			lv2:scalePoint [ rdfs:label "Program Change (0xCx)"  ; rdf:value 4.0 ] ;
-			lv2:scalePoint [ rdfs:label "Channel Pressure (0xDx)"  ; rdf:value 5.0 ] ;
-			lv2:scalePoint [ rdfs:label "Pitchbend (0xEx)"  ; rdf:value 6.0 ] ;
+			lv2:scalePoint [ rdfs:label "Note Off (0x8x)"  ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Note On (0x9x)"  ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "Polykey Pressure (0xAx)"  ; rdf:value 2 ] ;
+			lv2:scalePoint [ rdfs:label "Control Change (0xBx)"  ; rdf:value 3 ] ;
+			lv2:scalePoint [ rdfs:label "Program Change (0xCx)"  ; rdf:value 4 ] ;
+			lv2:scalePoint [ rdfs:label "Channel Pressure (0xDx)"  ; rdf:value 5 ] ;
+			lv2:scalePoint [ rdfs:label "Pitchbend (0xEx)"  ; rdf:value 6 ] ;
 			)
 	, TTF_IPORT(9, "cmf", "Custom message Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(10, "cm1", "Custom message Data1",  -1.0, 127.0, -1.0, lv2:portProperty lv2:integer;
-			lv2:scalePoint [ rdfs:label "Any" ; rdf:value -1.0 ] ;
+	, TTF_IPORT(10, "cm1", "Custom message Data1",  -1, 127, -1, lv2:portProperty lv2:integer;
+			lv2:scalePoint [ rdfs:label "Any" ; rdf:value -1 ] ;
 			)
-	, TTF_IPORT(11, "cm2", "Custom message Data2",  -1.0, 127.0, -1.0, lv2:portProperty lv2:integer;
-			lv2:scalePoint [ rdfs:label "Any" ; rdf:value -1.0 ] ;
+	, TTF_IPORT(11, "cm2", "Custom message Data2",  -1, 127, -1, lv2:portProperty lv2:integer;
+			lv2:scalePoint [ rdfs:label "Any" ; rdf:value -1 ] ;
 			)
 	; rdfs:comment "Notch style message filter. Suppress specific messages. For flexible note-on/off range see also 'keyrange' and 'velocityrange'."
 	.

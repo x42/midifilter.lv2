@@ -7,13 +7,13 @@ MFD_FILTER(velocityrange)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "lower", "Min Volume",  0.0, 127.0,  0.0, lv2:portProperty lv2:integer)
-	, TTF_IPORT(2, "upper", "Max Volume",  0.0, 127.0,  127.0, lv2:portProperty lv2:integer)
-	, TTF_IPORT(3, "mode", "Operation Mode",  0.0, 3.0,  1.0,
+	, TTF_IPORT(1, "lower", "Min Volume",  0, 127, 0, lv2:portProperty lv2:integer)
+	, TTF_IPORT(2, "upper", "Max Volume",  0, 127, 127, lv2:portProperty lv2:integer)
+	, TTF_IPORT(3, "mode", "Operation Mode",  0, 3, 1,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "Bypass"  ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Include Range"  ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "Exclude Range"  ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "Bypass"  ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Include Range"  ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "Exclude Range"  ; rdf:value 2 ] ;
 			)
 	; rdfs:comment "Filter MIDI note-on events according to velocity. Note-on events outside the allowed range are discarded. If a Note-off is received for a note that was previously filtered, it is also not passed though. If the allowed range changes, note-off events are sent to currently active notes that end up outside the valid range."
 	.

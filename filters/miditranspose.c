@@ -8,8 +8,8 @@ MFD_FILTER(miditranspose)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTINT(1, "transpose", "Transpose",  -72.0, 72.0, 0.0)
-	, TTF_IPORT(2, "inversion", "Inversion point",  0.0, 127.0, 0.0,
-			lv2:scalePoint [ rdfs:label "Off"; rdf:value  0.0 ] ; \
+	, TTF_IPORT(2, "inversion", "Inversion point",  0, 127, 0,
+			lv2:scalePoint [ rdfs:label "Off"; rdf:value  0 ] ; \
 			lv2:portProperty lv2:integer; units:unit units:midiNote;
 			rdfs:comment "Chromatic Inversion. Mirror chromatic scale around this point before transposing.")
 	; rdfs:comment "Chromatic transpose of midi notes and key-pressure. If an inversion point is set, the scale is mirrored around this point before transposing. Notes that end up outside the valid range 0..127 are discarded.";

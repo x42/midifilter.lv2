@@ -4,9 +4,9 @@ MFD_FILTER(mididelay)
 
 	mflt:mididelay
 	TTF_DEF("MIDI Delayline", ; atom:supports time:Position)
-	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0.0, 1.0,  1.0,
-			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
+	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0, 1, 1,
+			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
 

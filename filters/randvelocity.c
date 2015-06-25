@@ -8,9 +8,9 @@ MFD_FILTER(randvelocity)
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 127.0,  8.0)
-	, TTF_IPORT( 2, "mode",  "Random Mode", 0.0, 1.0,  1.0,
-			lv2:scalePoint [ rdfs:label "Absolute (equal distribution)" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Normalized (standard deviation)" ; rdf:value 1.0 ] ;
+	, TTF_IPORT( 2, "mode",  "Random Mode", 0, 1, 1,
+			lv2:scalePoint [ rdfs:label "Absolute (equal distribution)" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Normalized (standard deviation)" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			rdfs:comment ""
 			)

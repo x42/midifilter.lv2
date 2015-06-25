@@ -7,9 +7,9 @@ MFD_FILTER(ntapdelay)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT( 1, "bpmsrc",  "BPM source", 0.0, 1.0,  1.0,
-			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
+	, TTF_IPORT( 1, "bpmsrc",  "BPM source", 0, 1, 1,
+			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
 	, TTF_IPORT(2, "delayBPM",  "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
@@ -24,8 +24,8 @@ MFD_FILTER(ntapdelay)
 			lv2:scalePoint [ rdfs:label "Two Bars" ; rdf:value 8.0 ] ;
 			lv2:scalePoint [ rdfs:label "Four Bars" ; rdf:value 16.0 ] ;
 			rdfs:comment "delay length in base-units")
-	, TTF_IPORT(4, "taps",  "Repeats", 0.0, 64, 3.0, lv2:portProperty lv2:integer;
-			lv2:scalePoint [ rdfs:label "until note-off" ; rdf:value 0.0 ] ;
+	, TTF_IPORT(4, "taps",  "Repeats", 0, 64, 3, lv2:portProperty lv2:integer;
+			lv2:scalePoint [ rdfs:label "until note-off" ; rdf:value 0 ] ;
 			rdfs:comment "Number of repeats")
 	, TTF_IPORT(5, "velocityadj",  "velocity ramp", -64.0, 64.0, -10.0,
 			rdfs:comment "Velocity change per repeat")

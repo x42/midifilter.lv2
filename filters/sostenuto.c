@@ -9,10 +9,10 @@ MFD_FILTER(sostenuto)
 			DOC_CHANF)
 	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s ;
 			rdfs:comment "Time to delay the note-off signal.")
-	, TTF_IPORT( 2, "pedal",  "Pedal Mode", 0.0, 2.0, 1.0,
-			lv2:scalePoint [ rdfs:label "off" ; rdf:value  0.0 ] ;
-			lv2:scalePoint [ rdfs:label "on" ; rdf:value  1.0 ] ;
-			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value  2.0 ] ;
+	, TTF_IPORT( 2, "pedal",  "Pedal Mode", 0, 2, 1,
+			lv2:scalePoint [ rdfs:label "off" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "on" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 2 ] ;
 			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;
 			rdfs:comment "Mode of the sustain pedal. Fixed on/off (control parameter automation) or depending on MIDI CC 64.")
 	; rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal. When the pedal is released, note-off messages that are queued will be sent immediately. The delay-time can be changed dynamically, changes do affects note-off messages that are still queued."

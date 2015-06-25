@@ -7,17 +7,17 @@ MFD_FILTER(notetocc)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "mode", "Operation Mode",  0.0, 3.0,  0.0,
+	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = velocity" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = key" ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "All keys, parameter = key, CC-value = velocity" ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = velocity" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = key" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "All keys, parameter = key, CC-value = velocity" ; rdf:value 2 ] ;
 			rdfs:comment "")
-	, TTF_IPORT(2, "param", "CC Parameter",  0.0, 127.0,  0.0,
+	, TTF_IPORT(2, "param", "CC Parameter", 0, 127, 0,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "unused in 'all keys' mode."
 			)
-	, TTF_IPORT(3, "key", "Active Key (midi-note)",  0.0, 127.0,  48.0,
+	, TTF_IPORT(3, "key", "Active Key (midi-note)", 0, 127, 48,
 			lv2:portProperty lv2:integer; units:unit units:midiNote ;
 			rdfs:comment "only used in 'value = velocity' mode."
 			)

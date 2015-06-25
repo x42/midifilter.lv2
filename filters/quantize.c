@@ -4,9 +4,9 @@ MFD_FILTER(quantize)
 
 	mflt:quantize
 	TTF_DEF("MIDI Quantization", ; atom:supports time:Position)
-	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0.0, 1.0,  1.0,
-			lv2:scalePoint [ rdfs:label "Control Port (freerun)" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1.0 ] ;
+	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0, 1, 1,
+			lv2:scalePoint [ rdfs:label "Control Port (freerun)" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
 	, TTF_IPORT(1, "bpm", "BPM", 1.0, 280.0,  120.0, units:unit units:bpm;
@@ -18,9 +18,9 @@ MFD_FILTER(quantize)
 			lv2:scalePoint [ rdfs:label "Quarter" ; rdf:value 1.0 ] ;
 			lv2:scalePoint [ rdfs:label "Half Note" ; rdf:value 2.0 ] ;
 			lv2:scalePoint [ rdfs:label "Whole Note" ; rdf:value 4.0 ])
-	, TTF_IPORT(3, "mindur", "Note-off behaviour", 0.0, 1.0,  1.0,
-			lv2:scalePoint [ rdfs:label "Quantize as is (may result in zero duration)" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Enforce minimum duration of one grid unit" ; rdf:value 1.0 ] ;
+	, TTF_IPORT(3, "mindur", "Note-off behaviour", 0, 1, 1,
+			lv2:scalePoint [ rdfs:label "Quantize as is (may result in zero duration)" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Enforce minimum duration of one grid unit" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			)
 	; rdfs:comment "Live event quantization. This filter aligns incoming MIDI events to a fixed time-grid. Since the effect operates on a live-stream it will introduce latency: Events will be delayed until the next 'tick'. If the plugin-host provides BBT information, the events are aligned to the host's clock otherwise the effect runs on its own time."

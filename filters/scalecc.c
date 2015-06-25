@@ -7,28 +7,28 @@ MFD_FILTER(scalecc)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "lower", "Parameter (Min)",  0.0, 127.0,  0.0,
+	, TTF_IPORT(1, "lower", "Parameter (Min)", 0, 127, 0,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "lower end of parameter-range (inclusive)")
-	, TTF_IPORT(2, "upper", "Parameter (Max)",  0.0, 127.0,  127.0,
+	, TTF_IPORT(2, "upper", "Parameter (Max)", 0, 127, 127,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "upper end of parameter-range (inclusive)")
-	, TTF_IPORT(3, "pmode", "Parameter Mode",  0.0, 3.0,  1.0,
+	, TTF_IPORT(3, "pmode", "Parameter Mode", 0, 3, 1,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "Bypass" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Include Range" ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "Exclude Range" ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "Bypass" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Include Range" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "Exclude Range" ; rdf:value 2 ] ;
 			rdfs:comment "")
 	, TTF_IPORT(4, "valmul",  "Value Scale",   -10.0, 10.0, 1.0,
 			rdfs:comment "")
-	, TTF_IPORT(5, "valoff",  "Value Offset",  -64.0, 64.0, 0.0,
+	, TTF_IPORT(5, "valoff",  "Value Offset",  -64, 64, 0,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "")
-	, TTF_IPORT(6, "vmode", "Value Mode",  0.0, 3.0, 0.0,
+	, TTF_IPORT(6, "vmode", "Value Mode", 0, 3, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "Clamp to 0..127" ; rdf:value 0.0 ] ;
-			lv2:scalePoint [ rdfs:label "Reflect Overflow (-1 to 1, 128 to 127)"  ; rdf:value 1.0 ] ;
-			lv2:scalePoint [ rdfs:label "Truncate Overflow (-1 to 127, 128 to 0)" ; rdf:value 2.0 ] ;
+			lv2:scalePoint [ rdfs:label "Clamp to 0..127" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Reflect Overflow (-1 to 1, 128 to 127)"  ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "Truncate Overflow (-1 to 127, 128 to 0)" ; rdf:value 2 ] ;
 			rdfs:comment "")
 	; rdfs:comment "Modify the value (data-byte) of a MIDI control change message."
 	.
