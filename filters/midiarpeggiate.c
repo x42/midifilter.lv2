@@ -20,7 +20,7 @@ MFD_FILTER(midistrum)
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			rdfs:comment ""
 			)
-	, TTF_IPORT(3, "collect", "Note Collect Timeout [ms]", 0.0, 300,  15,
+	, TTF_IPORT(3, "collect", "Note Collect Timeout [ms]", 0.0, 300.0, 15.0,
 			rdfs:comment "Time to wait for chord to be 'complete'. Keys pressed withing given timeframe will be combined into one chord.")
 	, TTF_IPORT(4, "duration", "Strum Duration in Beats", 0.0, 4.0, .25,
 			lv2:scalePoint [ rdfs:label "Immediate" ; rdf:value 0.0 ] ;
