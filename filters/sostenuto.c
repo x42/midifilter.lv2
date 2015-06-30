@@ -4,7 +4,7 @@ MFD_FILTER(sostenuto)
 
 	mflt:sostenuto
 	TTF_DEFAULTDEF("MIDI Sostenuto")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s ;

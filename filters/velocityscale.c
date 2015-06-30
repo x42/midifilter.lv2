@@ -4,7 +4,7 @@ MFD_FILTER(velocityscale)
 
 	mflt:velocityscale
 	TTF_DEFAULTDEF("MIDI Velocity Adjust")
-	, TTF_IPORT(0, "channel", "Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channel", "Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORTFLOAT(1, "onmin",  "Note-on Min",       1.0, 127.0,   1.0)

@@ -4,7 +4,7 @@ MFD_FILTER(notetocc)
 
 	mflt:notetocc
 	TTF_DEFAULTDEF("Note2CC")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 0,

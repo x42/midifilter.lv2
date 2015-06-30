@@ -4,7 +4,7 @@ MFD_FILTER(scalecc)
 
 	mflt:scalecc
 	TTF_DEFAULTDEF("Scale CC Value")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT(1, "lower", "Parameter (Min)", 0, 127, 0,

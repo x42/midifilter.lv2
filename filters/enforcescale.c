@@ -4,7 +4,7 @@ MFD_FILTER(enforcescale)
 
 	mflt:enforcescale
 	TTF_DEFAULTDEF("MIDI Enforce Scale")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT(1, "scale", "Scale",  0, 11, 0,
@@ -23,7 +23,7 @@ MFD_FILTER(enforcescale)
 			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11 ] ;
 			rdfs:comment "Limit note-on/off messages to this scale."
 			)
-	, TTF_IPORT(2, "mode", "Mode",  0, 2,  0, \
+	, TTF_IPORT(2, "mode", "Mode",  0, 2, 0, \
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Always down"  ; rdf:value 1 ] ;

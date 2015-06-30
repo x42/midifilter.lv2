@@ -4,7 +4,7 @@ MFD_FILTER(ntapdelay)
 
 	mflt:ntapdelay
 	TTF_DEF("MIDI N-Tap Delay", ; atom:supports time:Position)
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT( 1, "bpmsrc",  "BPM source", 0, 1, 1,

@@ -4,7 +4,7 @@ MFD_FILTER(notetoggle)
 
 	mflt:notetoggle
 	TTF_DEFAULTDEF("MIDI Note Toggle")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	; rdfs:comment "Toggle Notes: play a note to turn it on, play it again to turn it off."

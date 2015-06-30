@@ -4,14 +4,14 @@ MFD_FILTER(eventblocker)
 
 	mflt:eventblocker
 	TTF_DEFAULTDEF("MIDI Event Filter")
-	, TTF_IPORTTOGGLE( 0, "blkcc",   "Block Control Changes", 0.0)
-	, TTF_IPORTTOGGLE( 1, "blknote", "Block Notes", 0.0)
-	, TTF_IPORTTOGGLE( 2, "blkpc",   "Block Program Changes", 0.0)
-	, TTF_IPORTTOGGLE( 3, "blkpp",   "Block Polykey-Pressure", 0.0)
-	, TTF_IPORTTOGGLE( 4, "blkcp",   "Block Channel-Pressure", 0.0)
-	, TTF_IPORTTOGGLE( 5, "blkpb",   "Block Pitch Bend", 0.0)
-	, TTF_IPORTTOGGLE( 6, "blksx",   "Block Sysex/RT messages", 0.0)
-	, TTF_IPORTTOGGLE( 7, "blkcm",   "Block custom message", 0.0)
+	, TTF_IPORTTOGGLE( 0, "blkcc",   "Block Control Changes", 0)
+	, TTF_IPORTTOGGLE( 1, "blknote", "Block Notes", 0)
+	, TTF_IPORTTOGGLE( 2, "blkpc",   "Block Program Changes", 0)
+	, TTF_IPORTTOGGLE( 3, "blkpp",   "Block Polykey-Pressure", 0)
+	, TTF_IPORTTOGGLE( 4, "blkcp",   "Block Channel-Pressure", 0)
+	, TTF_IPORTTOGGLE( 5, "blkpb",   "Block Pitch Bend", 0)
+	, TTF_IPORTTOGGLE( 6, "blksx",   "Block Sysex/RT messages", 0)
+	, TTF_IPORTTOGGLE( 7, "blkcm",   "Block custom message", 0)
 	, TTF_IPORT(8, "cmt", "Custom Message Type",  0, 6, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Note Off (0x8x)"  ; rdf:value 0 ] ;
@@ -22,7 +22,7 @@ MFD_FILTER(eventblocker)
 			lv2:scalePoint [ rdfs:label "Channel Pressure (0xDx)"  ; rdf:value 5 ] ;
 			lv2:scalePoint [ rdfs:label "Pitchbend (0xEx)"  ; rdf:value 6 ] ;
 			)
-	, TTF_IPORT(9, "cmf", "Custom message Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(9, "cmf", "Custom message Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT(10, "cm1", "Custom message Data1",  -1, 127, -1, lv2:portProperty lv2:integer;

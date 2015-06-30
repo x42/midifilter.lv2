@@ -4,10 +4,10 @@ MFD_FILTER(randvelocity)
 
 	mflt:randvelocity
 	TTF_DEFAULTDEF("MIDI Velocity Randomization")
-	, TTF_IPORT(0, "channel", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channel", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization",  0.0, 127.0,  8.0)
+	, TTF_IPORTFLOAT(1, "randfact", "Velocity Randomization", 0.0, 127.0,  8.0)
 	, TTF_IPORT( 2, "mode",  "Random Mode", 0, 1, 1,
 			lv2:scalePoint [ rdfs:label "Absolute (equal distribution)" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Normalized (standard deviation)" ; rdf:value 1 ] ;

@@ -4,7 +4,7 @@ MFD_FILTER(keyrange)
 
 	mflt:keyrange
 	TTF_DEFAULTDEF("MIDI Key-Range Filter")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
 	, TTF_IPORT(1, "lower", "Lowest Note",  0, 127,  0,

@@ -4,10 +4,10 @@ MFD_FILTER(cctonote)
 
 	mflt:cctonote
 	TTF_DEFAULTDEF("CC2Note")
-	, TTF_IPORT(0, "channelf", "Filter Channel",  0.0, 16.0,  0.0,
+	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16,  0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3,  1,
+	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 1,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Fixed key, velocity = CC-value" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "key = CC-value, fixed velocity (64)" ; rdf:value 1 ] ;
