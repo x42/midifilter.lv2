@@ -1,3 +1,8 @@
+2015-06-30 (0.4.2)  Robin Gareus <robin@gareus.org>
+* honor playback speed in BBT calc & fix zero speed
+* add LV2 version
+* fix ranges and explicitly use int
+
 2015-06-08 (0.4.1)  Robin Gareus <robin@gareus.org>
 * key map/transpoe: use an enum with unit semitone
 
