@@ -29,7 +29,7 @@ MFD_FILTER(ntapdelay)
 			rdfs:comment "Number of repeats")
 	, TTF_IPORT(5, "velocityadj",  "velocity ramp", -64.0, 64.0, -10.0,
 			rdfs:comment "Velocity change per repeat")
-	; rdfs:comment "This effect repeats notes N times. Where N is either a fixed number or unlimited as long as a given key is pressed. BPM and delay-time variable and allow tempo-ramps. On every repeat the given velocity-adjustment is added or subtracted, the result is clamped between 1 and 127."
+	; rdfs:comment "This effect repeats notes N times. Where N is either a fixed number or unlimited as long as a given key is pressed. BPM and delay-time variable allows tempo-ramps. On every repeat the given velocity-adjustment is added or subtracted, the result is clamped between 1 and 127."
 	.
 
 #elif defined MX_CODE
