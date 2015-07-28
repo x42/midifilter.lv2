@@ -24,6 +24,7 @@ cat >> $OUTDIR/index.html_1 << EOF
 <li>Every control can be automated, the plugins handle dynamic parameter changes</li>
 <li>All plugins report their latency to the host (for most of them it is zero)</li>
 <li>DRY (Don't Repeat Yourself principle) - simple filters that can be combined in a network</li>
+<li>Self-documenting: Built-in description and control-port documentation</li>
 </ul>
 </div>
 EOF
@@ -34,6 +35,10 @@ mv $OUTDIR/index.html_1 $OUTDIR/index.html
 rm doc/http__*
 cp -a $OUTDIR/*.html doc/
 cp -a $OUTDIR/*.png doc/
+
+grep '<tr><td class="first center">' doc/index.html \
+	| sed 's/ class="[^"]*"//g;s/<a href="[^"]*"[^>]*>//g;s/<\/a>//g;s/<td>Filter<\/td>//;s/<td>[0-9]\/[0-9]\/[0-9]*<\/td>//g;s/<td>http:[^>]*>//' \
+	> /tmp/x42-midifilter.inc.html
 
 echo -n "git add+push doc? [y/N] "
 read -n1 a
