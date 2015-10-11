@@ -105,9 +105,9 @@ forge_midimessage(MidiFilter* self,
 	midiatom.type = self->uris.midi_MidiEvent;
 	midiatom.size = size;
 
-	lv2_atom_forge_frame_time(&self->forge, tme);
-	lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom));
-	lv2_atom_forge_raw(&self->forge, buffer, size);
+	if (0 == lv2_atom_forge_frame_time(&self->forge, tme)) return;
+	if (0 == lv2_atom_forge_raw(&self->forge, &midiatom, sizeof(LV2_Atom))) return;
+	if (0 == lv2_atom_forge_raw(&self->forge, buffer, size)) return;
 	lv2_atom_forge_pad(&self->forge, sizeof(LV2_Atom) + size);
 }
 
