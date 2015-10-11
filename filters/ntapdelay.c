@@ -81,8 +81,6 @@ filter_midi_ntapdelay(MidiFilter* self,
 		filter_ntapdelay_panic(self, buffer[0]&0x0f, tme);
 	}
 
-	forge_midimessage(self, tme, buffer, size);
-
 	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
@@ -92,10 +90,12 @@ filter_midi_ntapdelay(MidiFilter* self,
 			|| !(floorf(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
+		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
 
 	if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
+		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
 
@@ -116,15 +116,32 @@ filter_midi_ntapdelay(MidiFilter* self,
 	if (mst == MIDI_NOTEON) {
 		self->memCI[chn][key] = tme + rint(grid * samples_per_beat);
 		self->memCM[chn][key] = vel;
+		if (self->memCS[chn][key] == 0) {
+				self->memCS[chn][key]++; // key active
+				forge_midimessage(self, tme, buffer, size);
+		}
 	}
 	else if (mst == MIDI_NOTEOFF) {
 		self->memCI[chn][key] = -1;
 		self->memCM[chn][key] = 0;
+		if (self->memCS[chn][key] > 0) {
+			self->memCS[chn][key]--;
+			if (self->memCS[chn][key] == 0) {
+				forge_midimessage(self, tme, buffer, size);
+			}
+		}
+
+	} else {
+		forge_midimessage(self, tme, buffer, size);
 	}
 
 	for (i=0; i < RAIL(*self->cfg[4], 0, 128); ++i) {
 		int delay = rint(grid * samples_per_beat * (i+1.0));
-		buf[2] = RAIL(rintf(vel + (i+1.0) * (*self->cfg[5])), 1, 127);
+		if (mst == MIDI_NOTEON) {
+			buf[2] = RAIL(rintf(vel + (i+1.0) * (*self->cfg[5])), 1, 127);
+		} else {
+			buf[2] = vel;
+		}
 		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 		memcpy(qm->buf, buf, 3);
 		qm->size = size;
@@ -184,7 +201,6 @@ filter_postproc_ntapdelay(MidiFilter* self)
 	int i,c,k;
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
-	const int woff = self->memI[2];
 	const uint32_t n_samples = self->n_samples;
 	int skipped = 0;
 
@@ -244,9 +260,37 @@ filter_postproc_ntapdelay(MidiFilter* self)
 		self->memCI[c][k] -= n_samples;
 	}
 
+	/* sort queue */
+	int pidx = -1;
+	for (i=0; i < max_delay; ++i) {
+		const int off = (i + roff) % max_delay;
+		if (off == self->memI[2]) {
+			break;
+		}
+		if (self->memQ[off].size == 0) {
+			continue;
+		}
+		if (self->memQ[off].size > 3) {
+			pidx = -1;
+			continue;
+		}
+		if (pidx < 0 || self->memQ[off].reltime >= self->memQ[pidx].reltime) {
+			pidx = off;
+			continue;
+		}
+		// swap
+		MidiEventQueue tmp;
+		memcpy(&tmp, &self->memQ[off], sizeof(MidiEventQueue));
+		memcpy(&self->memQ[off], &self->memQ[pidx], sizeof(MidiEventQueue));
+		memcpy(&self->memQ[pidx], &tmp, sizeof(MidiEventQueue));
+		pidx = off;
+	}
+
 	/* dequeue delayline */
 	for (i=0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
+		if (off == self->memI[2]) break;
+
 		if (self->memQ[off].size > 0) {
 			if (self->memQ[off].reltime < n_samples) {
 
@@ -255,6 +299,7 @@ filter_postproc_ntapdelay(MidiFilter* self)
 					const uint8_t key = self->memQ[off].buf[1] & 0x7f;
 					self->memCS[chn][key]++;
 					if (self->memCS[chn][key] > 1) { // send a note-off first
+						//self->memCS[chn][key]--;
 						uint8_t buf[3];
 						buf[0] = MIDI_NOTEOFF | chn;
 						buf[1] = key; buf[2] = 0;
@@ -282,8 +327,7 @@ filter_postproc_ntapdelay(MidiFilter* self)
 				skipped = 1;
 			}
 		} else if (!skipped) self->memI[1] = off;
-
-		if (off == woff) break;
+		if (off == self->memI[2]) break;
 	}
 }
 
