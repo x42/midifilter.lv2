@@ -3,7 +3,7 @@ MFD_FILTER(mapcc)
 #ifdef MX_TTF
 
 	mflt:mapcc
-	TTF_DEFAULTDEF("MapCC")
+	TTF_DEFAULTDEF("MIDI MapCC")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

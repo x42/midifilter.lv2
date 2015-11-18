@@ -3,7 +3,7 @@ MFD_FILTER(notetocc)
 #ifdef MX_TTF
 
 	mflt:notetocc
-	TTF_DEFAULTDEF("Note2CC")
+	TTF_DEFAULTDEF("MIDI Note2CC")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
