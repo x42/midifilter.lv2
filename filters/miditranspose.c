@@ -7,7 +7,7 @@ MFD_FILTER(miditranspose)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORTINT(1, "transpose", "Transpose",  -72, 72, 0)
+	, TTF_IPORTINT(1, "transpose", "Transpose",  -63, 64, 0)
 	, TTF_IPORT(2, "inversion", "Inversion point",  0, 127, 0,
 			lv2:scalePoint [ rdfs:label "Off"; rdf:value  0 ] ; \
 			lv2:portProperty lv2:integer; units:unit units:midiNote;
