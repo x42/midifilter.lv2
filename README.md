@@ -3,7 +3,7 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 27 MIDI event filters have been implemented:
+So far 28 MIDI event filters have been implemented:
 
 *   CC2Note -- translate control-commands to note-on/off messages
 *   Channel Filter -- discard messages per channel
@@ -13,7 +13,8 @@ So far 27 MIDI event filters have been implemented:
 *   Keyrange -- discard notes-on/off events outside a given range
 *   Keysplit -- change midi-channel number depending on note (and optionally transpose)
 *   MapCC -- change one control message into another
-*   Mapscale -- flexible 12-tone map
+*   Mapscale -- flexible 12-tone note map
+*   Mapkeychannel -- 12-tone channel map.
 *   Chord -- harmonizer - create chords from a single note in a given musical scale
 *   Delay -- delay MIDI events with optional randomization
 *   Dup -- unisono - duplicate MIDI events from one channel to another
