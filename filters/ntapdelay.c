@@ -334,7 +334,7 @@ filter_postproc_ntapdelay(MidiFilter* self)
 void filter_init_ntapdelay(MidiFilter* self) {
 	int c,k;
 	srandom ((unsigned int) time (NULL));
-	self->memI[0] = MAX(self->samplerate / 8.0, 256);
+	self->memI[0] = MAX(self->samplerate / 8.0, 1024);
 	self->memI[1] = 0; // read-pointer
 	self->memI[2] = 0; // write-pointer
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
