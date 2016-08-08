@@ -1,0 +1,53 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-delay">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Delay</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="mod-control-group mod-enumerated-group bottom clearfix">
+      <span class="mod-knob-title">Delay Beats 4/4</span>
+      <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="delayBeats" mod-widget="custom-select">
+        <div mod-role="input-control-value" mod-port-symbol="delayBeats" class="mod-enumerated-selected"></div>
+        <div class="mod-enumerated-list">
+          <div mod-role="enumeration-option" mod-port-value="0">No Delay</div>
+          <div mod-role="enumeration-option" mod-port-value="0.5">Eighth</div>
+          <div mod-role="enumeration-option" mod-port-value="1">Quarter</div>
+          <div mod-role="enumeration-option" mod-port-value="2">Half Note</div>
+          <div mod-role="enumeration-option" mod-port-value="4">Whole Note</div>
+          <div mod-role="enumeration-option" mod-port-value="8">Two Bars</div>
+          <div mod-role="enumeration-option" mod-port-value="16">Four Bars</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mod-control-group top clearfix">
+        <div class="mod-knob">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="delayBPM"></div>
+            <span class="mod-knob-title" title="base unit for the delay-time">BPM</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="delayBPM"></div>
+        </div>
+        <div class="mod-knob">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="delayRandom"></div>
+            <span class="mod-knob-title" title="randomize delay in multiples of beats">Randomize</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="delayRandom"></div>
+        </div>
+    </div>
+
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

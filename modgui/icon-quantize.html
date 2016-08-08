@@ -1,0 +1,52 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-quantize">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Quantization</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+
+    <div class="mod-control-group mod-enumerated-group top">
+        <span class="mod-knob-title">Repeat-time</span>
+        <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="quant" mod-widget="custom-select">
+            <div mod-role="input-control-value" mod-port-symbol="quant" class="mod-enumerated-selected"></div>
+            <div class="mod-enumerated-list">
+                <div mod-role="enumeration-option" mod-port-value="0.125">32th</div>
+                <div mod-role="enumeration-option" mod-port-value="0.25">16th</div>
+                <div mod-role="enumeration-option" mod-port-value="0.5">Eighth</div>
+                <div mod-role="enumeration-option" mod-port-value="1">Quarter</div>
+                <div mod-role="enumeration-option" mod-port-value="2">Half Note</div>
+                <div mod-role="enumeration-option" mod-port-value="4">Whole Note</div>
+                <div mod-role="enumeration-option" mod-port-value="8">Two Bars</div>
+                <div mod-role="enumeration-option" mod-port-value="16">Four Bars</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-control-group top clearfix">
+        <div class="clearfix top buttongrid">
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="mindur" title="Enforce minimum duration of one grid unit">Min.D</div>
+        </div>
+        <div class="mod-knob">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="bpm"></div>
+            <span class="mod-knob-title" title="base unit for the delay-time">BPM</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="bpm"></div>
+        </div>
+    </div>
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

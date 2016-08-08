@@ -39,6 +39,9 @@ ifneq ($(XWIN),)
 endif
 
 targets+=$(BUILDDIR)$(LV2NAME)$(LIB_EXT)
+ifneq ($(MOD),)
+  targets+=$(BUILDDIR)modgui
+endif
 
 ###############################################################################
 # extract versions
@@ -86,6 +89,13 @@ $(BUILDDIR)manifest.ttl: manifest.ttl.in ttf.h filters.c
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
 		| uniq \
 		>> $(BUILDDIR)manifest.ttl
+ifneq ($(MOD),)
+	gcc -E -I. -DMX_MODGUI filters.c \
+		| grep -v '^\#' \
+		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/_DASH_/-/g;s/_DOT_/./g;" \
+		| uniq \
+		>> $(BUILDDIR)manifest.ttl
+endif
 	for file in presets/*.ttl; do head -n 3 $$file >> $(BUILDDIR)manifest.ttl; echo "rdfs:seeAlso <presets.ttl> ." >> $(BUILDDIR)manifest.ttl; done
 
 $(BUILDDIR)presets.ttl: presets.ttl.in presets/*.ttl
@@ -109,22 +119,32 @@ $(BUILDDIR)$(LV2NAME)$(LIB_EXT): $(LV2NAME).c midifilter.h filters.c
 		-shared $(LV2LDFLAGS) $(LDFLAGS) $(LOADLIBES)
 	$(STRIP) $(STRIPFLAGS) $(BUILDDIR)$(LV2NAME)$(LIB_EXT)
 
+$(BUILDDIR)modgui: modgui/
+	@mkdir -p $(BUILDDIR)/modgui
+	cp -r modgui/* $(BUILDDIR)modgui/
+
 # install/uninstall/clean target definitions
 
 install: all
 	install -d $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 	install -m755 $(BUILDDIR)$(LV2NAME)$(LIB_EXT) $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 	install -m644 $(BUILDDIR)manifest.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)presets.ttl $(DESTDIR)$(LV2DIR)/$(BUNDLE)
+ifneq ($(MOD),)
+	install -d $(DESTDIR)$(LV2DIR)/$(BUNDLE)/modgui
+	install -t $(DESTDIR)$(LV2DIR)/$(BUNDLE)/modgui $(BUILDDIR)modgui/*
+endif
 
 uninstall:
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/manifest.ttl
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/presets.ttl
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/$(LV2NAME).ttl
 	rm -f $(DESTDIR)$(LV2DIR)/$(BUNDLE)/$(LV2NAME)$(LIB_EXT)
+	rm -rf $(DESTDIR)$(LV2DIR)/$(BUNDLE)/modgui
 	-rmdir $(DESTDIR)$(LV2DIR)/$(BUNDLE)
 
 clean:
 	rm -f $(BUILDDIR)manifest.ttl $(BUILDDIR)presets.ttl $(BUILDDIR)$(LV2NAME).ttl $(BUILDDIR)$(LV2NAME)$(LIB_EXT) lv2syms filters.c
+	rm -rf $(BUILDDIR)modgui
 	-test -d $(BUILDDIR) && rmdir $(BUILDDIR) || true
 
 .PHONY: clean all install uninstall

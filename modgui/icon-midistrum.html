@@ -1,0 +1,95 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-strum">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Strum</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="mod-enum-top-group-2items clearfix">
+        <div class="mod-control-group mod-enumerated-group bottom float">
+
+            <span class="mod-knob-title">Strum Duration</span>
+            <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="duration" mod-widget="custom-select">
+                <div mod-role="input-control-value" mod-port-symbol="duration" class="mod-enumerated-selected"></div>
+                <div class="mod-enumerated-list">
+                    <div mod-role="enumeration-option" mod-port-value="0">Immediate</div>
+                    <div mod-role="enumeration-option" mod-port-value="0.125">32th</div>
+                    <div mod-role="enumeration-option" mod-port-value="0.25">16th</div>
+                    <div mod-role="enumeration-option" mod-port-value="0.5">Eighth</div>
+                    <div mod-role="enumeration-option" mod-port-value="1">Quarter Note</div>
+                    <div mod-role="enumeration-option" mod-port-value="2">Half Note</div>
+                    <div mod-role="enumeration-option" mod-port-value="4">Whole Note</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mod-control-group mod-enumerated-group bottom float">
+            <span class="mod-knob-title">Strum Mode</span>
+            <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="mode" mod-widget="custom-select">
+                <div mod-role="input-control-value" mod-port-symbol="mode" class="mod-enumerated-selected"></div>
+                <div class="mod-enumerated-list">
+                    <div mod-role="enumeration-option" mod-port-value="0">Always Down (low notes first)</div>
+                    <div mod-role="enumeration-option" mod-port-value="1">Always Up (high notes first)</div>
+                    <div mod-role="enumeration-option" mod-port-value="2">Alternate</div>
+                    <div mod-role="enumeration-option" mod-port-value="3">Up/Down Beat</div>
+                    <div mod-role="enumeration-option" mod-port-value="4">Up/Down 8th</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-control-group top clearfix">
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="bpm"></div>
+            <span class="mod-knob-title" title="base unit for timing">BPM</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="bpm"></div>
+        </div>
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="collect"></div>
+            <span class="mod-knob-title" title="Time to wait for chord to be 'complete'. Keys pressed withing given timeframe will be combined into one chord.">Timeout</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="collect"></div>
+        </div>
+    </div>
+    <div class="mod-control-group top clearfix">
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="adjspeed"></div>
+            <span class="mod-knob-title" title="Accellerate/Decelerate over the time of the strum. The total duration remains unchanged. If the value is greater than zero, early notes are further apart and later notes will be closer together.">Strum Acc.</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="adjspeed"></div>
+        </div>
+
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="randspeed"></div>
+            <span class="mod-knob-title" title="Amount of randomization to apply to the accel/decel setting. A Value of 1.0 means to add a random-number of the full-range (-1..1) to the given value.">Rnd. Accel.</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="randspeed"></div>
+        </div>
+
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="randvelocity"></div>
+            <span class="mod-knob-title" title="Amount of randomization to apply to the acceleation value. A value of 1.0 means to add a random-number of the full-range (-112..112) to the given value.">Rnd. Vel.</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="randvelocity"></div>
+        </div>
+
+        <div class="mod-knob wide">
+            <div class="mod-knob-image" mod-role="input-control-port" mod-port-symbol="adjvelocity"></div>
+            <span class="mod-knob-title" title="Modify velocity over stroke time. If the value is greater than zero, later notes will played louder.">&Delta; Vel.</span>
+            <div class="mod-knob-value" contenteditable="true" mod-role="input-control-value" mod-port-symbol="adjvelocity"></div>
+        </div>
+    </div>
+
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

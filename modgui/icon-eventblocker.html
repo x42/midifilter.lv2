@@ -1,0 +1,94 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-eventblocker">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Event Notch</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="clearfix top-float">
+        <div class="clearfix top buttongrid">
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkcc" title="Block Control Changes">CC</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blknote" title="Block All Note Events">Notes</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkpc" title="Block Program Changes">PC</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkpp" title="Block Polykey-Pressure">KP</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkcp" title="Block Channel-Pressure">CP</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkpb" title="Block Pitch Bend">PB</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blksx" title="Block Sysex/RT messages">SX</div>
+            <div class="togglebtn on" mod-widget="switch" mod-role="input-control-port" mod-port-symbol="blkcm" title="Enable Custom Filter">Cstm</div>
+        </div>
+
+        <div class="group-pane">
+            <div class="center">Custom Filter Settings</div>
+            <div class="mod-enum-float-group clearfix">
+                <div class="mod-control-group mod-enumerated-group bottom float">
+                    <span class="mod-knob-title">Midi Channel</span>
+                    <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="cmf" mod-widget="custom-select">
+                        <div mod-role="input-control-value" mod-port-symbol="cmf" class="mod-enumerated-selected"></div>
+                        <div class="mod-enumerated-list">
+                            <div mod-role="enumeration-option" mod-port-value="0">Any</div>
+                            <div mod-role="enumeration-option" mod-port-value="1">1</div>
+                            <div mod-role="enumeration-option" mod-port-value="2">2</div>
+                            <div mod-role="enumeration-option" mod-port-value="3">3</div>
+                            <div mod-role="enumeration-option" mod-port-value="4">4</div>
+                            <div mod-role="enumeration-option" mod-port-value="5">5</div>
+                            <div mod-role="enumeration-option" mod-port-value="6">6</div>
+                            <div mod-role="enumeration-option" mod-port-value="7">7</div>
+                            <div mod-role="enumeration-option" mod-port-value="8">8</div>
+                            <div mod-role="enumeration-option" mod-port-value="9">9</div>
+                            <div mod-role="enumeration-option" mod-port-value="10">10</div>
+                            <div mod-role="enumeration-option" mod-port-value="11">11</div>
+                            <div mod-role="enumeration-option" mod-port-value="12">12</div>
+                            <div mod-role="enumeration-option" mod-port-value="13">13</div>
+                            <div mod-role="enumeration-option" mod-port-value="14">14</div>
+                            <div mod-role="enumeration-option" mod-port-value="15">15</div>
+                            <div mod-role="enumeration-option" mod-port-value="16">16</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mod-control-group mod-enumerated-group bottom float" style="width:150px">
+                    <span class="mod-knob-title">Scale</span>
+                    <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="cmt" mod-widget="custom-select">
+                        <div mod-role="input-control-value" mod-port-symbol="cmt" class="mod-enumerated-selected"></div>
+                        <div class="mod-enumerated-list">
+                            <div mod-role="enumeration-option" mod-port-value="0">Note Off (0x8x)</div>
+                            <div mod-role="enumeration-option" mod-port-value="1">Note On (0x9x)</div>
+                            <div mod-role="enumeration-option" mod-port-value="2">Polykey Pressure (0xAx)</div>
+                            <div mod-role="enumeration-option" mod-port-value="3">Control Change (0xBx)</div>
+                            <div mod-role="enumeration-option" mod-port-value="4">Program Change (0xCx)</div>
+                            <div mod-role="enumeration-option" mod-port-value="5">Channel Pressure (0xDx)</div>
+                            <div mod-role="enumeration-option" mod-port-value="6">Pitchbend (0xEx)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mod-control-group top clearfix">
+                <div class="mod-knob midi">
+                    <span class="mod-knob-title" title="Custom Filter Databyte 1">Data 1</span>
+                    <div class="mod-knob-m129-image" mod-role="input-control-port" mod-port-symbol="cm1"></div>
+                </div>
+                <div class="mod-knob midi">
+                    <span class="mod-knob-title" title="Custom Filter Databyte 2">Data 2</span>
+                    <div class="mod-knob-m129-image" mod-role="input-control-port" mod-port-symbol="cm2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

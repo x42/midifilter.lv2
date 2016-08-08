@@ -1,0 +1,100 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-mapkeyscale">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Key Transpose</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="mod-control-group mod-enumerated-group top clearfix">
+        <span class="mod-knob-title">Midi Channel</span>
+        <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="channelf" mod-widget="custom-select">
+            <div mod-role="input-control-value" mod-port-symbol="channelf" class="mod-enumerated-selected"></div>
+            <div class="mod-enumerated-list">
+                <div mod-role="enumeration-option" mod-port-value="0">Any</div>
+                <div mod-role="enumeration-option" mod-port-value="1">1</div>
+                <div mod-role="enumeration-option" mod-port-value="2">2</div>
+                <div mod-role="enumeration-option" mod-port-value="3">3</div>
+                <div mod-role="enumeration-option" mod-port-value="4">4</div>
+                <div mod-role="enumeration-option" mod-port-value="5">5</div>
+                <div mod-role="enumeration-option" mod-port-value="6">6</div>
+                <div mod-role="enumeration-option" mod-port-value="7">7</div>
+                <div mod-role="enumeration-option" mod-port-value="8">8</div>
+                <div mod-role="enumeration-option" mod-port-value="9">9</div>
+                <div mod-role="enumeration-option" mod-port-value="10">10</div>
+                <div mod-role="enumeration-option" mod-port-value="11">11</div>
+                <div mod-role="enumeration-option" mod-port-value="12">12</div>
+                <div mod-role="enumeration-option" mod-port-value="13">13</div>
+                <div mod-role="enumeration-option" mod-port-value="14">14</div>
+                <div mod-role="enumeration-option" mod-port-value="15">15</div>
+                <div mod-role="enumeration-option" mod-port-value="16">16</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-control-group clearfix">
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">C</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k0"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">C#</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k1"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">D</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k2"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">D#</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k3"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">E</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k4"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">F</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k5"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">F#</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k6"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">G</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k7"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">G#</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k8"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">A</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k9"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">A#</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k10"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">B</span>
+            <div class="mod-knob-m1312-image" mod-role="input-control-port" mod-port-symbol="k11"></div>
+        </div>
+    </div>
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

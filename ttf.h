@@ -163,6 +163,20 @@
 	lv2:binary <@LV2NAME@@LIB_EXT@>  ; \
 	rdfs:seeAlso <@LV2NAME@.ttl> . \
 
+#elif (defined MX_MODGUI)
+
+#define MFD_FLT(ID, FNX) \
+	<HTTPP/gareus.org/oss/lv2/midifilterHASH ## FNX> \
+	modgui:gui [ \
+		modgui:resourcesDirectory <modgui> ; \
+		modgui:iconTemplate <modgui/icon_DASH_ ## FNX ##_DOT_html> ; \
+		modgui:stylesheet   <modgui/x42-style.css> ; \
+		modgui:screenshot   <modgui/screenshot_DASH_ ## FNX ##_DOT_png> ; \
+		modgui:thumbnail    <modgui/thumbnail_DASH_ ## FNX ##_DOT_png> ; \
+		modgui:brand "x42" ; \
+		modgui:label # FNX ; \
+	].
+
 #else
 
 #define MFD_FLT(ID, FNX)

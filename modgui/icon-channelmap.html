@@ -1,0 +1,90 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-channelmap">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Channelmap</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="mod-control-group clearfix">
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 1</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn1"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 2</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn2"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 3</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn3"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 4</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn4"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 5</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn5"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 6</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn6"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 7</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn7"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 8</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn8"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 9</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn9"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 12</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn10"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 11</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn11"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 12</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn12"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 13</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn13"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 14</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn14"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 15</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn15"></div>
+        </div>
+        <div class="mod-knob grid16">
+            <span class="mod-knob-title">Chn 16</span>
+            <div class="mod-knob-mc17-image" mod-role="input-control-port" mod-port-symbol="chn16"></div>
+        </div>
+    </div>
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>
