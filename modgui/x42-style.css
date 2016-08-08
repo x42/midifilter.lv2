@@ -14,7 +14,7 @@
 /* = Labels
 ================================================ */
 .x42-midifilter{{{cns}}} .center {
-	text-align:center;
+    text-align:center;
 }
 
 .x42-midifilter{{{cns}}} .x42-brand {
@@ -107,6 +107,7 @@
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group span.mod-knob-title {
+    color:#333;
     font-size:11px;
     font-weight:bold;
     line-height:1;
@@ -115,6 +116,7 @@
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob > span.mod-knob-title {
+    color:#333;
     bottom:12px;
     display:block;
     height:12px;
@@ -127,10 +129,12 @@
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob.midi > span.mod-knob-title {
+    color:#333;
     bottom:0px;
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob .mod-knob-value {
+    color:#333;
     bottom:0px;
     font-size:11px;
     position:absolute;
@@ -314,7 +318,7 @@
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob.midi {
     height:74px;
-		margin-bottom:0;
+    margin-bottom:0;
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob.grid16 > span.mod-knob-title {
@@ -343,7 +347,7 @@
 .x42-midifilter{{{cns}}} .mod-enum-top-group-2items {
     cursor:default;
     margin:15px auto 5px;
-		width:240px;
+    width:240px;
 }
 
 .x42-midifilter{{{cns}}} .mod-enum-float-group {
@@ -532,11 +536,15 @@
     width:32px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-channelfilter .mod-footswitch {
+.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch {
     bottom: 35px;
     left: 10px;
     right: 10px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-channelfilter .mod-footswitch {
+    bottom: 35px;
+    left: 82px;
 }
 
 /* --- */
@@ -564,8 +572,6 @@
     width:32px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-cctonote .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-delay .mod-footswitch,
@@ -584,6 +590,7 @@
 
 /* --- */
 
+.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-mapkeyscale .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch {
     bottom: 55px;
@@ -704,8 +711,8 @@
 
 .x42-midifilter{{{cns}}}.x42-midi-mididup .mod-knob.m16
 {
-	margin:0px 10px;
-	width:100px;
+    margin:0px 10px;
+    width:100px;
 }
 
 
@@ -744,8 +751,7 @@
     width:170px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-ntapdelay,
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity
+.x42-midifilter{{{cns}}}.x42-midi-ntapdelay
 {
     background-size:360px 240px;
     height:240px;
@@ -754,7 +760,7 @@
 
 .x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-footswitch
 {
-    bottom: 45px;
+    bottom: 35px;
     left: 20px;
     right: 20px;
 }
@@ -766,7 +772,19 @@
     right:20px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-randvelocity
+{
+    background-size:360px 220px;
+    height:220px;
+    width:360px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-footswitch
+{
+    bottom: 25px;
+    left: 62px;
+}
+
 .x42-midifilter{{{cns}}}.x42-midi-stub .mod-footswitch
 {
     bottom: 25px;
@@ -790,8 +808,8 @@
 .x42-midifilter{{{cns}}}.x42-midi-quantize .buttongrid {
     width: 60px;
     height: 66px;
-		display:inline-block;
-		text-align:left;
+    display:inline-block;
+    text-align:left;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-quantize .mod-light {
@@ -819,8 +837,8 @@
 
 .x42-midifilter{{{cns}}}.x42-midi-keysplit .top-float > div {
     float:left;
-		margin:0;
-		max-width:240px;
+    margin:0;
+    max-width:240px;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-keysplit .mod-light {
