@@ -175,9 +175,9 @@ filter_preproc_ntapdelay(MidiFilter* self)
 	const float oldbpm = self->memF[0];
 	self->memF[0] = newbpm;
 
-	const float old_grid = RAIL((self->lcfg[3]), 1/256.0, 4.0);
+	const float old_grid = RAIL((self->lcfg[3]), 1/256.0, 16.0);
 	const double old_samples_per_beat = 60.0 / oldbpm * self->samplerate;
-	const float new_grid = RAIL((*self->cfg[3]), 1/256.0, 4.0);
+	const float new_grid = RAIL((*self->cfg[3]), 1/256.0, 16.0);
 	const double new_samples_per_beat = 60.0 / newbpm * self->samplerate;
 
 	const double fact = (new_grid * new_samples_per_beat) / (old_grid * old_samples_per_beat);
@@ -209,7 +209,7 @@ filter_postproc_ntapdelay(MidiFilter* self)
 		bpm = self->bpm;
 	}
 	if (bpm <= 0) bpm = 60;
-	const float grid = RAIL((*self->cfg[3]), 1/256.0, 4.0);
+	const float grid = RAIL((*self->cfg[3]), 1/256.0, 16.0);
 	const double samples_per_beat = 60.0 / bpm * self->samplerate;
 
 	/* add note-on/off for held notes..

@@ -13,7 +13,7 @@ MFD_FILTER(scalecc)
 	, TTF_IPORT(2, "upper", "Parameter (Max)", 0, 127, 127,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "upper end of parameter-range (inclusive)")
-	, TTF_IPORT(3, "pmode", "Parameter Mode", 0, 3, 1,
+	, TTF_IPORT(3, "pmode", "Parameter Mode", 0, 2, 1,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Bypass" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Include Range" ; rdf:value 1 ] ;
@@ -24,7 +24,7 @@ MFD_FILTER(scalecc)
 	, TTF_IPORT(5, "valoff",  "Value Offset",  -64, 64, 0,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "")
-	, TTF_IPORT(6, "vmode", "Value Mode", 0, 3, 0,
+	, TTF_IPORT(6, "vmode", "Value Mode", 0, 2, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Clamp to 0..127" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Reflect Overflow (-1 to 1, 128 to 127)"  ; rdf:value 1 ] ;
@@ -43,7 +43,7 @@ filter_midi_scalecc(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int mode = RAIL(floorf(*self->cfg[3]),0, 3);
+	const int mode = RAIL(floorf(*self->cfg[3]),0, 2);
 	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
@@ -66,7 +66,7 @@ filter_midi_scalecc(MidiFilter* self,
 	if ((param >= low && param <= upp) ^ (mode == 2)) {
 		const float mul = (*self->cfg[4]);
 		const float off = (*self->cfg[5]);
-		const int clamp = RAIL(floorf(*self->cfg[6]),0, 3);
+		const int clamp = RAIL(floorf(*self->cfg[6]),0, 2);
 		uint8_t buf[3];
 
 		int val = rintf((value * mul) + off);
