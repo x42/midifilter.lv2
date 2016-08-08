@@ -456,57 +456,149 @@
 ================================================ */
 .x42-midifilter{{{cns}}} h1,
 .x42-midifilter{{{cns}}} .mod-enumerated,
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob > span.mod-knob-title
-{
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob > span.mod-knob-title {
     color:black;
 }
-.x42-midifilter{{{cns}}} h1
-{
+.x42-midifilter{{{cns}}} h1 {
     border-color:black;
 }
 
 /* = Plugin Specifics -- TODO unify a bit more
 ================================================ */
-
-.x42-midifilter{{{cns}}}.x42-midi-nodup,
-.x42-midifilter{{{cns}}}.x42-midi-mididup,
-.x42-midifilter{{{cns}}}.x42-midi-monolegato,
-.x42-midifilter{{{cns}}}.x42-midi-onechannelfilter,
-.x42-midifilter{{{cns}}}.x42-midi-notetoggle
-{
-    background-size:300px 200px;
-    height:200px;
-    width:300px;
-}
-
 .x42-midifilter{{{cns}}}.x42-midi-nodup .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-mididup .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-monolegato .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-transpose .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-onechannelfilter .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-notetoggle .mod-light
-{
+.x42-midifilter{{{cns}}}.x42-midi-notetoggle .mod-light {
     bottom:90px;
     left:20px;
     right:20px;
 }
+
+.x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-strum .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-onechannelfilter .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-velocityrange .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-keyrange .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-cctonote .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-delay .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-sostenuto .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-keysplit .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-quantize .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-eventblocker .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-midichord .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-enforcescale .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-mapkeychannel .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-channelfilter .mod-light {
+    bottom:43px;
+    right:20px;
+    width:32px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-scalecc .mod-light {
+    bottom:43px;
+    right:0px;
+    left:60px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-stub .mod-light {
+    bottom:75px;
+    left:20px;
+    right:20px;
+}
+
+/* --- */
+
+.x42-midifilter{{{cns}}}.x42-midi-stub .mod-footswitch {
+    bottom: 25px;
+    left: 20px;
+    right: 20px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-footswitch {
+    bottom: 25px;
+    left: 62px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-quantize .mod-footswitch {
+    bottom: 25px;
+    left: 72px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-cctonote .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-delay .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-sostenuto .mod-footswitch {
+    bottom: 35px;
+    left: 10px;
+    right: 10px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-keysplit .mod-footswitch {
+    bottom: 37px;
+    left: 60px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-scalecc .mod-footswitch {
+    bottom: 37px;
+    right: 60px;
+    left: 0px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-enforcescale .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-eventblocker .mod-footswitch {
+    bottom: 37px;
+    left: 10px;
+    right: 10px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-mapkeychannel .mod-footswitch {
+    bottom: 42px;
+    left: 10px;
+    right: 10px;
+}
+
 
 .x42-midifilter{{{cns}}}.x42-midi-nodup .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-mididup .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-monolegato .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-transpose .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-onechannelfilter .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-notetoggle .mod-footswitch
-{
+.x42-midifilter{{{cns}}}.x42-midi-notetoggle .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-velocityrange .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-keyrange .mod-footswitch {
     bottom: 45px;
-    left: 20px;
-    right: 20px;
+    left: 10px;
+    right: 10px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-strum .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-midichord .mod-footswitch {
+    bottom: 47px;
+    left: 10px;
+    right: 10px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale .mod-footswitch,
+.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch {
+    bottom: 55px;
+    left: 10px;
+    right: 10px;
 }
 
 /* --- */
 
-.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale
-{
+.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale {
     background-size:430px 330px;
     height:330px;
     width:430px;
@@ -525,29 +617,23 @@
     top: 15px;
 }
 
-
-.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-enforcescale .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-mapkeychannel .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-channelfilter .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch {
-    bottom: 35px;
-    left: 10px;
-    right: 10px;
-}
-
 .x42-midifilter{{{cns}}}.x42-midi-channelfilter .mod-footswitch {
     bottom: 35px;
     left: 82px;
 }
 
 /* --- */
+
+.x42-midifilter{{{cns}}}.x42-midi-nodup,
+.x42-midifilter{{{cns}}}.x42-midi-mididup,
+.x42-midifilter{{{cns}}}.x42-midi-monolegato,
+.x42-midifilter{{{cns}}}.x42-midi-onechannelfilter,
+.x42-midifilter{{{cns}}}.x42-midi-notetoggle {
+    background-size:300px 200px;
+    height:200px;
+    width:300px;
+}
+
 
 .x42-midifilter{{{cns}}}.x42-midi-mapcc,
 .x42-midifilter{{{cns}}}.x42-midi-delay,
@@ -557,48 +643,6 @@
     width:280px;
 }
 
-
-.x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-velocityrange .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-keyrange .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-cctonote .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-delay .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-sostenuto .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-cctonote .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-delay .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-sostenuto .mod-footswitch {
-    bottom: 35px;
-    left: 10px;
-    right: 10px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-enforcescale .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-eventblocker .mod-footswitch {
-    bottom: 37px;
-    left: 10px;
-    right: 10px;
-}
-
-/* --- */
-
-.x42-midifilter{{{cns}}}.x42-midi-mapcc .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-mapkeyscale .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch {
-    bottom: 55px;
-    left: 10px;
-    right: 10px;
-}
-
-/* --- */
 .x42-midifilter{{{cns}}}.x42-midi-notetocc,
 .x42-midifilter{{{cns}}}.x42-midi-cctonote {
     background-size:444px 225px;
@@ -606,7 +650,7 @@
     width:444px;
 }
 
-/* --- */
+
 .x42-midifilter{{{cns}}}.x42-midi-velocityrange,
 .x42-midifilter{{{cns}}}.x42-midi-keyrange {
     background-size:332px 220px;
@@ -614,12 +658,45 @@
     width:332px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-velocityrange .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-keyrange .mod-footswitch {
-    bottom: 45px;
-    left: 10px;
-    right: 10px;
+.x42-midifilter{{{cns}}}.x42-midi-velocityscale,
+.x42-midifilter{{{cns}}}.x42-midi-strum {
+    background-size:420px 360px;
+    height:360px;
+    width:420px;
 }
+
+.x42-midifilter{{{cns}}}.x42-midi-transpose {
+    background-size:300px 230px;
+    height:230px;
+    width:300px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-ntapdelay {
+    background-size:360px 240px;
+    height:240px;
+    width:360px;
+}
+
+.x42-midifilter{{{cns}}}.x42-midi-randvelocity {
+    background-size:360px 220px;
+    height:220px;
+    width:360px;
+}
+
+/* --- */
+
+.x42-midifilter{{{cns}}}.x42-midi-stub {
+    background-size:170px 170px;
+    height:170px;
+    width:170px;
+}
+
+
+.x42-midifilter{{{cns}}}.x42-midi-stub .x42-plugin-name {
+    top:0px;
+    left:7%;
+}
+
 
 /* --- */
 
@@ -631,18 +708,6 @@
 
 .x42-midifilter{{{cns}}}.x42-midi-midichord .buttongrid {
     width: 300px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-midichord .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-midichord .mod-footswitch {
-    bottom: 47px;
-    left: 10px;
-    right: 10px;
 }
 
 /* --- */
@@ -674,20 +739,13 @@
     border-radius: 11px;
     margin:5px;
 }
-.x42-midifilter{{{cns}}}.x42-midi-eventblocker .group-pane  > span 
-{
+.x42-midifilter{{{cns}}}.x42-midi-eventblocker .group-pane  > span {
     display:block;
     text-align:center;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-eventblocker .buttongrid {
     width: 120px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-eventblocker .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-eventblocker .x42-brand {
@@ -702,99 +760,11 @@
     width:330px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-mapkeychannel .mod-footswitch
-{
-    bottom: 42px;
-    left: 10px;
-    right: 10px;
-}
+/* --- */
 
-.x42-midifilter{{{cns}}}.x42-midi-mididup .mod-knob.m16
-{
+.x42-midifilter{{{cns}}}.x42-midi-mididup .mod-knob.m16 {
     margin:0px 10px;
     width:100px;
-}
-
-
-.x42-midifilter{{{cns}}}.x42-midi-velocityscale,
-.x42-midifilter{{{cns}}}.x42-midi-strum {
-    background-size:420px 360px;
-    height:360px;
-    width:420px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-light,
-.x42-midifilter{{{cns}}}.x42-midi-strum .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-footswitch,
-.x42-midifilter{{{cns}}}.x42-midi-strum .mod-footswitch {
-    bottom: 47px;
-    left: 10px;
-    right: 10px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-transpose
-{
-    background-size:300px 230px;
-    height:230px;
-    width:300px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-stub
-{
-    background-size:170px 170px;
-    height:170px;
-    width:170px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-ntapdelay
-{
-    background-size:360px 240px;
-    height:240px;
-    width:360px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-footswitch
-{
-    bottom: 35px;
-    left: 20px;
-    right: 20px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-stub .mod-light
-{
-    bottom:75px;
-    left:20px;
-    right:20px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity
-{
-    background-size:360px 220px;
-    height:220px;
-    width:360px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-randvelocity .mod-footswitch
-{
-    bottom: 25px;
-    left: 62px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-stub .mod-footswitch
-{
-    bottom: 25px;
-    left: 20px;
-    right: 20px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-stub .x42-plugin-name {
-    top:0px;
-    left:7%;
 }
 
 /* --- */
@@ -810,17 +780,6 @@
     height: 66px;
     display:inline-block;
     text-align:left;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-quantize .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-quantize .mod-footswitch {
-    bottom: 25px;
-    left: 72px;
 }
 
 /* --- */
@@ -841,34 +800,10 @@
     max-width:240px;
 }
 
-.x42-midifilter{{{cns}}}.x42-midi-keysplit .mod-light {
-    bottom:43px;
-    right:20px;
-    width:32px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-keysplit .mod-footswitch {
-    bottom: 37px;
-    left: 60px;
-}
-
-
 /* --- */
 
 .x42-midifilter{{{cns}}}.x42-midi-scalecc {
     background-size:510px 240px;
     height:240px;
     width:510px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-scalecc .mod-light {
-    bottom:43px;
-    right:0px;
-    left:60px;
-}
-
-.x42-midifilter{{{cns}}}.x42-midi-scalecc .mod-footswitch {
-    bottom: 37px;
-    right: 60px;
-    left: 0px;
 }
