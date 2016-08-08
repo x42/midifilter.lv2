@@ -219,18 +219,6 @@
     margin:0 auto;
 }
 
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob .mod-knob-m128-image {
-    background-image:url(/resources/knob128.png{{{ns}}});
-    background-repeat:no-repeat;
-    background-size:auto 56px;
-    background-color:#222;
-    box-shadow: 2px 2px 2px 0px #000 inset, -1px -1px 2px 1px #fff inset;
-    height:56px;
-    width:96px;
-    margin:0 auto;
-}
-
-
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob .mod-knob-n127-image {
     background-image:url(/resources/midi127.png{{{ns}}});
     background-repeat:no-repeat;
