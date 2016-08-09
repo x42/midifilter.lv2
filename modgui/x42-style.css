@@ -104,6 +104,28 @@
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob {
     overflow:hidden;
     position:relative;
+    display:inline-block;
+    height:88px;
+    margin: 3px 10px;
+}
+
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.midi {
+    height:74px;
+    margin-bottom:0;
+}
+
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.wide {
+    width:64px;
+}
+
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.wider {
+    width:88px;
+}
+
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.grid16 {
+    height:42px;
+    margin: 3px 5px 3px 15px;
+    overflow:visible;
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group span.mod-knob-title {
@@ -131,6 +153,21 @@
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob.midi > span.mod-knob-title {
     color:#333;
     bottom:0px;
+}
+
+.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.grid16 > span.mod-knob-title {
+    display:block;
+    width:10px;
+    margin:0;
+    overflow:hidden;
+    padding:0;
+    position:absolute;
+    text-align:center;
+    top:15px;
+    left:-30px;
+    width:48px;
+    transform: rotate(270deg);
+    -webkit-transform: rotate(270deg);
 }
 
 .x42-midifilter{{{cns}}} .mod-control-group .mod-knob .mod-knob-value {
@@ -273,57 +310,6 @@
     width:72px;
     margin:0 auto;
 }
-
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob .mod-knob-image {
-    background-image:url(/resources/knob.png{{{ns}}});
-    background-repeat:no-repeat;
-    background-size:auto 60px;
-    height:60px;
-    width:60px;
-    margin:0 auto;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob {
-    display:inline-block;
-    height:88px;
-    margin: 3px 10px;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.wide {
-    width:64px;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.wider {
-    width:88px;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.grid16 {
-    height:42px;
-    margin: 3px 5px 3px 15px;
-    overflow:visible;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.midi {
-    height:74px;
-    margin-bottom:0;
-}
-
-.x42-midifilter{{{cns}}} .mod-control-group .mod-knob.grid16 > span.mod-knob-title {
-    display:block;
-    width:10px;
-    margin:0;
-    overflow:hidden;
-    padding:0;
-    position:absolute
-    text-align:center;
-    top:15px;
-    left:-30px;
-    width:48px;
-    transform: rotate(270deg);
-    -webkit-transform: rotate(270deg);
-}
-
 
 /* = ENUMERATED LIST
 ================================================ */
