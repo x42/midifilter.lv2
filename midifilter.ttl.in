@@ -6,6 +6,7 @@
 @prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix urid:  <http://lv2plug.in/ns/ext/urid#> .
 @prefix mflt:  <http://gareus.org/oss/lv2/midifilter#> .
+@prefix mod:   <http://moddevices.com/ns/mod#> .
 @prefix pprops:<http://lv2plug.in/ns/ext/port-props#> .
 @prefix units: <http://lv2plug.in/ns/extensions/units#> .
 @prefix time:  <http://lv2plug.in/ns/ext/time#> .

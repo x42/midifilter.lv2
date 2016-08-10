@@ -17,6 +17,13 @@ BUNDLE=midifilter.lv2
 BUILDDIR=build/
 targets=
 
+ifneq ($(MOD),)
+  MODBRAND=mod:brand \"x42\";
+else
+  MODBRAND=
+endif
+
+
 UNAME=$(shell uname)
 ifeq ($(UNAME),Darwin)
   LV2LDFLAGS=-dynamiclib
@@ -108,7 +115,7 @@ $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	cat $(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
 	gcc -E -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
-		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g' \
+		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g;s/@MODBRAND@/$(MODBRAND)/' \
 		| uniq \
 		>> $(BUILDDIR)$(LV2NAME).ttl
 
