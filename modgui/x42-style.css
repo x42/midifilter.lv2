@@ -781,3 +781,8 @@
     height:240px;
     width:510px;
 }
+
+/* --- */
+.x42-midifilter{{{cns}}}.x42-midi-keyrange .mod-footswitch {
+    z-index:40;
+}
