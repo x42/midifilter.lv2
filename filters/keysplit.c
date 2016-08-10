@@ -3,7 +3,7 @@ MFD_FILTER(keysplit)
 #ifdef MX_TTF
 
 	mflt:keysplit
-	TTF_DEFAULTDEF("MIDI Keysplit")
+	TTF_DEFAULTDEF("MIDI Keysplit", "MIDI Keysplit")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16, 0, PORTENUMZ("Any") DOC_CHANF)
 	, TTF_IPORT(1, "split", "Splitpoint",  0, 127,  48,
 			lv2:portProperty lv2:integer; units:unit units:midiNote ;

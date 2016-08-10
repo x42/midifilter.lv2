@@ -3,7 +3,7 @@ MFD_FILTER(passthru)
 #ifdef MX_TTF
 
 	mflt:passthru
-	TTF_DEFAULTDEF("MIDI Thru")
+	TTF_DEFAULTDEF("MIDI Thru", "MIDI Thru")
 	; rdfs:comment "MIDI All pass. This plugin has no effect and is intended as example."
 	.
 

@@ -3,7 +3,7 @@ MFD_FILTER(mapkeyscale)
 #ifdef MX_TTF
 
 	mflt:mapkeyscale
-	TTF_DEFAULTDEF("MIDI Keys Transpose")
+	TTF_DEFAULTDEF("MIDI Note Transpose", "MIDI Note Transp")
 	, TTF_IPORT( 0, "channelf", "Filter Channel", 0, 16, 0, PORTENUMZ("Any") DOC_CHANF)
 	, TTF_IPORT( 1, "k0",  "C",  -13, 12, 0, lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration; SPX("Off", -13) SPX("-12 (C-1)", -12) SPX("-11 (C#-1)", -11) SPX("-10 (D-1)", -10) SPX("-9 (D#-1)", -9) SPX("-8 (E-1)", -8) SPX("-7 (F-1)", -7) SPX("-6 (F#-1)", -6) SPX("-5 (G-1)", -5) SPX("-4 (G#-1)", -4) SPX("-3 (A-1)", -3) SPX("-2 (A#-1)", -2) SPX("-1 (B-1)", -1) SPX("+-0 (C+0)", 0) SPX("+1 (C#+0)", 1) SPX("+2 (D+0)", 2) SPX("+3 (D#+0)", 3) SPX("+4 (E+0)", 4) SPX("+5 (F+0)", 5) SPX("+6 (F#+0)", 6) SPX("+7 (G+0)", 7) SPX("+8 (G#+0)", 8) SPX("+9 (A+0)", 9) SPX("+10 (A#+0)", 10) SPX("+11 (B+0)", 11) SPX("+12 (C+1)", 12) units:unit units:semitone12TET)
 	, TTF_IPORT( 2, "k1",  "C#", -13, 12, 0, lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration; SPX("Off", -13) SPX("-12 (C#-1)", -12) SPX("-11 (D-1)", -11) SPX("-10 (D#-1)", -10) SPX("-9 (E-1)", -9) SPX("-8 (F-1)", -8) SPX("-7 (F#-1)", -7) SPX("-6 (G-1)", -6) SPX("-5 (G#-1)", -5) SPX("-4 (A-1)", -4) SPX("-3 (A#-1)", -3) SPX("-2 (B-1)", -2) SPX("-1 (C+0)", -1) SPX("+-0 (C#+0)", 0) SPX("+1 (D+0)", 1) SPX("+2 (D#+0)", 2) SPX("+3 (E+0)", 3) SPX("+4 (F+0)", 4) SPX("+5 (F#+0)", 5) SPX("+6 (G+0)", 6) SPX("+7 (G#+0)", 7) SPX("+8 (A+0)", 8) SPX("+9 (A#+0)", 9) SPX("+10 (B+0)", 10) SPX("+11 (C+1)", 11) SPX("+12 (C#+1)", 12) units:unit units:semitone12TET)

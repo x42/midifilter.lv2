@@ -3,7 +3,7 @@ MFD_FILTER(scalecc)
 #ifdef MX_TTF
 
 	mflt:scalecc
-	TTF_DEFAULTDEF("Scale CC Value")
+	TTF_DEFAULTDEF("Scale CC Value", "Scale CC Value")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

@@ -3,7 +3,7 @@ MFD_FILTER(miditranspose)
 #ifdef MX_TTF
 
 	mflt:miditranspose
-	TTF_DEFAULTDEF("MIDI Chromatic Transpose")
+	TTF_DEFAULTDEF("MIDI Chromatic Transpose", "MIDI Transpose")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

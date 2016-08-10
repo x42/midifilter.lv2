@@ -3,7 +3,7 @@ MFD_FILTER(velocityscale)
 #ifdef MX_TTF
 
 	mflt:velocityscale
-	TTF_DEFAULTDEF("MIDI Velocity Adjust")
+	TTF_DEFAULTDEF("MIDI Velocity Adjust", "MIDI Vel. Adjust")
 	, TTF_IPORT(0, "channel", "Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

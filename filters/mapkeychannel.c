@@ -3,7 +3,7 @@ MFD_FILTER(mapkeychannel)
 #ifdef MX_TTF
 
 	mflt:mapkeychannel
-	TTF_DEFAULTDEF("MIDI Note Channel Map")
+	TTF_DEFAULTDEF("MIDI Note/Channel Map", "MIDI Key/Chn Map")
 	, TTF_IPORT( 0, "k0",  "C",  0, 16, 1, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT( 1, "k1",  "C#", 0, 16, 1, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT( 2, "k2",  "D",  0, 16, 1, PORTENUMZ("Off") DOC_CHANZ)

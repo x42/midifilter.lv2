@@ -3,7 +3,7 @@ MFD_FILTER(channelmap)
 #ifdef MX_TTF
 
 	mflt:channelmap
-	TTF_DEFAULTDEF("MIDI Channel Map")
+	TTF_DEFAULTDEF("MIDI Channel Map", "MIDI Chn Map")
 	, TTF_IPORT( 0, "chn1",  "Channel  1 to", 0, 16,  1, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT( 1, "chn2",  "Channel  2 to", 0, 16,  2, PORTENUMZ("Off") DOC_CHANZ)
 	, TTF_IPORT( 2, "chn3",  "Channel  3 to", 0, 16,  3, PORTENUMZ("Off") DOC_CHANZ)

@@ -3,7 +3,7 @@ MFD_FILTER(onechannelfilter)
 #ifdef MX_TTF
 
 	mflt:onechannelfilter
-	TTF_DEFAULTDEF("MIDI Simple Channel Filter")
+	TTF_DEFAULTDEF("MIDI Simple Channel Filter", "MIDI 1 Chn Flt.")
 	, TTF_IPORT(0, "channel", "Channel",  1, 16,  1, PORTENUM16
 			rdfs:comment "MIDI channel that can pass.")
 	; rdfs:comment "MIDI channel filter. Only data for selected channel shall pass. This filter only affects midi-data which is channel relevant (ie note-on/off, control and program changes, key and channel pressure and pitchbend). MIDI-SYSEX and Realtime message are always passed on. See also 'MIDI Channel Map' and 'MIDI Channel Filter' filters." ; 

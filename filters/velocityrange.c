@@ -3,7 +3,7 @@ MFD_FILTER(velocityrange)
 #ifdef MX_TTF
 
 	mflt:velocityrange
-	TTF_DEFAULTDEF("MIDI Velocity-Range Filter")
+	TTF_DEFAULTDEF("MIDI Velocity-Range Filter", "MIDI Vel. Flt.")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

@@ -19,7 +19,9 @@ targets=
 
 ifneq ($(MOD),)
   MODBRAND=mod:brand \"x42\";
+  GREPEXCL="^^^^"
 else
+  GREPEXCL=mod:label[^;]*;
   MODBRAND=
 endif
 
@@ -115,7 +117,7 @@ $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	cat $(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
 	gcc -E -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
-		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g;s/@MODBRAND@/$(MODBRAND)/' \
+		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g;s/@MODBRAND@/$(MODBRAND)/;s/$(GREPEXCL)//' \
 		| uniq \
 		>> $(BUILDDIR)$(LV2NAME).ttl
 

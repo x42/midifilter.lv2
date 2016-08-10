@@ -3,7 +3,7 @@ MFD_FILTER(mididup)
 #ifdef MX_TTF
 
 	mflt:mididup
-	TTF_DEFAULTDEF("MIDI Channel Unisono")
+	TTF_DEFAULTDEF("MIDI Channel Unisono", "MIDI Chn Unisono")
 	, TTF_IPORTINT(0, "chs", "Source Channel",  1, 16,  1)
 	, TTF_IPORTINT(1, "chd", "Duplicate to Channel", 1, 16, 2)
 	; rdfs:comment "Duplicate MIDI events from one channel to another."

@@ -3,7 +3,7 @@ MFD_FILTER(keyrange)
 #ifdef MX_TTF
 
 	mflt:keyrange
-	TTF_DEFAULTDEF("MIDI Key-Range Filter")
+	TTF_DEFAULTDEF("MIDI Key-Range Filter", "MIDI Key/Range")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

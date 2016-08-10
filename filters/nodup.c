@@ -3,7 +3,7 @@ MFD_FILTER(nodup)
 #ifdef MX_TTF
 
 	mflt:nodup
-	TTF_DEFAULTDEF("MIDI Duplicate Blocker")
+	TTF_DEFAULTDEF("MIDI Duplicate Blocker", "MIDI Dup. Block")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

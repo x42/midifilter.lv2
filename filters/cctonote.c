@@ -3,7 +3,7 @@ MFD_FILTER(cctonote)
 #ifdef MX_TTF
 
 	mflt:cctonote
-	TTF_DEFAULTDEF("MIDI CC2Note")
+	TTF_DEFAULTDEF("MIDI CC to Note", "MIDI CC to Note")
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16,  0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

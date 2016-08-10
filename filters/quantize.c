@@ -3,7 +3,7 @@ MFD_FILTER(quantize)
 #ifdef MX_TTF
 
 	mflt:quantize
-	TTF_DEF("MIDI Quantization", ; atom:supports time:Position)
+	TTF_DEF("MIDI Quantization", "MIDI Quantize", ; atom:supports time:Position)
 	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0, 1, 1,
 			lv2:scalePoint [ rdfs:label "Control Port (freerun)" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1 ] ;

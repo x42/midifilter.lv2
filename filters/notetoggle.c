@@ -3,7 +3,7 @@ MFD_FILTER(notetoggle)
 #ifdef MX_TTF
 
 	mflt:notetoggle
-	TTF_DEFAULTDEF("MIDI Note Toggle")
+	TTF_DEFAULTDEF("MIDI Note Toggle", "MIDI Note Toggle")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

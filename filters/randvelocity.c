@@ -3,7 +3,7 @@ MFD_FILTER(randvelocity)
 #ifdef MX_TTF
 
 	mflt:randvelocity
-	TTF_DEFAULTDEF("MIDI Velocity Randomization")
+	TTF_DEFAULTDEF("MIDI Velocity Randomization", "MIDI Rand Vel.")
 	, TTF_IPORT(0, "channel", "Filter Channel",  0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

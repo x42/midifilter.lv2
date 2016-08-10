@@ -3,7 +3,7 @@ MFD_FILTER(channelfilter)
 #ifdef MX_TTF
 
 	mflt:channelfilter
-	TTF_DEFAULTDEF("MIDI Channel Filter")
+	TTF_DEFAULTDEF("MIDI Channel Filter", "MIDI Chn Filter")
 	, TTF_IPORTTOGGLE( 0, "chn1",  "Channel  1", 1)
 	, TTF_IPORTTOGGLE( 1, "chn2",  "Channel  2", 1)
 	, TTF_IPORTTOGGLE( 2, "chn3",  "Channel  3", 1)

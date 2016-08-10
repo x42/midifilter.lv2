@@ -3,7 +3,7 @@ MFD_FILTER(sostenuto)
 #ifdef MX_TTF
 
 	mflt:sostenuto
-	TTF_DEFAULTDEF("MIDI Sostenuto")
+	TTF_DEFAULTDEF("MIDI Sostenuto", "MIDI Sostenuto")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

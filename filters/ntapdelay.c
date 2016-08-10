@@ -3,7 +3,7 @@ MFD_FILTER(ntapdelay)
 #ifdef MX_TTF
 
 	mflt:ntapdelay
-	TTF_DEF("MIDI N-Tap Delay", ; atom:supports time:Position)
+	TTF_DEF("MIDI N-Tap Delay", "MIDI N-Tap Delay", ; atom:supports time:Position)
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

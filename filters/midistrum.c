@@ -3,7 +3,7 @@ MFD_FILTER(midistrum)
 #ifdef MX_TTF
 
 	mflt:midistrum
-	TTF_DEF("MIDI Strum", ; atom:supports time:Position)
+	TTF_DEF("MIDI Strum", "MIDI Strum", ; atom:supports time:Position)
 	, TTF_IPORT( 0, "bpmsrc",  "BPM source", 0, 1, 1,
 			lv2:scalePoint [ rdfs:label "Control Port" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Plugin Host (if available)" ; rdf:value 1 ] ;

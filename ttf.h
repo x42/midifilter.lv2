@@ -24,9 +24,10 @@
 #define MAINTAINER <HTTPP/gareus.org/rgareus#me>
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
 
-#define TTF_DEF(DOAPNAME, INSUPPORTS) \
+#define TTF_DEF(DOAPNAME, MODNAME, INSUPPORTS) \
 	a lv2:Plugin, lv2:UtilityPlugin ; \
 	doap:name DOAPNAME ; \
+	mod:label MODNAME ; \
 	@MODBRAND@ \
 	@VERSION@ \
 	doap:license <HTTPP/usefulinc.com/doap/licenses/gpl> ; \
@@ -61,7 +62,7 @@
 		lv2:portProperty lv2:reportsLatency, lv2:integer, pprops:notOnGUI; \
 	]
 
-#define TTF_DEFAULTDEF(DOAPNAME) TTF_DEF(DOAPNAME,)
+#define TTF_DEFAULTDEF(DOAPNAME, MODNAME) TTF_DEF(DOAPNAME, MODNAME,)
 
 #define TTF_PORT(TYPE, IDX, SYM, DESC, VMIN, VMAX, VDFLT, ATTR) \
 	[ \

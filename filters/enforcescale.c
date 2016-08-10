@@ -3,7 +3,7 @@ MFD_FILTER(enforcescale)
 #ifdef MX_TTF
 
 	mflt:enforcescale
-	TTF_DEFAULTDEF("MIDI Enforce Scale")
+	TTF_DEFAULTDEF("MIDI Enforce Scale", "MIDI Force Scale")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)

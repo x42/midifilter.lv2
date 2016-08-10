@@ -3,7 +3,7 @@ MFD_FILTER(eventblocker)
 #ifdef MX_TTF
 
 	mflt:eventblocker
-	TTF_DEFAULTDEF("MIDI Event Filter")
+	TTF_DEFAULTDEF("MIDI Event Filter", "MIDI Event Flt.")
 	, TTF_IPORTTOGGLE( 0, "blkcc",   "Block Control Changes", 0)
 	, TTF_IPORTTOGGLE( 1, "blknote", "Block Notes", 0)
 	, TTF_IPORTTOGGLE( 2, "blkpc",   "Block Program Changes", 0)
