@@ -552,6 +552,7 @@
     bottom: 45px;
     left: 10px;
     right: 10px;
+    z-index: 45;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-footswitch,
