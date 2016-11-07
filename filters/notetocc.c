@@ -21,6 +21,7 @@ MFD_FILTER(notetocc)
 			lv2:portProperty lv2:integer; units:unit units:midiNote ;
 			rdfs:comment "only used in 'value = velocity' mode."
 			)
+	, TTF_IPORTTOGGLE(4, "nooff", "Ignore Note Off", 1)
 	; rdfs:comment "Convert MIDI note-on messages to control change messages."
 	.
 
@@ -79,7 +80,7 @@ filter_midi_notetocc(MidiFilter* self,
 			buf[2] = vel;
 			break;
 	}
-	if (mst == MIDI_NOTEON) {
+	if (mst == MIDI_NOTEON || (*(self->cfg[4])) <= 0) {
 		forge_midimessage(self, tme, buf, 3);
 	}
 }
