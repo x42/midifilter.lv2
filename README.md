@@ -3,7 +3,7 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 28 MIDI event filters have been implemented:
+So far 29 MIDI event filters have been implemented:
 
 *   CC2Note -- translate control-commands to note-on/off messages
 *   Channel Filter -- discard messages per channel
@@ -26,6 +26,7 @@ So far 28 MIDI event filters have been implemented:
 *   Note2CC -- convert MIDI note-on messages to control change messages
 *   NoteToggle -- toggle notes: play a note to turn it on, play it again to turn it off
 *   nTabDelay -- repeat notes N times (incl tempo-ramps -- eurotechno hell yeah)
+*   Simple 1 Channel Filter -- convenient MIDI channel filter
 *   Passthru -- no operation, just pass the MIDI event through (example plugin)
 *   Quantize -- live midi event quantization
 *   Velocity Randomizer -- randomly change velocity of note-on events
