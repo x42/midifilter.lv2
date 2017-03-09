@@ -7,11 +7,12 @@ MFD_FILTER(notetocc)
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 0,
+	, TTF_IPORT(1, "mode", "Operation Mode",  0, 4, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = velocity" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = key" ; rdf:value 1 ] ;
 			lv2:scalePoint [ rdfs:label "All keys, parameter = key, CC-value = velocity" ; rdf:value 2 ] ;
+			lv2:scalePoint [ rdfs:label "Toggle, parameter = key, CC-value = 127 note-on or 0 note-off" ; rdf:value 3 ] ;
 			rdfs:comment "")
 	, TTF_IPORT(2, "param", "CC Parameter", 0, 127, 0,
 			lv2:portProperty lv2:integer;
@@ -22,7 +23,7 @@ MFD_FILTER(notetocc)
 			rdfs:comment "only used in 'value = velocity' mode."
 			)
 	, TTF_IPORTTOGGLE(4, "nooff", "Ignore Note Off", 1)
-	; rdfs:comment "Convert MIDI note-on messages to control change messages."
+	; rdfs:comment "Convert only MIDI note-on messages to control change messages (ignored in toggle mode)."
 	.
 
 #elif defined MX_CODE
@@ -50,7 +51,7 @@ filter_midi_notetocc(MidiFilter* self,
 
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
-	const int mode = RAIL(floorf(*self->cfg[1]),0, 3);
+	const int mode = RAIL(floorf(*self->cfg[1]),0, 4);
 
 	const uint8_t param = midi_limit_val(floorf(*self->cfg[2]));
 	const uint8_t kfltr = midi_limit_val(floorf(*self->cfg[3]));
@@ -79,8 +80,16 @@ filter_midi_notetocc(MidiFilter* self,
 			buf[1] = key;
 			buf[2] = vel;
 			break;
+		case 3: // toggle, param <- note,  value <- 0 or 127 
+			buf[1] = key;
+            if (mst == MIDI_NOTEOFF) {
+                buf[2] = 0;
+            } else {
+                buf[2] = 127;
+            }
+            //no break
 	}
-	if (mst == MIDI_NOTEON || (*(self->cfg[4])) <= 0) {
+	if (mst == MIDI_NOTEON || (*(self->cfg[4])) <= 0 || mode == 3) {
 		forge_midimessage(self, tme, buf, 3);
 	}
 }
