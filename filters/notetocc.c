@@ -82,12 +82,12 @@ filter_midi_notetocc(MidiFilter* self,
 			break;
 		case 3: // toggle, param <- note,  value <- 0 or 127 
 			buf[1] = key;
-            if (mst == MIDI_NOTEOFF) {
-                buf[2] = 0;
-            } else {
-                buf[2] = 127;
-            }
-            //no break
+			if (mst == MIDI_NOTEOFF) {
+				buf[2] = 0;
+			} else {
+				buf[2] = 127;
+			}
+			//no break
 	}
 	if (mst == MIDI_NOTEON || (*(self->cfg[4])) <= 0 || mode == 3) {
 		forge_midimessage(self, tme, buf, 3);
