@@ -22,3 +22,8 @@
 	doap:maintainer <http://gareus.org/rgareus#me> ;
 	doap:name "Midi Filter Plugin Set" .
 
+# Temporarily include description of lv2:MIDIPlugin for backwards compatibility
+lv2:MIDIPlugin
+	a rdfs:Class ;
+	rdfs:subClassOf lv2:Plugin ;
+	rdfs:label "MIDI" .
