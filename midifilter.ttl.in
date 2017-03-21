@@ -21,4 +21,3 @@
 	a doap:Project ;
 	doap:maintainer <http://gareus.org/rgareus#me> ;
 	doap:name "Midi Filter Plugin Set" .
-

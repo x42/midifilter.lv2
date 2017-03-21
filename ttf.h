@@ -25,7 +25,7 @@
 #define MIDIEXTURI <HTTPP/lv2plug.in/ns/ext/midi#MidiEvent>
 
 #define TTF_DEF(DOAPNAME, MODNAME, INSUPPORTS) \
-	a lv2:Plugin, lv2:UtilityPlugin ; \
+	a lv2:Plugin, lv2:MIDIPlugin ; \
 	doap:name DOAPNAME ; \
 	mod:label MODNAME ; \
 	@MODBRAND@ \
