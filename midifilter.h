@@ -101,7 +101,7 @@ typedef struct _MidiFilter{
 	double   bar_beats;
 	double   beat_beats;
 	uint32_t pos_bbt;
-	long int pos_frame;
+	int64_t  pos_frame;
 	float    frames_per_second;
 
 	MidiEventQueue *memQ;
