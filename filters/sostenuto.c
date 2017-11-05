@@ -13,8 +13,9 @@ MFD_FILTER(sostenuto)
 			lv2:scalePoint [ rdfs:label "off" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "on" ; rdf:value 1 ] ;
 			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 2 ] ;
+			lv2:scalePoint [ rdfs:label "CC66" ; rdf:value 3 ] ;
 			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;
-			rdfs:comment "Mode of the sustain pedal. Fixed on/off (control parameter automation) or depending on MIDI CC 64.")
+			rdfs:comment "Mode of the sustain pedal. Fixed on (pedal pressed) or off (pedal released) for notes of all MIDI channels. The on/off state can alternatively be set by CC, in which case it's per MIDI-channel.")
 	; rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal. When the pedal is released, note-off messages that are queued will be sent immediately. The delay-time can be changed dynamically, changes do affects note-off messages that are still queued."
 	.
 
@@ -108,8 +109,10 @@ filter_midi_sostenuto(MidiFilter* self,
 	const uint8_t vel = buffer[2] & 0x7f;
 	uint8_t mst = buffer[0] & 0xf0;
 
-	/* pedal CC 64 -- TODO make CC (and theshold) configurable !? */
-	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64) {
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64 && pedal == 2) {
+		self->memI[16 + chn] = vel > 63 ? 1 : 0;
+	}
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 66 && pedal == 3) {
 		self->memI[16 + chn] = vel > 63 ? 1 : 0;
 	}
 
@@ -126,7 +129,8 @@ filter_midi_sostenuto(MidiFilter* self,
 		default:
 		case 0: state = 0; break;
 		case 1: state = 1; break;
-		case 2: state = self->memI[16 + chn]; break;
+		case 2: // no break, fallthrough
+		case 3: state = self->memI[16 + chn]; break;
 	}
 
 	if (mst == MIDI_NOTEON && vel ==0 ) {
