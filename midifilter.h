@@ -26,11 +26,15 @@
 #define SQUARE(a) ( (a) * (a) )
 #endif
 
+#ifndef ABSDIFF
+#define ABSDIFF(a,b) ( (a) > (b) ? ((a) - (b)) : ((b) - (a)) )
+#endif
+
 #define ROUND_PARTIAL_BEATS(X,Y) ( rint( (Y) * (X)) / (Y) - floor(rint( (Y) * (X)) / (Y)) )
 
-/* /monotonic/ sample count */
+/* /monotonic/sample count */
 #define MSC_MAX (1<<29)
-#define MSC_DIFF(NOW, THEN) ( abs((NOW) - (THEN)) < (MSC_MAX>>1) \
+#define MSC_DIFF(NOW, THEN) ( ABSDIFF(NOW, THEN) < (MSC_MAX>>1) \
 		? ( (NOW) - (THEN) ) \
 		: ( (NOW) > (THEN) ? ((NOW) - (THEN) - MSC_MAX) : (MSC_MAX - (THEN) + (NOW)) ) \
 		)
