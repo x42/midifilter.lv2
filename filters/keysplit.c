@@ -40,7 +40,7 @@ filter_midi_keysplit(MidiFilter* self,
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size != 3
-			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE)
+			|| !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF || mst == MIDI_POLYKEYPRESSURE || mst == MIDI_CONTROLCHANGE)
 			|| !(floor(*self->cfg[0]) == 0 || chs == chn)
 		 )
 	{
@@ -95,6 +95,14 @@ filter_midi_keysplit(MidiFilter* self,
 				buf[0] = mst | ch1;
 				buf[1] = midi_limit_val(key + transp1);
 			}
+			break;
+		case MIDI_CONTROLCHANGE:
+			buf[1] = buffer[1];
+			if (ch0 != ch1) {
+				buf[0] = mst | ch0;
+				forge_midimessage(self, tme, buf, size);
+			}
+			buf[0] = mst | ch1;
 			break;
 	}
 	forge_midimessage(self, tme, buf, size);
