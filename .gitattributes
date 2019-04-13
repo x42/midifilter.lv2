@@ -2,3 +2,4 @@
 .gitattributes export-ignore
 /makedoc.sh export-ignore
 /misc export-ignore
+/modgui export-ignore
