@@ -54,6 +54,37 @@ filter_cleanup_midistrum(MidiFilter* self)
 }
 
 static void
+filter_midistrum_enqueue(MidiFilter* self, uint8_t const* buf, int size, int tme)
+{
+	const int max_delay = self->memI[0];
+	const int roff = self->memI[1];
+	const int woff = self->memI[2];
+
+	if ((woff + 1) % max_delay == roff) {
+		return; // queue full
+	}
+
+	MidiEventQueue* qm = &(self->memQ[roff]);
+
+	for (int idx = woff; idx != roff;) {
+		/* move existing (later) events forward in the queue */
+		const int pidx = (idx > 0) ? (idx - 1) : (max_delay - 1);
+		memcpy (&(self->memQ[idx]), &(self->memQ[pidx]), sizeof (MidiEventQueue));
+
+		if (self->memQ[idx].size != 0 && self->memQ[idx].reltime <= tme) {
+			qm = &(self->memQ[idx]);
+			break;
+		}
+		idx = pidx;
+	}
+
+	memcpy(qm->buf, buf, size);
+	qm->size = size;
+	qm->reltime = tme;
+	self->memI[2] = (self->memI[2] + 1) % max_delay;
+}
+
+static void
 filter_midistrum_process(MidiFilter* self, int tme)
 {
 	int i;
@@ -67,7 +98,6 @@ filter_midistrum_process(MidiFilter* self, int tme)
 			return;
 		}
 	}
-
 
 	float bpm = (*self->cfg[1]);
 	if (*self->cfg[0] && (self->available_info & NFO_BPM)) {
@@ -108,7 +138,6 @@ filter_midistrum_process(MidiFilter* self, int tme)
 
 	int reltime = MSC_DIFF(self->memI[4], self->memI[3]);
 	int tdiff = strum_time / self->memI[5];
-
 
 	float spdcfg = -(*self->cfg[5]);
 	float velcfg = (*self->cfg[6]) / -112.0;
@@ -156,11 +185,9 @@ filter_midistrum_process(MidiFilter* self, int tme)
 			sfact = sfact ==0 ? 0 : 1.0 / sqrt(sfact);
 		}
 
-		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
-		memcpy(qm->buf, self->memS[nextup].buf, self->memS[nextup].size);
-		qm->size = self->memS[nextup].size;
-		qm->reltime = reltime + rint((float)(tdiff * i) * sfact);
-		self->memI[2] = (self->memI[2] + 1) % self->memI[0];
+		filter_midistrum_enqueue (self, self->memS[nextup].buf, self->memS[nextup].size,
+				reltime + rint((float)(tdiff * i) * sfact));
+
 		self->memS[nextup].size = 0; // mark as processed
 	}
 
@@ -202,6 +229,12 @@ filter_midi_midistrum(MidiFilter* self,
 	uint8_t mst = buffer[0] & 0xf0;
 
 	if (size > 3) {
+		/* This may result in out-of-order messages (!)
+		 *
+		 * However messages > 3 bytes (sysex) are not commonly sent to softsynths.
+		 * Furthermore, LV2 requires normalized MIDI (no running status),
+		 * so this should be safe.
+		 */
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
@@ -211,14 +244,7 @@ filter_midi_midistrum(MidiFilter* self,
 	}
 
 	if (size != 3 || !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF)) {
-		if ((self->memI[2] + 1) % self->memI[0] == self->memI[1]) {
-			return; // queue full
-		}
-		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
-		memcpy(qm->buf, buffer, size);
-		qm->size = size;
-		qm->reltime = tme;
-		self->memI[2] = (self->memI[2] + 1) % self->memI[0];
+		filter_midistrum_enqueue (self, buffer, size, tme);
 		return;
 	}
 
@@ -282,11 +308,7 @@ filter_midi_midistrum(MidiFilter* self,
 		const int delay = strum_time + max_collect;
 #endif
 		// TODO filter out ignored dups from (ignored note-on) above
-		MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
-		memcpy(qm->buf, buffer, size);
-		qm->size = size;
-		qm->reltime = tme + delay;
-		self->memI[2] = (self->memI[2] + 1) % self->memI[0];
+		filter_midistrum_enqueue(self, buffer, size, tme + delay);
 	}
 }
 
@@ -299,7 +321,6 @@ filter_preproc_midistrum(MidiFilter* self)
 static void
 filter_postproc_midistrum(MidiFilter* self)
 {
-	int i;
 	const int max_delay = self->memI[0];
 	const int roff = self->memI[1];
 	const int woff = self->memI[2];
@@ -308,45 +329,54 @@ filter_postproc_midistrum(MidiFilter* self)
 
 	filter_midistrum_process(self, n_samples);
 
-	for (i=0; i < max_delay; ++i) {
+	for (int i = 0; i < max_delay; ++i) {
 		const int off = (i + roff) % max_delay;
-		if (self->memQ[off].size > 0) {
-			if (self->memQ[off].reltime < n_samples) {
 
-				if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEON) {
-					const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
-					const uint8_t key = self->memQ[off].buf[1] & 0x7f;
-					self->memCS[chn][key]++;
-					if (self->memCS[chn][key] > 1) { // send a note-off first
-						uint8_t buf[3];
-						buf[0] = MIDI_NOTEOFF | chn;
-						buf[1] = key; buf[2] = 0;
-						forge_midimessage(self, self->memQ[off].reltime, buf, 3);
-					}
-					forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
-				}
-				else if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEOFF) {
-					const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
-					const uint8_t key = self->memQ[off].buf[1] & 0x7f;
-					if (self->memCS[chn][key] > 0) {
-						self->memCS[chn][key]--;
-						if (self->memCS[chn][key] == 0) {
-							forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
-						}
-					}
-				} else {
-					forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
-				}
+		if (off == woff) {
+			if (!skipped) { self->memI[1] = off; }
+			break;
+		}
 
-				self->memQ[off].size = 0;
-				if (!skipped) self->memI[1] = (self->memI[1] + 1) % max_delay;
-			} else {
-				self->memQ[off].reltime -= n_samples;
-				skipped = 1;
+		if (self->memQ[off].size == 0) {
+			if (!skipped) { self->memI[1] = off; }
+			continue;
+		}
+
+		if (self->memQ[off].reltime >= n_samples) {
+			self->memQ[off].reltime -= n_samples;
+			skipped = 1;
+			continue;
+		}
+
+		assert (!skipped);
+
+		if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEON) {
+			const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
+			const uint8_t key = self->memQ[off].buf[1] & 0x7f;
+			self->memCS[chn][key]++;
+			if (self->memCS[chn][key] > 1) { // send a note-off first
+				uint8_t buf[3];
+				buf[0] = MIDI_NOTEOFF | chn;
+				buf[1] = key; buf[2] = 0;
+				forge_midimessage(self, self->memQ[off].reltime, buf, 3);
 			}
-		} else if (!skipped) self->memI[1] = off;
+			forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+		}
+		else if (self->memQ[off].size == 3 && (self->memQ[off].buf[0] & 0xf0) == MIDI_NOTEOFF) {
+			const uint8_t chn = self->memQ[off].buf[0] & 0x0f;
+			const uint8_t key = self->memQ[off].buf[1] & 0x7f;
+			if (self->memCS[chn][key] > 0) {
+				self->memCS[chn][key]--;
+				if (self->memCS[chn][key] == 0) {
+					forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+				}
+			}
+		} else {
+			forge_midimessage(self, self->memQ[off].reltime, self->memQ[off].buf, self->memQ[off].size);
+		}
 
-		if (off == woff) break;
+		self->memQ[off].size = 0;
+		self->memI[1] = off;
 	}
 
 	self->memI[3] = (self->memI[3] + n_samples)%MSC_MAX;
