@@ -8,6 +8,7 @@ So far 29 MIDI event filters have been implemented:
 *   CC2Note -- translate control-commands to note-on/off messages
 *   Channel Filter -- discard messages per channel
 *   Channel Map -- map any MIDI-channel to another MIDI-channel
+*   Choke Filter -- trigger note-off events, create exclusive note-groups
 *   Enforce Scale -- force midi notes on given musical scale
 *   Eventblocker -- notch style message filter. Suppress specific messages
 *   Keyrange -- discard notes-on/off events outside a given range
