@@ -46,11 +46,11 @@ void filter_midi_chokefilter(MidiFilter* self,
 	}
 
 	bool block = false;
-	const uint8_t chf = midi_limit_chn(floorf(*self->cfg[0]) -1);
+	const int8_t chf = RAIL(floorf(*self->cfg[0]) -1, -1, 15);
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t mst = buffer[0] & 0xf0;
 
-	if ((chf != 0 && chf != chn) || (mst != MIDI_NOTEON && mst != MIDI_NOTEOFF)) {
+	if ((chf != -1 && chf != chn) || (mst != MIDI_NOTEON && mst != MIDI_NOTEOFF)) {
 		forge_midimessage(self, tme, buffer, size);
 		return;
 	}
