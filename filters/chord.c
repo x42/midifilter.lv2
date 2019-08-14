@@ -10,16 +10,16 @@ MFD_FILTER(midichord)
 	, TTF_IPORT(1, "scale", "Scale",  0, 11,  0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "C Major"  ; rdf:value 0 ] ;
-			lv2:scalePoint [ rdfs:label "C# Major" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "C#/Db Major" ; rdf:value 1 ] ;
 			lv2:scalePoint [ rdfs:label "D Major"  ; rdf:value 2 ] ;
-			lv2:scalePoint [ rdfs:label "D# Major" ; rdf:value 3 ] ;
+			lv2:scalePoint [ rdfs:label "D#/Eb Major" ; rdf:value 3 ] ;
 			lv2:scalePoint [ rdfs:label "E Major"  ; rdf:value 4 ] ;
 			lv2:scalePoint [ rdfs:label "F Major"  ; rdf:value 5 ] ;
-			lv2:scalePoint [ rdfs:label "F# Major" ; rdf:value 6 ] ;
+			lv2:scalePoint [ rdfs:label "F#/Gb Major" ; rdf:value 6 ] ;
 			lv2:scalePoint [ rdfs:label "G Major"  ; rdf:value 7 ] ;
-			lv2:scalePoint [ rdfs:label "G# Major" ; rdf:value 8 ] ;
+			lv2:scalePoint [ rdfs:label "G#/Ab Major" ; rdf:value 8 ] ;
 			lv2:scalePoint [ rdfs:label "A Major"  ; rdf:value 9 ] ;
-			lv2:scalePoint [ rdfs:label "A# Major" ; rdf:value 10 ] ;
+			lv2:scalePoint [ rdfs:label "A#/Bb Major" ; rdf:value 10 ] ;
 			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11 ] ;
 			rdfs:comment "Scale for the Chords."
 			)
