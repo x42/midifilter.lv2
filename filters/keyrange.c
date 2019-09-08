@@ -32,7 +32,6 @@ filter_midi_keyrange(MidiFilter* self,
 		uint32_t size)
 {
 	const int mode = RAIL(floorf(*self->cfg[3]),0, 2);
-	fprintf (stderr, "MODE: %d\n", mode);
 	const uint8_t chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const uint8_t chn = buffer[0] & 0x0f;
 	uint8_t mst = buffer[0] & 0xf0;
