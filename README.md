@@ -35,6 +35,7 @@ So far 29 MIDI event filters have been implemented:
 *   Sostenuto -- delay note-off messages, emulate a piano sostenuto pedal
 *   Velocity Range -- filter MIDI note events according to velocity
 *   Velocity Scale -- modify note velocity by constant factor and offset
+*   Velocity Gamma -- modify note velocity curve by a gamma exponent
 
 Install
 -------
