@@ -1,0 +1,79 @@
+<div class="mod-pedal x42-midifilter{{{cns}}} x42-midi-chokefilter">
+    <div mod-role="drag-handle" class="mod-drag-handle"></div>
+    <div class="x42-brand"><h1 title="Brought to you by x42.">x42</h1></div>
+    <div class="x42-plugin-name"><h1>MIDI Choke Filter</h1></div>
+
+    <div class="mod-light on" mod-role="bypass-light"></div>
+    <div class="mod-footswitch" mod-role="bypass"></div>
+
+    <div class="mod-enum-top-group clearfix">
+        <div class="mod-control-group mod-enumerated-group bottom float" style="width:100px; margin-left:60px !important">
+            <span class="mod-knob-title">Midi Channel</span>
+            <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="channelf" mod-widget="custom-select">
+                <div mod-role="input-control-value" mod-port-symbol="channelf" class="mod-enumerated-selected"></div>
+                <div class="mod-enumerated-list">
+                    <div mod-role="enumeration-option" mod-port-value="0">Any</div>
+                    <div mod-role="enumeration-option" mod-port-value="1">1</div>
+                    <div mod-role="enumeration-option" mod-port-value="2">2</div>
+                    <div mod-role="enumeration-option" mod-port-value="3">3</div>
+                    <div mod-role="enumeration-option" mod-port-value="4">4</div>
+                    <div mod-role="enumeration-option" mod-port-value="5">5</div>
+                    <div mod-role="enumeration-option" mod-port-value="6">6</div>
+                    <div mod-role="enumeration-option" mod-port-value="7">7</div>
+                    <div mod-role="enumeration-option" mod-port-value="8">8</div>
+                    <div mod-role="enumeration-option" mod-port-value="9">9</div>
+                    <div mod-role="enumeration-option" mod-port-value="10">10</div>
+                    <div mod-role="enumeration-option" mod-port-value="11">11</div>
+                    <div mod-role="enumeration-option" mod-port-value="12">12</div>
+                    <div mod-role="enumeration-option" mod-port-value="13">13</div>
+                    <div mod-role="enumeration-option" mod-port-value="14">14</div>
+                    <div mod-role="enumeration-option" mod-port-value="15">15</div>
+                    <div mod-role="enumeration-option" mod-port-value="16">16</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mod-control-group mod-enumerated-group bottom float" style="width:230px">
+            <span class="mod-knob-title">Release Velocity</span>
+            <div class="mod-enumerated" mod-role="input-control-port" mod-port-symbol="rvmode" mod-widget="custom-select">
+                <div mod-role="input-control-value" mod-port-symbol="rvmode" class="mod-enumerated-selected"></div>
+                <div class="mod-enumerated-list">
+                    <div mod-role="enumeration-option" mod-port-value="0">Set to zero</div>
+                    <div mod-role="enumeration-option" mod-port-value="1">From choke note-on velocity</div>
+                    <div mod-role="enumeration-option" mod-port-value="2">From trigger note-on velocity</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mod-control-group top clearfix">
+        <div class="mod-knob" title="Lowest note of the note range, which triggers the choke (inclusive)">
+            <span class="mod-knob-title">Low Trigger Note</span>
+            <div class="mod-knob-n128-image" mod-role="input-control-port" mod-port-symbol="triggerlo"></div>
+        </div>
+        <div class="mod-knob" title="Highest note of the note range, which triggers the choke (inclusive)">
+            <span class="mod-knob-title">High Trigger Note</span>
+            <div class="mod-knob-n128-image" mod-role="input-control-port" mod-port-symbol="triggerhi"></div>
+        </div>
+        <div class="mod-knob" title="Note, which is choked when a trigger note is received.">
+            <span class="mod-knob-title">Choke Note</span>
+            <div class="mod-knob-n128-image" mod-role="input-control-port" mod-port-symbol="choke"></div>
+        </div>
+    </div>
+
+
+    <div class="mod-pedal-input">
+        {{#effect.ports.midi.input}}
+        <div class="mod-input mod-input-disconnected" title="{{name}}" mod-role="input-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-input-image"></div>
+        </div>
+        {{/effect.ports.midi.input}}
+    </div>
+    <div class="mod-pedal-output">
+        {{#effect.ports.midi.output}}
+        <div class="mod-output mod-output-disconnected" title="{{name}}" mod-role="output-midi-port" mod-port-symbol="{{symbol}}">
+            <div class="mod-pedal-output-image"></div>
+        </div>
+        {{/effect.ports.midi.output}}
+    </div>
+</div>

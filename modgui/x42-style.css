@@ -450,6 +450,7 @@
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-velocityscale .mod-light,
+.x42-midifilter{{{cns}}}.x42-midi-chokefilter .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-velocitygamma .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-strum .mod-light,
 .x42-midifilter{{{cns}}}.x42-midi-onechannelfilter .mod-light,
@@ -507,6 +508,7 @@
     left: 85px;
 }
 
+.x42-midifilter{{{cns}}}.x42-midi-chokefilter .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-ntapdelay .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-channelmap .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-notetocc .mod-footswitch,
@@ -780,6 +782,7 @@
 
 /* --- */
 
+.x42-midifilter{{{cns}}}.x42-midi-chokefilter,
 .x42-midifilter{{{cns}}}.x42-midi-scalecc {
     background-size:510px 240px;
     height:240px;
