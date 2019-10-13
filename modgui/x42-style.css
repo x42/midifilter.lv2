@@ -505,7 +505,7 @@
 .x42-midifilter{{{cns}}}.x42-midi-velocitygamma .mod-footswitch,
 .x42-midifilter{{{cns}}}.x42-midi-quantize .mod-footswitch {
     bottom: 35px;
-    left: 85px;
+    left: 45px;
 }
 
 .x42-midifilter{{{cns}}}.x42-midi-chokefilter .mod-footswitch,
