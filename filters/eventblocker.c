@@ -10,8 +10,8 @@ MFD_FILTER(eventblocker)
 	, TTF_IPORTTOGGLE( 3, "blkpp",   "Block Polykey-Pressure", 0)
 	, TTF_IPORTTOGGLE( 4, "blkcp",   "Block Channel-Pressure", 0)
 	, TTF_IPORTTOGGLE( 5, "blkpb",   "Block Pitch Bend", 0)
-	, TTF_IPORTTOGGLE( 6, "blksx",   "Block Sysex/RT messages", 0)
-	, TTF_IPORTTOGGLE( 7, "blkcm",   "Block custom message", 0)
+	, TTF_IPORTTOGGLE( 6, "blksx",   "Block System Messages", 0)
+	, TTF_IPORTTOGGLE( 7, "blkcm",   "Block Custom Message", 0)
 	, TTF_IPORT(8, "cmt", "Custom Message Type",  0, 6, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Note Off (0x8x)"  ; rdf:value 0 ] ;
