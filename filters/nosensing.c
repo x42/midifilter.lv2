@@ -17,7 +17,7 @@ filter_midi_noactivesensing(MidiFilter* self,
 		const uint8_t* const buffer,
 		uint32_t size)
 {
-	const int mst = buffer[0] & 0xf0;
+	const int mst = buffer[0];
 	if (mst == MIDI_ACTIVESENSING) return;
 	forge_midimessage(self, tme, buffer, size);
 }
