@@ -30,15 +30,17 @@ MFD_FILTER(midichord)
 			rdfs:comment "When enabled, parameter changes apply to new chords only."
 			)
 	, TTF_IPORTTOGGLE( 3, "c1",  "prime",  1)
-	, TTF_IPORTTOGGLE( 4, "c3",  "3rd",    1)
-	, TTF_IPORTTOGGLE( 5, "c5",  "5th",    1)
-	, TTF_IPORTTOGGLE( 6, "c6",  "6th",    0)
-	, TTF_IPORTTOGGLE( 7, "c7",  "7th",    0)
-	, TTF_IPORTTOGGLE( 8, "c8",  "octave", 1)
-	, TTF_IPORTTOGGLE( 9, "c9",  "9th",    0)
-	, TTF_IPORTTOGGLE(10, "c11", "11th",   0)
-	, TTF_IPORTTOGGLE(11, "c13", "13th",   0)
-	, TTF_IPORTTOGGLE(12, "_8",  "bass",   0)
+	, TTF_IPORTTOGGLE( 4, "c2",  "2nd",    0)
+	, TTF_IPORTTOGGLE( 5, "c3",  "3rd",    1)
+	, TTF_IPORTTOGGLE( 6, "c4",  "4th",    0)
+	, TTF_IPORTTOGGLE( 7, "c5",  "5th",    1)
+	, TTF_IPORTTOGGLE( 8, "c6",  "6th",    0)
+	, TTF_IPORTTOGGLE( 9, "c7",  "7th",    0)
+	, TTF_IPORTTOGGLE(10, "c8",  "octave", 1)
+	, TTF_IPORTTOGGLE(11, "c9",  "9th",    0)
+	, TTF_IPORTTOGGLE(12, "c11", "11th",   0)
+	, TTF_IPORTTOGGLE(13, "c13", "13th",   0)
+	, TTF_IPORTTOGGLE(14, "_8",  "bass",   0)
 	; rdfs:comment "Harmonizer - make chords from single (fundamental) note in a given musical scale. The scale as well as intervals can be automated freely (currently held chords will change). Note-ons are latched, for multiple/combined chords only single note-on/off will be triggered for the duration of the combined chords. If a off-scale note is given, it will be passed through - no chord is allocated. Note: Combine this effect with the 'MIDI Enforce Scale' filter to weed them out." ;
 	.
 
@@ -52,20 +54,20 @@ static inline int filter_midichord_isonscale(int base) {
 }
 
 static inline int filter_midichord_halftoneoffset(int base, int interval) {
-	const short chord_scale[12][10] = {
-	/* 1  3  5  6   7  OC   9  11  13   BS */
-		{0, 4, 7, 9, 11, 12, 14, 17, 21, -12 }, // I
-		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-		{0, 3, 7, 9, 10, 12, 14, 17, 21, -12 }, // II
-		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-		{0, 3, 7, 8, 10, 12, 13, 17, 20, -12 }, // III
-		{0, 4, 7, 9, 11, 12, 14, 18, 21, -12 }, // IV
-		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-		{0, 4, 7, 9, 10, 12, 14, 17, 21, -12 }, // V
-		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-		{0, 3, 7, 8, 10, 12, 14, 17, 20, -12 }, // VI
-		{0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
-		{0, 3, 6, 8, 10, 12, 13, 16, 19, -12 }, // VII
+	const short chord_scale[12][12] = {
+	/* 1  2  3  4  5  6   7  OC   9  11  13   BS */
+		{0, 2, 4, 5, 7, 9, 11, 12, 14, 17, 21, -12 }, // I
+		{0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 2, 3, 5, 7, 9, 10, 12, 14, 17, 21, -12 }, // II
+		{0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 1, 3, 5, 7, 8, 10, 12, 13, 17, 20, -12 }, // III
+		{0, 2, 4, 6, 7, 9, 11, 12, 14, 18, 21, -12 }, // IV
+		{0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 2, 4, 5, 7, 9, 10, 12, 14, 17, 21, -12 }, // V
+		{0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 2, 3, 5, 7, 8, 10, 12, 14, 17, 20, -12 }, // VI
+		{0, 0, 0, 0, 0, 0,  0,  0,  0,  0,  0,   0 },
+		{0, 1, 3, 5, 6, 8, 10, 12, 13, 16, 19, -12 }, // VII
 	};
 	return chord_scale[base][interval];
 }
@@ -122,7 +124,7 @@ filter_midi_midichord(MidiFilter* self,
 	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
 
 	int chord = 0;
-	for (i=0; i < 10 ; ++i) {
+	for (i=0; i < 12 ; ++i) {
 		if ((*self->cfg[i+3]) > 0) chord |= 1<<i;
 	}
 
@@ -154,14 +156,14 @@ filter_midi_midichord(MidiFilter* self,
 		case MIDI_NOTEON:
 			self->memCI[chn][key] = chord;
 			self->memCM[chn][key] = vel;
-			for (i=0; i < 10 ; ++i) {
+			for (i=0; i < 12 ; ++i) {
 				if (!(chord & (1<<i))) continue;
 				filter_midichord_noteon(self, tme, chn, key + filter_midichord_halftoneoffset(tonika, i), vel);
 			}
 			break;
 		case MIDI_NOTEOFF:
 			chord = self->memCI[chn][key];
-			for (i=0; i < 10 ; ++i) {
+			for (i=0; i < 12 ; ++i) {
 				if (!(chord & (1<<i))) continue;
 				filter_midichord_noteoff(self, tme, chn, key + filter_midichord_halftoneoffset(tonika, i), vel);
 			}
@@ -169,7 +171,7 @@ filter_midi_midichord(MidiFilter* self,
 			self->memCM[chn][key] = 0;
 			break;
 		case MIDI_POLYKEYPRESSURE:
-			for (i=0; i < 10 ; ++i) {
+			for (i=0; i < 12 ; ++i) {
 				uint8_t buf[3];
 				if (!(chord & (1<<i))) continue;
 				int note = key + filter_midichord_halftoneoffset(tonika, i);
@@ -189,7 +191,7 @@ static void filter_preproc_midichord(MidiFilter* self) {
 	int identical_cfg = 1;
 	int newchord = 0;
 
-	for (i=0; i < 10; ++i) {
+	for (i=0; i < 12; ++i) {
 		if ((*self->cfg[i+3]) != 0) newchord |= 1<<i;
 		if (floorf(self->lcfg[i+3]) != floorf(*self->cfg[i+3])) {
 			identical_cfg = 0;
@@ -220,7 +222,7 @@ static void filter_preproc_midichord(MidiFilter* self) {
 				chord = 1;
 			}
 
-			for (i=0; i < 10 ; ++i) {
+			for (i=0; i < 12 ; ++i) {
 
 				if ((chord & (1<<i)) == (oldchord & (1<<i))
 						&& !(chord & (1<<i))) {
