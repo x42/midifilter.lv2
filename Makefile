@@ -91,7 +91,7 @@ filters.c: $(FILTERS)
 		done;
 	echo >> filters.c;
 
-$(BUILDDIR)manifest.ttl: manifest.ttl.in ttf.h filters.c
+$(BUILDDIR)manifest.ttl: manifest.ttl.in ttf.h filters.c presets/*.ttl
 	@mkdir -p $(BUILDDIR)
 	cat manifest.ttl.in > $(BUILDDIR)manifest.ttl
 	gcc -E -I. -DMX_MANIFEST filters.c \
@@ -106,7 +106,7 @@ ifneq ($(MOD),)
 		| uniq \
 		>> $(BUILDDIR)manifest.ttl
 endif
-	for file in presets/*.ttl; do head -n 3 $$file >> $(BUILDDIR)manifest.ttl; echo "rdfs:seeAlso <presets.ttl> ." >> $(BUILDDIR)manifest.ttl; done
+	for file in presets/*.ttl; do grep -A 3 "mfltpreset:" $$file | sed 's/ ;/;\n\trdfs:seeAlso <presets.ttl> ./g;s/^---*//g' >> $(BUILDDIR)manifest.ttl; done
 
 $(BUILDDIR)presets.ttl: presets.ttl.in presets/*.ttl
 	@mkdir -p $(BUILDDIR)

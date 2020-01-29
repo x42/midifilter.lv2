@@ -1,5 +1,5 @@
 mfltpreset:invertcc
-	a pset:Preset ;
+	a pset:Preset;
 	lv2:appliesTo mfltplugin:scalecc ;
 
 	rdfs:label "Invert CC Value" ;
