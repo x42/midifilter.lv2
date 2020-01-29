@@ -23,16 +23,22 @@ MFD_FILTER(midichord)
 			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11 ] ;
 			rdfs:comment "Scale for the Chords."
 			)
-	, TTF_IPORTTOGGLE( 2, "c1",  "prime",  1)
-	, TTF_IPORTTOGGLE( 3, "c3",  "3rd",    1)
-	, TTF_IPORTTOGGLE( 4, "c5",  "5th",    1)
-	, TTF_IPORTTOGGLE( 5, "c6",  "6th",    0)
-	, TTF_IPORTTOGGLE( 6, "c7",  "7th",    0)
-	, TTF_IPORTTOGGLE( 7, "c8",  "octave", 1)
-	, TTF_IPORTTOGGLE( 8, "c9",  "9th",    0)
-	, TTF_IPORTTOGGLE( 9, "c11", "11th",   0)
-	, TTF_IPORTTOGGLE(10, "c13", "13th",   0)
-	, TTF_IPORTTOGGLE(11, "_8",  "bass",   0)
+	, TTF_IPORT(2, "hold", "Hold Chord",  0, 11,  0,
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "Off"  ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "On" ; rdf:value 1 ] ;
+			rdfs:comment "When enabled, parameter changes apply to new chords only."
+			)
+	, TTF_IPORTTOGGLE( 3, "c1",  "prime",  1)
+	, TTF_IPORTTOGGLE( 4, "c3",  "3rd",    1)
+	, TTF_IPORTTOGGLE( 5, "c5",  "5th",    1)
+	, TTF_IPORTTOGGLE( 6, "c6",  "6th",    0)
+	, TTF_IPORTTOGGLE( 7, "c7",  "7th",    0)
+	, TTF_IPORTTOGGLE( 8, "c8",  "octave", 1)
+	, TTF_IPORTTOGGLE( 9, "c9",  "9th",    0)
+	, TTF_IPORTTOGGLE(10, "c11", "11th",   0)
+	, TTF_IPORTTOGGLE(11, "c13", "13th",   0)
+	, TTF_IPORTTOGGLE(12, "_8",  "bass",   0)
 	; rdfs:comment "Harmonizer - make chords from single (fundamental) note in a given musical scale. The scale as well as intervals can be automated freely (currently held chords will change). Note-ons are latched, for multiple/combined chords only single note-on/off will be triggered for the duration of the combined chords. If a off-scale note is given, it will be passed through - no chord is allocated. Note: Combine this effect with the 'MIDI Enforce Scale' filter to weed them out." ;
 	.
 
@@ -117,7 +123,7 @@ filter_midi_midichord(MidiFilter* self,
 
 	int chord = 0;
 	for (i=0; i < 10 ; ++i) {
-		if ((*self->cfg[i+2]) > 0) chord |= 1<<i;
+		if ((*self->cfg[i+3]) > 0) chord |= 1<<i;
 	}
 
 	const uint8_t chn = buffer[0] & 0x0f;
@@ -184,8 +190,8 @@ static void filter_preproc_midichord(MidiFilter* self) {
 	int newchord = 0;
 
 	for (i=0; i < 10; ++i) {
-		if ((*self->cfg[i+2]) != 0) newchord |= 1<<i;
-		if (floorf(self->lcfg[i+2]) != floorf(*self->cfg[i+2])) {
+		if ((*self->cfg[i+3]) != 0) newchord |= 1<<i;
+		if (floorf(self->lcfg[i+3]) != floorf(*self->cfg[i+3])) {
 			identical_cfg = 0;
 		}
 	}
@@ -193,6 +199,7 @@ static void filter_preproc_midichord(MidiFilter* self) {
 			identical_cfg = 0;
 	}
 	if (identical_cfg) return;
+	if (floorf(*self->cfg[2])) return;
 
 	const int newscale = RAIL(floorf(*self->cfg[1]), 0, 11);
 	const int oldscale = RAIL(floorf(self->lcfg[1]), 0, 11);
