@@ -106,7 +106,7 @@ ifneq ($(MOD),)
 		| uniq \
 		>> $(BUILDDIR)manifest.ttl
 endif
-	for file in presets/*.ttl; do grep -A 3 "mfltpreset:" $$file | sed 's/ ;/;\n\trdfs:seeAlso <presets.ttl> ./g;s/^---*//g' >> $(BUILDDIR)manifest.ttl; done
+	for file in presets/*.ttl; do grep -A 3 "mfltpreset:" $$file | sed 's/ ;/; rdfs:seeAlso <presets.ttl> ./g;s/^---*//g' >> $(BUILDDIR)manifest.ttl; done
 
 $(BUILDDIR)presets.ttl: presets.ttl.in presets/*.ttl
 	@mkdir -p $(BUILDDIR)
