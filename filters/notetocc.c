@@ -7,7 +7,7 @@ MFD_FILTER(notetocc)
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "mode", "Operation Mode",  0, 4, 0,
+	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = velocity" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "Fixed parameter, CC-value = key" ; rdf:value 1 ] ;
@@ -51,7 +51,7 @@ filter_midi_notetocc(MidiFilter* self,
 
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
-	const int mode = RAIL(floorf(*self->cfg[1]),0, 4);
+	const int mode = RAIL(floorf(*self->cfg[1]),0, 3);
 
 	const uint8_t param = midi_limit_val(floorf(*self->cfg[2]));
 	const uint8_t kfltr = midi_limit_val(floorf(*self->cfg[3]));
