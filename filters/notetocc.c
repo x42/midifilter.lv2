@@ -14,7 +14,7 @@ MFD_FILTER(notetocc)
 			lv2:scalePoint [ rdfs:label "All keys, parameter = key, CC-value = velocity" ; rdf:value 2 ] ;
 			lv2:scalePoint [ rdfs:label "Toggle, parameter = key, CC-value = 127 note-on or 0 note-off" ; rdf:value 3 ] ;
 			rdfs:comment "")
-	, TTF_IPORT(2, "param", "CC Parameter", 0, 127, 0,
+	, TTF_IPORT(2, "param", "CC Parameter", 0, 127, 1,
 			lv2:portProperty lv2:integer;
 			rdfs:comment "unused in 'all keys' mode."
 			)
