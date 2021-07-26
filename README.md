@@ -25,6 +25,7 @@ So far 29 MIDI event filters have been implemented:
 *   NoSensing -- strip MIDI Active-Sensing events
 *   NoDup -- MIDI duplicate blocker. Filter out overlapping note on/off and duplicate messages
 *   Note2CC -- convert MIDI note-on messages to control change messages
+*   Note2PC -- convert MIDI note messages to patch/program change messages
 *   NoteToggle -- toggle notes: play a note to turn it on, play it again to turn it off
 *   nTabDelay -- repeat notes N times (incl tempo-ramps -- eurotechno hell yeah)
 *   Simple 1 Channel Filter -- convenient MIDI channel filter
