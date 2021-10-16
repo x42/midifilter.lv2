@@ -94,13 +94,13 @@ filters.c: $(FILTERS)
 $(BUILDDIR)manifest.ttl: manifest.ttl.in ttf.h filters.c presets/*.ttl
 	@mkdir -p $(BUILDDIR)
 	cat manifest.ttl.in > $(BUILDDIR)manifest.ttl
-	gcc -E -I. -DMX_MANIFEST filters.c \
+	$(CPP) -I. -DMX_MANIFEST filters.c \
 		| grep -v '^\#' \
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/@LV2NAME@/$(LV2NAME)/g;s/@LIB_EXT@/$(LIB_EXT)/g" \
 		| uniq \
 		>> $(BUILDDIR)manifest.ttl
 ifneq ($(MOD),)
-	gcc -E -I. -DMX_MODGUI filters.c \
+	$(CPP) -I. -DMX_MODGUI filters.c \
 		| grep -v '^\#' \
 		| sed "s/HTTPP/http:\//g;s/HASH/#/g;s/_DASH_/-/g;s/_DOT_/./g;" \
 		| uniq \
@@ -116,7 +116,7 @@ $(BUILDDIR)presets.ttl: presets.ttl.in presets/*.ttl
 $(BUILDDIR)$(LV2NAME).ttl: $(LV2NAME).ttl.in ttf.h filters.c
 	@mkdir -p $(BUILDDIR)
 	cat $(LV2NAME).ttl.in > $(BUILDDIR)$(LV2NAME).ttl
-	gcc -E -I. -DMX_TTF filters.c \
+	$(CPP) -I. -DMX_TTF filters.c \
 		| grep -v '^\#' \
 		| sed 's/HTTPP/http:\//g;s/@VERSION@/lv2:microVersion $(LV2MIC) ;lv2:minorVersion $(LV2MIN) ;/g;s/@MODBRAND@/$(MODBRAND)/;s/$(GREPEXCL)//' \
 		| uniq \
