@@ -7,22 +7,6 @@ MFD_FILTER(enforcescale)
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "scale", "Scale",  0, 11, 0,
-			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
-			lv2:scalePoint [ rdfs:label "C Major"  ; rdf:value 0 ] ;
-			lv2:scalePoint [ rdfs:label "C# Major" ; rdf:value 1 ] ;
-			lv2:scalePoint [ rdfs:label "D Major"  ; rdf:value 2 ] ;
-			lv2:scalePoint [ rdfs:label "D# Major" ; rdf:value 3 ] ;
-			lv2:scalePoint [ rdfs:label "E Major"  ; rdf:value 4 ] ;
-			lv2:scalePoint [ rdfs:label "F Major"  ; rdf:value 5 ] ;
-			lv2:scalePoint [ rdfs:label "F# Major" ; rdf:value 6 ] ;
-			lv2:scalePoint [ rdfs:label "G Major"  ; rdf:value 7 ] ;
-			lv2:scalePoint [ rdfs:label "G# Major" ; rdf:value 8 ] ;
-			lv2:scalePoint [ rdfs:label "A Major"  ; rdf:value 9 ] ;
-			lv2:scalePoint [ rdfs:label "A# Major" ; rdf:value 10 ] ;
-			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11 ] ;
-			rdfs:comment "Limit note-on/off messages to this scale."
-			)
 	, TTF_IPORT(2, "mode", "Mode",  0, 2, 0, \
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Discard"  ; rdf:value 0 ] ;
@@ -30,17 +14,62 @@ MFD_FILTER(enforcescale)
 			lv2:scalePoint [ rdfs:label "Always up"  ; rdf:value 2 ] ;
 			rdfs:comment "Behaviour towards of off-key notes."
 			)
+	, TTF_IPORT(1, "scale", "Scale",  0, 11, 0,
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "C"  ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "C#" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "D"  ; rdf:value 2 ] ;
+			lv2:scalePoint [ rdfs:label "D#" ; rdf:value 3 ] ;
+			lv2:scalePoint [ rdfs:label "E"  ; rdf:value 4 ] ;
+			lv2:scalePoint [ rdfs:label "F"  ; rdf:value 5 ] ;
+			lv2:scalePoint [ rdfs:label "F#" ; rdf:value 6 ] ;
+			lv2:scalePoint [ rdfs:label "G"  ; rdf:value 7 ] ;
+			lv2:scalePoint [ rdfs:label "G#" ; rdf:value 8 ] ;
+			lv2:scalePoint [ rdfs:label "A"  ; rdf:value 9 ] ;
+			lv2:scalePoint [ rdfs:label "A#" ; rdf:value 10 ] ;
+			lv2:scalePoint [ rdfs:label "B"  ; rdf:value 11 ] ;
+			rdfs:comment "Limit note-on/off messages to this scale."
+			)
+    , TTF_IPORT(3, "scaleMode", "ScaleMode",  0, 6, 0, \
+			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
+			lv2:scalePoint [ rdfs:label "Ionian/Major"  ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "Aeolian/Minor" ; rdf:value 1 ] ;
+			lv2:scalePoint [ rdfs:label "Dorian"  ; rdf:value 2 ] ;
+			lv2:scalePoint [ rdfs:label "Phrygian"  ; rdf:value 3 ] ;
+			lv2:scalePoint [ rdfs:label "Lydian" ; rdf:value 4 ] ;
+			lv2:scalePoint [ rdfs:label "Mixolydian"  ; rdf:value 5 ] ;
+			lv2:scalePoint [ rdfs:label "Locrian"  ; rdf:value 6 ] ;
+			rdfs:comment "Mode of the Scale"
+			)
 	; rdfs:comment "Filter note-on/off events depending on musical scale. If the key is changed note-off events of are sent for all active off-key notes." ; 
 	.
 
 #elif defined MX_CODE
+/*
+ * Mode Tonic relative
+ * scale Interval sequence Example
+ * Ionian     I     W–W–H–W–W–W–H     C–D–E–F–G–A–B–C
+ * Dorian     II    W–H–W–W–W–H–W     D–E–F–G–A–B–C–D
+ * Phrygian   III   H–W–W–W–H–W–W     E–F–G–A–B–C–D–E
+ * Lydian     IV    W–W–W–H–W–W–H     F–G–A–B–C–D–E–F
+ * Mixolydian V     W–W–H–W–W–H–W     G–A–B–C–D–E–F–G
+ * Aeolian    VI    W–H–W–W–H–W–W     A–B–C–D–E–F–G–A
+ * Locrian    VII   H–W–W–H–W–W–W     B–C–D–E–F–G–A–B
+ *
+ */
 
+static int filter_enforcescale_check(int scale,int scalemode, uint8_t key) {
+	const short scales[7][12] = {
+		{ 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1 },  // Ionian/Major
+		{ 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0 },  // Aeolian/Minor
+		{ 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0 },  // Dorian
+		{ 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0 },  // Phrygian
+		{ 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1 },  // Lydian
+		{ 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0 },  // Mixolydian
+		{ 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0 },  // Locrian
 
-static int filter_enforcescale_check(int scale, uint8_t key) {
-	const short major_scale[12] = {
-		1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1
 	};
-	return major_scale[(key - scale + 12) % 12];
+	return scales[scalemode][(key - scale + 12) % 12];
 }
 
 static inline void filter_enforcescale_panic(MidiFilter* self, const uint8_t c, const uint32_t tme) {
@@ -67,6 +96,7 @@ filter_midi_enforcescale(MidiFilter* self,
 	const int chs = midi_limit_chn(floorf(*self->cfg[0]) -1);
 	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
 	const int mode  = RAIL(floorf(*self->cfg[2]), 0, 2);
+	const int scalemode  = RAIL(floorf(*self->cfg[3]), 0, 6);
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
@@ -87,7 +117,7 @@ filter_midi_enforcescale(MidiFilter* self,
 
 	int transp = 0;
 
-	if (!filter_enforcescale_check(scale, key)) {
+	if (!filter_enforcescale_check(scale, scalemode, key)) {
 		switch (mode) {
 			case 1:
 					transp = -1;
@@ -105,7 +135,7 @@ filter_midi_enforcescale(MidiFilter* self,
 		return;
 	}
 
-	if (!filter_enforcescale_check(scale, key + transp)) {
+	if (!filter_enforcescale_check(scale, scalemode,key + transp)) {
 		return;
 	}
 
@@ -149,6 +179,7 @@ filter_midi_enforcescale(MidiFilter* self,
 static void filter_preproc_enforcescale(MidiFilter* self) {
 	if (floorf(self->lcfg[1]) == floorf(*self->cfg[1])) return;
 	const int scale = RAIL(floorf(*self->cfg[1]), 0, 11);
+	const int scalemode = RAIL(floorf(*self->cfg[3]), 0, 6);
 
 	int c,k;
 	uint8_t buf[3];
@@ -157,7 +188,7 @@ static void filter_preproc_enforcescale(MidiFilter* self) {
 		for (k=0; k < 127; ++k) {
 			if (self->memCS[c][k] ==0) continue;
 
-			if (filter_enforcescale_check(scale, k)) {
+			if (filter_enforcescale_check(scale, scalemode, k)) {
 				self->memCI[c][k] = 0;
 				continue;
 			}
