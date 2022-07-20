@@ -8,6 +8,7 @@ MFD_FILTER(tonalpedal)
 			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "CC66" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;)
+	, TTF_IPORTTOGGLE( 1, "forward_cc",   "Forward CC", 0)
 	; rdfs:comment "This filter holds any notes that are currently played when the sustain pedal is pressed for as long as the pedal remains pressed. Releasing the pedal sends Note-Off events. New notes played after presseing the pedal are not affected."
 	.
 
@@ -20,19 +21,28 @@ filter_midi_tonalpedal(MidiFilter* self,
 		const uint32_t size)
 {
 	const int pedal = RAIL(*self->cfg[0], 0, 1);
+	const int fwdcc = RAIL(*self->cfg[1], 0, 1);
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
 	const uint8_t vel = buffer[2] & 0x7f;
+
 	uint8_t mst = buffer[0] & 0xf0;
+	bool    fwd = true;
 
 	int oldstate = self->memI[chn];
 
 	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64 && pedal == 0) {
 		self->memI[chn] = vel > 63 ? 1 : 0;
+		if (!fwdcc) {
+			fwd = false;
+		}
 	}
 	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 66 && pedal == 1) {
 		self->memI[chn] = vel > 63 ? 1 : 0;
+		if (!fwdcc) {
+			fwd = false;
+		}
 	}
 
 	if (midi_is_panic(buffer, size)) {
@@ -66,7 +76,9 @@ filter_midi_tonalpedal(MidiFilter* self,
 
 	if (size != 3 || !(mst == MIDI_NOTEON || mst == MIDI_NOTEOFF))
 	{
-		forge_midimessage(self, tme, buffer, size);
+		if (fwd) {
+			forge_midimessage(self, tme, buffer, size);
+		}
 		return;
 	}
 
