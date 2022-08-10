@@ -1,6 +1,5 @@
 #!/usr/bin/make -f
 PREFIX ?= /usr/local
-CFLAGS ?= $(OPTIMIZATIONS) -Wall
 
 PKG_CONFIG?=pkg-config
 STRIP?=strip
@@ -23,6 +22,7 @@ else
 endif
 
 ###############################################################################
+CFLAGS ?= $(OPTIMIZATIONS) -Wall
 
 midifilter_VERSION?=$(shell git describe --tags HEAD 2>/dev/null | sed 's/-g.*$$//;s/^v//' || echo "LV2")
 
