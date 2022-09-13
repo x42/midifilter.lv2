@@ -34,9 +34,10 @@ So far 29 MIDI event filters have been implemented:
 *   Velocity Randomizer -- randomly change velocity of note-on events
 *   ScaleCC -- modify the value (data-byte) of a MIDI control change message
 *   Sostenuto -- delay note-off messages, emulate a piano sostenuto pedal
+*   Tonal Pedal -- hold active notes when pressing the sustain pedal
 *   Velocity Range -- filter MIDI note events according to velocity
-*   Velocity Scale -- modify note velocity by constant factor and offset
 *   Velocity Gamma -- modify note velocity curve by a gamma exponent
+*   Velocity Scale -- modify note velocity by constant factor and offset
 
 Install
 -------
