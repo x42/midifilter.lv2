@@ -3,6 +3,7 @@ mfltpreset:chord_major3
 	lv2:appliesTo mfltplugin:midichord ;
 
 	rdfs:label "Triad" ;
+	rdfs:comment "major or minor chord, depending on the note" ;
 	lv2:port
 	[ lv2:symbol "c1";  pset:value 1.0 ],
 	[ lv2:symbol "c2";  pset:value 0.0 ],
@@ -23,6 +24,7 @@ mfltpreset:chord_sus2
 	lv2:appliesTo mfltplugin:midichord ;
 
 	rdfs:label "Sus2" ;
+	rdfs:comment "replace 3rd with 2nd" ;
 	lv2:port
 	[ lv2:symbol "c3"; pset:value 0.0 ],
 	[ lv2:symbol "c2"; pset:value 1.0 ],
@@ -33,6 +35,7 @@ mfltpreset:chord_sus4
 	lv2:appliesTo mfltplugin:midichord ;
 
 	rdfs:label "Sus4" ;
+	rdfs:comment "replace 3rd with 4th" ;
 	lv2:port
 	[ lv2:symbol "c3"; pset:value 0.0 ],
 	[ lv2:symbol "c2"; pset:value 0.0 ],

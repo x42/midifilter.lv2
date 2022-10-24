@@ -3,6 +3,7 @@ mfltpreset:invertcc
 	lv2:appliesTo mfltplugin:scalecc ;
 
 	rdfs:label "Invert CC Value" ;
+	rdfs:comment "effecively 127 - x" ;
 	lv2:port [
 		lv2:symbol "valmul";
 		pset:value -1.0;
