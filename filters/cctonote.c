@@ -7,7 +7,7 @@ MFD_FILTER(cctonote)
 	, TTF_IPORT(0, "channelf", "Filter Channel",  0, 16,  0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT(1, "mode", "Operation Mode",  0, 3, 1,
+	, TTF_IPORT(1, "mode", "Operation Mode",  0, 2, 1,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Fixed key, velocity = CC-value" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "key = CC-value, fixed velocity (64)" ; rdf:value 1 ] ;
@@ -161,7 +161,7 @@ filter_midi_cctonote(MidiFilter* self,
 
 	const uint8_t param = buffer[1] & 0x7f;
 	const uint8_t value = buffer[2] & 0x7f;
-	const int mode = RAIL(floorf(*self->cfg[1]),0, 3);
+	const int mode = RAIL(floorf(*self->cfg[1]),0, 2);
 
 	const uint8_t kprm = midi_limit_val(floorf(*self->cfg[2]));
 
