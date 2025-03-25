@@ -23,7 +23,7 @@ MFD_FILTER(midichord)
 			lv2:scalePoint [ rdfs:label "B Major"  ; rdf:value 11 ] ;
 			rdfs:comment "Scale for the Chords."
 			)
-	, TTF_IPORT(2, "hold", "Hold Chord",  0, 11,  0,
+	, TTF_IPORT(2, "hold", "Hold Chord",  0, 1,  0,
 			lv2:portProperty lv2:integer; lv2:portProperty lv2:enumeration;
 			lv2:scalePoint [ rdfs:label "Off"  ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "On" ; rdf:value 1 ] ;
