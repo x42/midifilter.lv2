@@ -33,7 +33,7 @@ So far 29 MIDI event filters have been implemented:
 *   Quantize -- live midi event quantization
 *   Velocity Randomizer -- randomly change velocity of note-on events
 *   ScaleCC -- modify the value (data-byte) of a MIDI control change message
-*   Sostenuto -- delay note-off messages for a set duration
+*   Hold -- delay note-off messages for a set duration
 *   Sustain Pedal -- hold active notes, emulating a piano sustain or sostenuto pedal
 *   Velocity Range -- filter MIDI note events according to velocity
 *   Velocity Gamma -- modify note velocity curve by a gamma exponent

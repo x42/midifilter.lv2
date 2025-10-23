@@ -1,33 +1,34 @@
-MFD_FILTER(sostenuto)
+MFD_FILTER(hold)
 
 #ifdef MX_TTF
 
-	mflt:sostenuto
-	TTF_DEFAULTDEF("MIDI Sostenuto", "MIDI Sostenuto")
+	mflt:hold
+	TTF_DEFAULTDEF("MIDI Hold", "MIDI Hold")
 	, TTF_IPORT(0, "channelf", "Filter Channel", 0, 16, 0,
 			PORTENUMZ("Any")
 			DOC_CHANF)
-	, TTF_IPORT( 1, "sostenuto",  "Sostenuto [sec]", 0.0, 600.0,  0.0, units:unit units:s ;
+	, TTF_IPORT( 1, "hold",  "Hold [sec]", 0.0, 600.0,  0.0, units:unit units:s ;
 			rdfs:comment "Time to delay the note-off signal.")
 	, TTF_IPORT( 2, "pedal",  "Pedal Mode", 0, 2, 1,
 			lv2:scalePoint [ rdfs:label "off" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "on" ; rdf:value 1 ] ;
 			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 2 ] ;
 			lv2:scalePoint [ rdfs:label "CC66" ; rdf:value 3 ] ;
+			lv2:scalePoint [ rdfs:label "CC69" ; rdf:value 4 ] ;
 			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;
-			rdfs:comment "Mode of the sustain pedal. Fixed on (pedal pressed) or off (pedal released) for notes of all MIDI channels. The on/off state can alternatively be set by CC, in which case it's per MIDI-channel.")
-	; rdfs:comment "This filter delays note-off messages by a given time, emulating a piano sostenuto pedal. When the pedal is released, note-off messages that are queued will be sent immediately. The delay-time can be changed dynamically, changes do affects note-off messages that are still queued."
+			rdfs:comment "Mode of the hold pedal. Fixed on (pedal pressed) or off (pedal released) for notes of all MIDI channels. The on/off state can alternatively be set by CC, in which case it's per MIDI-channel.")
+	; rdfs:comment "This filter delays note-off messages by a given time. When the pedal is released, note-off messages that are queued will be sent immediately. The delay-time can be changed dynamically, changes do affects note-off messages that are still queued."
 	.
 
 #elif defined MX_CODE
 
 static void
-filter_cleanup_sostenuto(MidiFilter* self)
+filter_cleanup_hold(MidiFilter* self)
 {
 	free(self->memQ);
 }
 
-static int sostenuto_check_dup(MidiFilter* self,
+static int hold_check_dup(MidiFilter* self,
 		uint8_t chn,
 		uint8_t key,
 		int newdelay
@@ -62,7 +63,7 @@ static int sostenuto_check_dup(MidiFilter* self,
 }
 
 static void
-filter_postproc_sostenuto(MidiFilter* self)
+filter_postproc_hold(MidiFilter* self)
 {
 	int i;
 	const int max_delay = self->memI[0];
@@ -83,7 +84,7 @@ filter_postproc_sostenuto(MidiFilter* self)
 				self->memQ[off].size = 0;
 				if (!skipped) self->memI[1] = (self->memI[1] + 1) % max_delay;
 			} else {
-				/* don't decrement time if called from filter_midi_sostenuto() */
+				/* don't decrement time if called from filter_midi_hold() */
 				if (self->memI[3] < 0) {self->memQ[off].reltime -= n_samples;}
 				skipped = 1;
 			}
@@ -94,7 +95,7 @@ filter_postproc_sostenuto(MidiFilter* self)
 }
 
 void
-filter_midi_sostenuto(MidiFilter* self,
+filter_midi_hold(MidiFilter* self,
 		const uint32_t tme,
 		const uint8_t* const buffer,
 		const uint32_t size)
@@ -113,6 +114,9 @@ filter_midi_sostenuto(MidiFilter* self,
 		self->memI[16 + chn] = vel > 63 ? 1 : 0;
 	}
 	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 66 && pedal == 3) {
+		self->memI[16 + chn] = vel > 63 ? 1 : 0;
+	}
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 69 && pedal == 4) {
 		self->memI[16 + chn] = vel > 63 ? 1 : 0;
 	}
 
@@ -140,7 +144,7 @@ filter_midi_sostenuto(MidiFilter* self,
 	if (size == 3 && mst == MIDI_NOTEON && state == 1) {
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
-		if (sostenuto_check_dup(self, chn, key, -1)) {
+		if (hold_check_dup(self, chn, key, -1)) {
 			/* note was already on,
 			 * send note off + immediate note on, again
 			 */
@@ -156,7 +160,7 @@ filter_midi_sostenuto(MidiFilter* self,
 		const uint8_t chn = buffer[0] & 0x0f;
 		const uint8_t key = buffer[1] & 0x7f;
 
-		if (!sostenuto_check_dup(self, chn, key, tme + delay)) {
+		if (!hold_check_dup(self, chn, key, tme + delay)) {
 			// queue note-off if not already queued
 			MidiEventQueue *qm = &(self->memQ[self->memI[2]]);
 			memcpy(qm->buf, buffer, size);
@@ -174,12 +178,12 @@ filter_midi_sostenuto(MidiFilter* self,
 	 * to retain sequential order.
 	 */
 	self->memI[3] = tme + 1;
-	filter_postproc_sostenuto(self);
+	filter_postproc_hold(self);
 	self->memI[3] = -1;
 }
 
 static void
-filter_preproc_sostenuto(MidiFilter* self)
+filter_preproc_hold(MidiFilter* self)
 {
 	int i;
 	const int max_delay = self->memI[0];
@@ -231,7 +235,7 @@ filter_preproc_sostenuto(MidiFilter* self)
 	}
 
 	self->memI[3] = 1;
-	filter_postproc_sostenuto(self);
+	filter_postproc_hold(self);
 	self->memI[3] = -1;
 
 	/* remember per channel pedal state */
@@ -244,7 +248,7 @@ filter_preproc_sostenuto(MidiFilter* self)
 	}
 }
 
-static void filter_init_sostenuto(MidiFilter* self) {
+static void filter_init_hold(MidiFilter* self) {
 	srandom ((unsigned int) time (NULL));
 	self->memI[0] = self->samplerate / 16.0;
 	self->memI[1] = 0; // read-pointer
@@ -256,9 +260,9 @@ static void filter_init_sostenuto(MidiFilter* self) {
 		self->memI[16 + i] = 1; // previous pedal state (default = on)
 	}
 	self->memQ = calloc(self->memI[0], sizeof(MidiEventQueue));
-	self->postproc_fn = filter_postproc_sostenuto;
-	self->preproc_fn = filter_preproc_sostenuto;
-	self->cleanup_fn = filter_cleanup_sostenuto;
+	self->postproc_fn = filter_postproc_hold;
+	self->preproc_fn = filter_preproc_hold;
+	self->cleanup_fn = filter_cleanup_hold;
 }
 
 #endif
