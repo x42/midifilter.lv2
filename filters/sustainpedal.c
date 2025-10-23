@@ -1,9 +1,9 @@
-MFD_FILTER(tonalpedal)
+MFD_FILTER(sustainpedal)
 
 #ifdef MX_TTF
 
-	mflt:tonalpedal
-	TTF_DEFAULTDEF("MIDI Tonal Pedal", "MIDI Tonal Pedal")
+	mflt:sustainpedal
+	TTF_DEFAULTDEF("MIDI Sustain Pedal", "MIDI Sustain Pedal")
 	, TTF_IPORT( 0, "pedal_style",  "Pedal style", 0, 1, 0,
 			lv2:scalePoint [ rdfs:label "sustain" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "sostenuto" ; rdf:value 1 ] ;
@@ -19,7 +19,7 @@ MFD_FILTER(tonalpedal)
 #elif defined MX_CODE
 
 void
-filter_midi_tonalpedal(MidiFilter* self,
+filter_midi_sustainpedal(MidiFilter* self,
 		const uint32_t tme,
 		const uint8_t* const buffer,
 		const uint32_t size)
@@ -112,7 +112,7 @@ filter_midi_tonalpedal(MidiFilter* self,
 	forge_midimessage(self, tme, buffer, size);
 }
 
-static void filter_init_tonalpedal(MidiFilter* self) {
+static void filter_init_sustainpedal(MidiFilter* self) {
 	for (uint32_t c = 16; c < 16; ++c) {
 		self->memI[c] = 0; // per channel pedal (CC64)
 		for (int k=0; k < 127; ++k) {
