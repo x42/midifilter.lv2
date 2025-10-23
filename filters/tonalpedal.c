@@ -4,12 +4,16 @@ MFD_FILTER(tonalpedal)
 
 	mflt:tonalpedal
 	TTF_DEFAULTDEF("MIDI Tonal Pedal", "MIDI Tonal Pedal")
-	, TTF_IPORT( 0, "pedal",  "Pedal CC", 0, 1, 0,
+	, TTF_IPORT( 0, "pedal_style",  "Pedal style", 0, 1, 0,
+			lv2:scalePoint [ rdfs:label "sustain" ; rdf:value 0 ] ;
+			lv2:scalePoint [ rdfs:label "sostenuto" ; rdf:value 1 ] ;
+			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;)
+	, TTF_IPORT( 1, "pedal_cc",  "Pedal CC", 0, 1, 0,
 			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "CC66" ; rdf:value 1 ] ;
 			lv2:portProperty lv2:integer;  lv2:portProperty lv2:enumeration;)
-	, TTF_IPORTTOGGLE( 1, "forward_cc",   "Forward CC", 0)
-	; rdfs:comment "This filter holds any notes that are currently played when the sustain pedal is pressed for as long as the pedal remains pressed. Releasing the pedal sends Note-Off events. New notes played after presseing the pedal are not affected."
+	, TTF_IPORTTOGGLE( 2, "forward_cc",   "Forward CC", 0)
+	; rdfs:comment "This filter holds any notes that are currently played when the pedal is pressed for as long as the pedal remains pressed. Releasing the pedal sends Note-Off events. When pedal style is set to 'sostenuto', new notes played after pressing the pedal are not affected."
 	.
 
 #elif defined MX_CODE
@@ -20,8 +24,9 @@ filter_midi_tonalpedal(MidiFilter* self,
 		const uint8_t* const buffer,
 		const uint32_t size)
 {
-	const int pedal = RAIL(*self->cfg[0], 0, 1);
-	const int fwdcc = RAIL(*self->cfg[1], 0, 1);
+	const int pedalstyle = RAIL(*self->cfg[0], 0, 1);
+	const int pedalcc = RAIL(*self->cfg[1], 0, 1);
+	const int fwdcc = RAIL(*self->cfg[2], 0, 1);
 
 	const uint8_t chn = buffer[0] & 0x0f;
 	const uint8_t key = buffer[1] & 0x7f;
@@ -32,13 +37,13 @@ filter_midi_tonalpedal(MidiFilter* self,
 
 	int oldstate = self->memI[chn];
 
-	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64 && pedal == 0) {
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 64 && pedalcc == 0) {
 		self->memI[chn] = vel > 63 ? 1 : 0;
 		if (!fwdcc) {
 			fwd = false;
 		}
 	}
-	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 66 && pedal == 1) {
+	if (size == 3 && mst == MIDI_CONTROLCHANGE && (buffer[1]) == 66 && pedalcc == 1) {
 		self->memI[chn] = vel > 63 ? 1 : 0;
 		if (!fwdcc) {
 			fwd = false;
@@ -92,10 +97,13 @@ filter_midi_tonalpedal(MidiFilter* self,
 			return;
 		}
 		forge_midimessage(self, tme, buffer, size);
-		return;
+		if (pedalstyle) {
+			/* no further collection in sostenuto style */
+			return;
+		}
 	}
 
-	/* pedal is not pressed, collect potential notes */
+	/* pedal is not pressed, collect potential notes in sustain style */
 	if (mst == MIDI_NOTEON) {
 		self->memCS[chn][key] = 1;
 	} else if (mst == MIDI_NOTEOFF) {
