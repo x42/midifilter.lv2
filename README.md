@@ -3,7 +3,7 @@ midifilter.lv2
 
 LV2 plugins to filter MIDI events.
 
-So far 29 MIDI event filters have been implemented:
+So far 33 MIDI event filters have been implemented:
 
 *   CC2Note -- translate control-commands to note-on/off messages
 *   Channel Filter -- discard messages per channel
