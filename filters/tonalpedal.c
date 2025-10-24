@@ -3,7 +3,7 @@ MFD_FILTER(tonalpedal)
 #ifdef MX_TTF
 
 	mflt:tonalpedal
-	TTF_DEFAULTDEF("MIDI Piano Pedal", "MIDI Piano Pedal")
+	TTF_DEFAULTDEF("MIDI Sustain Pedal", "MIDI Sustain Pedal")
 	, TTF_IPORT( 0, "pedal",  "Pedal CC", 0, 1, 0,
 			lv2:scalePoint [ rdfs:label "CC64" ; rdf:value 0 ] ;
 			lv2:scalePoint [ rdfs:label "CC66" ; rdf:value 1 ] ;
